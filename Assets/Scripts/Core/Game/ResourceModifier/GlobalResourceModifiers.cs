@@ -1,7 +1,9 @@
-﻿public abstract class GlobalResourceModifiers
+﻿using System;
+
+public abstract class GlobalResourceModifiers
 {
 
-    public ModifierType modifierType;
+    public ModifierType modifierType { get; private set; }
     public GlobalResourceType resourceType;
     public float amount; // must be positive.
 
@@ -15,6 +17,13 @@
         modifierType = type;
         resourceType = v.Item1;
         amount = v.Item2;
+    }
+
+    public override string ToString()
+    {
+        string result;
+        result = modifierType + ": (" + resourceType + ", " + amount + ")"; 
+        return result;
     }
 }
 

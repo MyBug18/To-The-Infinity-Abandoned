@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+
+using UnityEngine;
 
 public class POP
 {
@@ -8,12 +8,11 @@ public class POP
 
     public Job aptitude { get; private set; }
 
+    public bool isUnemployed { get; private set; } = true;
     public bool isTraining { get; private set; } = false;
-    //public Job currentJob { get; private set; } = Job.None;
-    //public Job trainingJob { get; private set; } = Job.None;
 
-    public (POPWorkingPlace workingPlace, int slotNum) currentWorkingPlace { get; private set; } = (null, 0); // Current POP's working place.
-    public (POPWorkingPlace workingPlace, int slotNum) futureWorkingPlace { get; set; } = (null, 0); // After training ended, POP will move to this place.
+    public (POPWorkingPlace workingPlace, int slotNum) currentWorkingPlace { get; private set; } // Current POP's working place.
+    public (POPWorkingPlace workingPlace, int slotNum) futureWorkingPlace { get; set; } // After training ended, POP will move to this place.
 
     public float happiness => _basicHappiness + _jobHappiness;
 
@@ -31,45 +30,85 @@ public class POP
         }
     }
 
+    public POP(string name, Planet_Inhabitable planet)
+    {
+        System.Random r = new System.Random();
+        this.name = name;
+        int aptitude = r.Next() % 12 + 1;
+        this.aptitude = (Job)aptitude; // Sets aptitude.
+        this.planet = planet;
 
-    public Planet planet; // The planet which this pop lives on.
+        Debug.Log(this);
+    }    
+
+    public Planet_Inhabitable planet { get; private set; }
 
     public int remainTrainingDay { get; private set; } = 0;
+
 
     public void DecreaseTrainingDay()
     {
         remainTrainingDay--;
     }
     
-    public void StartTraining() // Removes current job, sets future job, and start training.
+    public void ActivatePOP((POPWorkingPlace, int) futureWorkingPlace) // Activate just created POP, which must be unemployed
     {
-        POPWorkingPlace goal = futureWorkingPlace.workingPlace;
-        int slotnum = futureWorkingPlace.slotNum;
+        if (futureWorkingPlace.Item1.workingPOPList[futureWorkingPlace.Item2].pop != null)
+            throw new InvalidOperationException("Trying to move to already occupied slot!");
+
+        if (!isUnemployed) throw new InvalidOperationException("Trying to activate employed POP!");
+        else
+        {
+            isUnemployed = false;
+            StartTraining(futureWorkingPlace);
+            planet.unemployedPOPs.Remove(this);
+        }
+    }
+
+
+    public void StartTraining((POPWorkingPlace workingPlace, int slotnum) futureWorkingPlace) // Removes current job, sets future job, and start training.
+    {
+        if (isTraining) throw new InvalidOperationException("Trying to train POP already training!");
+
+        Debug.Log("Start Training: " + futureWorkingPlace.Item2 + "th slot of " + futureWorkingPlace.Item1.name); // mineral, 1
+
+        this.futureWorkingPlace = futureWorkingPlace;
+        //POPWorkingPlace goal = this.futureWorkingPlace.workingPlace;
+        //int slotnum = this.futureWorkingPlace.slotNum;
 
         isTraining = true;
-        currentWorkingPlace = (null, 0);
-        futureWorkingPlace = (goal, slotnum);
-        switch(_IsAptitudeMatching(goal.GetJobOfWorkingSlot(slotnum)))
+
+        remainTrainingDay = _GetTrainingDay();
+        Debug.Log("StartTraining: remainTrainingDay = " + remainTrainingDay);
+
+        /*
+        switch(_IsAptitudeMatching(futureWorkingPlace.workingPlace.GetJobOfWorkingSlot(futureWorkingPlace.slotnum))) // sets training day.
         {
             case 1:
-                remainTrainingDay = 30;
+                remainTrainingDay = 3;
                 break;
             case 0:
-                remainTrainingDay = 90;
+                remainTrainingDay = 9;
                 break;
             case -1:
-                remainTrainingDay = 180;
+                remainTrainingDay = 18;
                 break;
         }
+        */
 
-        Game.AddTrainingPOP(this); // Add POP to the training queue.
+        currentWorkingPlace = (null, 0);
+
+        planet.trainingPOPs.Add(this); // Add POP to the training queue.
     }
 
     public void MoveJob() // After the training ended, changes it's current job, and allocates this POP to designated workingplace slot. Will be automatically called by Game._ProceedTraining().
     {
+        Debug.Log("MoveJob(): Moving to " + futureWorkingPlace.slotNum + "th slot of " + futureWorkingPlace.workingPlace.name);
+
         isTraining = false;
         currentWorkingPlace = futureWorkingPlace;
         futureWorkingPlace = (null, 0);
+
         currentWorkingPlace.workingPlace.AllocatePOP(this, currentWorkingPlace.slotNum);
     }
 
@@ -109,6 +148,72 @@ public class POP
 
     }
 
+    private int _GetTrainingDay()
+    {
+        int _result = 0;
+
+        var futurePlace = futureWorkingPlace.workingPlace;
+
+        if (currentWorkingPlace.workingPlace == null)
+        {
+            switch(_IsAptitudeMatching(futurePlace.GetJobOfWorkingSlot(futureWorkingPlace.slotNum)))
+            {
+                case 1:
+                    _result = 30;
+                    break;
+                case 0:
+                    _result = 60;
+                    break;
+                case -1:
+                    _result = 90;
+                    break;
+                default: throw new InvalidOperationException("ERROR: Invalid Job detected.");
+            }
+        }
+        else
+        {
+            Job currentJob = currentWorkingPlace.workingPlace.GetJobOfWorkingSlot(currentWorkingPlace.slotNum);
+            Job futureJob = futureWorkingPlace.workingPlace.GetJobOfWorkingSlot(futureWorkingPlace.slotNum);
+
+            if (currentJob == futureJob)
+                _result = 60;
+            else if (GetJobTypeOfJob(currentJob) == GetJobTypeOfJob(futureJob))
+                _result = 120;
+            else
+                _result = 180;
+
+            switch (_IsAptitudeMatching(futurePlace.GetJobOfWorkingSlot(futureWorkingPlace.slotNum)))
+            {
+                case 1:
+                    _result = _result / 3;
+                    break;
+                case 0:
+                    _result = _result / 2;
+                    break;
+                case -1:
+                    break;
+                default: throw new InvalidOperationException("ERROR: Invalid Job detected.");
+            }           
+        }
+        return _result / 10;
+    }
+
+    public override string ToString()
+    {
+        string result = "";
+
+        string employed = "";
+        string training = "";
+
+        if (isUnemployed) employed = "unemployed ";
+
+        if (isTraining)
+            training = "training (" + remainTrainingDay + "days left) ";
+        else
+            training = "not training";
+        result = name + ": " + aptitude + " " + employed + training;
+        return result;
+    }
 }
 
 public enum Job

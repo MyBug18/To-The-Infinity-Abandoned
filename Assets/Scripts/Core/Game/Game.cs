@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public static class Game
 {
@@ -11,9 +12,10 @@ public static class Game
     public static string date => year + "." + month + "." + day;
     public static Resource globalResource = new Resource();
     public static List<Planet_Inhabitable> planets = new List<Planet_Inhabitable>();
+    
 
-    public static List<GlobalResourceModifiers> everyResourceModifiers = new List<GlobalResourceModifiers>();
-
+    public static float taxRate;
+    public static float popFoodUpkeepRate;
 
     public static void IncreaseOneDay()
     {
@@ -56,11 +58,12 @@ public static class Game
             day = 1;
             _IncreaseOneMonth();
         }
+
+        _ProceedTraining();
     }
 
     private static void _IncreaseOneMonth()
     {
-        globalResource.ApplyTurnRecources();
 
         if (month < 12)
         {
@@ -78,28 +81,31 @@ public static class Game
         year++;
     }
 
-    public static List<POP> currentTrainingPOPs { get; private set; }
 
-    public static void AddTrainingPOP(POP pop)
-    {
-        currentTrainingPOPs.Add(pop);
-    }
 
+
+    
     private static void _ProceedTraining() // Should be called with IncreaseOneDay()
     {
-        foreach (POP p in currentTrainingPOPs)
+        List<POP> toRemoveFromTrainingList = new List<POP>();
+        foreach (var planet in planets)
         {
-            if (p.remainTrainingDay > 0)
+            foreach (var pop in planet.trainingPOPs)
             {
-                p.DecreaseTrainingDay();
+                if (pop.remainTrainingDay > 0)
+                    pop.DecreaseTrainingDay();
+                else
+                {
+                    pop.MoveJob();
+                    toRemoveFromTrainingList.Add(pop);
+                }
             }
-            else
-            {
-                p.MoveJob();
-            }
+
+            foreach (var pop in toRemoveFromTrainingList)
+                planet.trainingPOPs.Remove(pop);
         }
     }
-
+    
 
 }
 

@@ -7,7 +7,7 @@ public abstract class District : POPWorkingPlace
 
     public DistrictType districtType { get; protected set; }
     
-    public District() : base(WorkingPlaceType.District) // Every district's upkeep is 0.5 fuel.
+    public District(Planet_Inhabitable planet) : base(WorkingPlaceType.District, planet) // Every district's upkeep is 0.5 fuel.
     {
         baseUpkeep.resourceType = GlobalResourceType.Fuel;
         baseUpkeep.amount = 0.5f;

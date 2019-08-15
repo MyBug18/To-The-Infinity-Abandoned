@@ -5,8 +5,10 @@ using System.Collections.Generic;
 public class MineralDistrict : District
 {
 
-    public MineralDistrict() : base()
+    public MineralDistrict(Planet_Inhabitable planet) : base(planet)
     {
+        name = "Mineral District";
+
         districtType = DistrictType.Mineral;
         workingPOPSlotNumber = 2;
         workingPOPList = new (POP, Job, List<JobUpkeep>)[workingPOPSlotNumber];
@@ -15,12 +17,12 @@ public class MineralDistrict : District
         workingPOPList[1].job = Job.Miner;
 
         List<JobUpkeep> upkeeps0 = new List<JobUpkeep>();
-        JobUpkeep _minerUpkeep0 = new JobUpkeep((GlobalResourceType.Money, 0.5f), null);
+        JobUpkeep _minerUpkeep0 = new JobUpkeep((GlobalResourceType.Mineral, 0.5f), null);
         upkeeps0.Add(_minerUpkeep0);
-        workingPOPList[1].upkeeps = upkeeps0;
+        workingPOPList[0].upkeeps = upkeeps0;
 
         List<JobUpkeep> upkeeps1 = new List<JobUpkeep>();
-        JobUpkeep _minerUpkeep1 = new JobUpkeep((GlobalResourceType.Money, 0.5f), null);
+        JobUpkeep _minerUpkeep1 = new JobUpkeep((GlobalResourceType.Money, 1f), null);
         upkeeps1.Add(_minerUpkeep1);
         workingPOPList[1].upkeeps = upkeeps1;
     }
