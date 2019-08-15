@@ -47,8 +47,8 @@ public abstract class POPWorkingPlace
         //(POP, Job, List<JobUpkeep>) slot = workingPOPList[slotNum];
 
         Debug.Log("Allocating " + pop.name + " to " + slotNum + "th slot of " + name + " as " + workingPOPList[slotNum].Item2);
-        workingPOPList[slotNum].Item1 = pop;
-        foreach (var upkeep in workingPOPList[slotNum].Item3)
+        workingPOPList[slotNum].pop = pop;
+        foreach (var upkeep in workingPOPList[slotNum].upkeeps)
         {
             upkeep.pop = pop;
             planet.planetJobUpkeeps.Add(upkeep);

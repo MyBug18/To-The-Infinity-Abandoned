@@ -4,20 +4,20 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public static class Game
+public class Game
 {
-    public static int year { get; private set; } = 2100;
-    public static int month { get; private set; } = 1;
-    public static int day { get; private set; } = 1;
-    public static string date => year + "." + month + "." + day;
-    public static Resource globalResource = new Resource();
-    public static List<Planet_Inhabitable> planets = new List<Planet_Inhabitable>();
+    public int year { get; private set; } = 2100;
+    public int month { get; private set; } = 1;
+    public int day { get; private set; } = 1;
+    public string date => year + "." + month + "." + day;
+    public Resource globalResource = new Resource();
+    public List<Planet_Inhabitable> planets = new List<Planet_Inhabitable>();
     
 
-    public static float taxRate;
-    public static float popFoodUpkeepRate;
+    public float taxRate;
+    public float popFoodUpkeepRate;
 
-    public static void IncreaseOneDay()
+    public void IncreaseOneDay()
     {
         int _lastDayOfMonth;
 
@@ -62,7 +62,7 @@ public static class Game
         _ProceedTraining();
     }
 
-    private static void _IncreaseOneMonth()
+    private void _IncreaseOneMonth()
     {
 
         if (month < 12)
@@ -76,16 +76,12 @@ public static class Game
         }
     }
 
-    private static void _IncreaseOneYear()
+    private void _IncreaseOneYear()
     {
         year++;
     }
-
-
-
-
     
-    private static void _ProceedTraining() // Should be called with IncreaseOneDay()
+    private void _ProceedTraining() // Should be called with IncreaseOneDay()
     {
         List<POP> toRemoveFromTrainingList = new List<POP>();
         foreach (var planet in planets)

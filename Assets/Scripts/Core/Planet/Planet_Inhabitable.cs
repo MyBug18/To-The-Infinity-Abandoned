@@ -6,7 +6,7 @@ using UnityEngine;
 public class Planet_Inhabitable : Planet
 {
 
-    public Planet_Inhabitable(string name, int size) : base(name, size, PlanetType.Inhabitable) { }
+    public Planet_Inhabitable(string name, int size, Game game) : base(name, size, PlanetType.Inhabitable, game) { }
 
     public int maxBuildingSlotNum => 12;
 

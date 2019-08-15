@@ -10,12 +10,14 @@ public class YearTest : MonoBehaviour
     public bool isPaused = false;
     public float interval = 0.15f;
     Coroutine cor;
-
+    Game game;
+    
     private void Awake()
     {
-        var earth = new Planet_Inhabitable("Earth", 16);
+        game = GameManager.game;
+        var earth = new Planet_Inhabitable("Earth", 16, game);
 
-        Game.planets.Add(earth);
+        GameManager.game.planets.Add(earth);
 
         earth.BuildDistrict(DistrictType.Fuel);
         earth.BuildDistrict(DistrictType.Mineral);
@@ -53,7 +55,7 @@ public class YearTest : MonoBehaviour
         // 0: POP 0
         // 1: POP 1
 
-        var earth = Game.planets[0];
+        var earth = GameManager.game.planets[0];
 
         if (Input.GetKeyDown(KeyCode.G))
         {
@@ -85,15 +87,15 @@ public class YearTest : MonoBehaviour
 
 
         if (Input.GetKeyDown(KeyCode.F))
-            foreach (var u in Game.planets[0].planetJobUpkeeps)
+            foreach (var u in earth.planetJobUpkeeps)
                 Debug.Log(u);        
 
         if (Input.GetKeyDown(KeyCode.D))
             for(int i = 0; i < 2; i++)
-                Debug.Log(Game.planets[0].districts[i]);
+                Debug.Log(earth.districts[i]);
 
         if (Input.GetKeyDown(KeyCode.S))
-            foreach (var p in Game.planets[0].pops)
+            foreach (var p in earth.pops)
                 Debug.Log(p);
 
         if (Input.GetKeyDown(KeyCode.A))
@@ -109,9 +111,9 @@ public class YearTest : MonoBehaviour
         while(true)
         {
             yield return new WaitForSeconds(interval);
-            Game.IncreaseOneDay();
-            date.text = Game.date;
+            GameManager.game.IncreaseOneDay();
+            date.text = GameManager.game.date;
         }
     }
-
+    
 }
