@@ -26,6 +26,8 @@ public class Planet_Inhabitable : Planet
     public List<JobUpkeep> planetJobUpkeeps = new List<JobUpkeep>();
     public List<WorkingPlaceBaseUpkeep> planetBaseUpkeeps = new List<WorkingPlaceBaseUpkeep>();
 
+    public List<JobYield> planetJobYields = new List<JobYield>();
+
     public float basePOPGrowth => 5;
 
     public void BirthPOP()

@@ -77,13 +77,6 @@ public class YearTest : MonoBehaviour
             earth.districts[1].MovePOPJob(1, (earth.districts[0], 0));
         }
 
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            earth.districts[1].MovePOPJob(0, (earth.districts[0], 0));
-        }
-
-
-
 
 
         if (Input.GetKeyDown(KeyCode.F))
@@ -101,6 +94,12 @@ public class YearTest : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A))
             foreach (var p in earth.unemployedPOPs)
                 Debug.Log(p);
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            foreach (var y in earth.planetJobYields)
+                Debug.Log(y);
+        }
 
 
 

@@ -65,36 +65,18 @@ public class POP
         }
     }
 
-
     public void StartTraining((POPWorkingPlace workingPlace, int slotnum) futureWorkingPlace) // Removes current job, sets future job, and start training.
     {
         if (isTraining) throw new InvalidOperationException("Trying to train POP already training!");
 
-        Debug.Log("Start Training: " + futureWorkingPlace.Item2 + "th slot of " + futureWorkingPlace.Item1.name); // mineral, 1
+        Debug.Log("Start Training: " + futureWorkingPlace.slotnum + "th slot of " + futureWorkingPlace.workingPlace.name); // mineral, 1
 
         this.futureWorkingPlace = futureWorkingPlace;
-        //POPWorkingPlace goal = this.futureWorkingPlace.workingPlace;
-        //int slotnum = this.futureWorkingPlace.slotNum;
 
         isTraining = true;
 
         remainTrainingDay = _GetTrainingDay();
         Debug.Log("StartTraining: remainTrainingDay = " + remainTrainingDay);
-
-        /*
-        switch(_IsAptitudeMatching(futureWorkingPlace.workingPlace.GetJobOfWorkingSlot(futureWorkingPlace.slotnum))) // sets training day.
-        {
-            case 1:
-                remainTrainingDay = 3;
-                break;
-            case 0:
-                remainTrainingDay = 9;
-                break;
-            case -1:
-                remainTrainingDay = 18;
-                break;
-        }
-        */
 
         currentWorkingPlace = (null, 0);
 

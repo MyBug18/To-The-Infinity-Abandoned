@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 142893858}
   - component: {fileID: 142893857}
   m_Layer: 5
-  m_Name: result
+  m_Name: Result
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -576,7 +576,7 @@ GameObject:
   - component: {fileID: 1230940693}
   - component: {fileID: 1230940692}
   m_Layer: 5
-  m_Name: POPs
+  m_Name: Debug2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -819,7 +819,7 @@ GameObject:
   - component: {fileID: 1675812273}
   - component: {fileID: 1675812272}
   m_Layer: 5
-  m_Name: buildings
+  m_Name: Debug1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -877,13 +877,15 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'F: Job Upkeeps
+  m_Text: 'F: All Job Upkeeps
 
     D: All Districts
 
     S: All POPs
 
-    A: All Umemployed POPs'
+    A: All Umemployed POPs
+
+    R: All Job Yields'
 --- !u!222 &1675812273
 CanvasRenderer:
   m_ObjectHideFlags: 0

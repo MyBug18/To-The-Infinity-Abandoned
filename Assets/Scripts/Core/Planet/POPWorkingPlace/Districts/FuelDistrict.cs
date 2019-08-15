@@ -11,20 +11,32 @@ public class FuelDistrict : District
 
         districtType = DistrictType.Fuel;
         workingPOPSlotNumber = 2;
-        workingPOPList = new (POP, Job, List<JobUpkeep>)[workingPOPSlotNumber];
+        InitiallizePOPWorkingList();
 
         workingPOPList[0].job = Job.Technician;
         workingPOPList[1].job = Job.Technician;
 
         List<JobUpkeep> upkeeps0 = new List<JobUpkeep>();
-        JobUpkeep _fuelTechUpkeep0 = new JobUpkeep((GlobalResourceType.Money, 0.5f), null);
-        upkeeps0.Add(_fuelTechUpkeep0);
+        JobUpkeep _technicianUpkeep0 = new JobUpkeep((GlobalResourceType.Money, 0.5f), null);
+        upkeeps0.Add(_technicianUpkeep0);
         workingPOPList[0].upkeeps = upkeeps0;
 
         List<JobUpkeep> upkeeps1 = new List<JobUpkeep>();
-        JobUpkeep _fuelTechUpkeep1 = new JobUpkeep((GlobalResourceType.Money, 1f), null);
-        upkeeps1.Add(_fuelTechUpkeep1);
+        JobUpkeep _technicianUpkeep1 = new JobUpkeep((GlobalResourceType.Money, 0.5f), null);
+        upkeeps1.Add(_technicianUpkeep1);
         workingPOPList[1].upkeeps = upkeeps1;
+
+
+        List<JobYield> yield0 = new List<JobYield>();
+        JobYield _technicianYield0 = new JobYield((GlobalResourceType.Fuel, 1.5f), null);
+        yield0.Add(_technicianYield0);
+        workingPOPList[0].yields = yield0;
+
+        List<JobYield> yield1 = new List<JobYield>();
+        JobYield _technicianYield1 = new JobYield((GlobalResourceType.Fuel, 1.5f), null);
+        yield1.Add(_technicianYield1);
+        workingPOPList[1].yields = yield1;
+
     }
 
     public override void BeforeDemolish()
