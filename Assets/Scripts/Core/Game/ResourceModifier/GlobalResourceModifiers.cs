@@ -1,6 +1,4 @@
-﻿using System;
-
-public abstract class GlobalResourceModifiers
+﻿public abstract class GlobalResourceModifiers
 {
 
     public ModifierType modifierType { get; private set; }

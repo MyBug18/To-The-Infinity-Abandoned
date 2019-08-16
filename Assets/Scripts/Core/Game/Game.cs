@@ -11,9 +11,20 @@ public class Game
     public int day { get; private set; } = 1;
     public string date => year + "." + month + "." + day;
     public Resource globalResource = new Resource();
-    public List<Planet_Inhabitable> planets = new List<Planet_Inhabitable>();
-    
 
+    public List<Planet_Inhabitable> colonizedPlanets = new List<Planet_Inhabitable>();
+    public List<Planet_Inhabitable> ongoingColonization = new List<Planet_Inhabitable>();
+
+    private float _baseColonizationDate = 7;
+    private float _colonizationDateModifier = 1;
+
+    public int colonizationDate => (int)(_baseColonizationDate * _colonizationDateModifier);
+
+    public void AddColonizationSpeedModifier(float v)
+    {
+        _colonizationDateModifier += v;
+    }
+    
     public float taxRate;
     public float popFoodUpkeepRate;
 
@@ -60,6 +71,7 @@ public class Game
         }
 
         _ProceedTraining();
+        _ProceedColonization();
     }
 
     private void _IncreaseOneMonth()
@@ -80,11 +92,11 @@ public class Game
     {
         year++;
     }
-    
+
     private void _ProceedTraining() // Should be called with IncreaseOneDay()
     {
         List<POP> toRemoveFromTrainingList = new List<POP>();
-        foreach (var planet in planets)
+        foreach (var planet in colonizedPlanets)
         {
             foreach (var pop in planet.trainingPOPs)
             {
@@ -92,17 +104,35 @@ public class Game
                     pop.DecreaseTrainingDay();
                 else
                 {
-                    pop.MoveJob();
+                    pop.EndTraining();
                     toRemoveFromTrainingList.Add(pop);
+
                 }
             }
 
             foreach (var pop in toRemoveFromTrainingList)
                 planet.trainingPOPs.Remove(pop);
         }
-    }
-    
+    }    
 
+    private void _ProceedColonization()
+    {
+        List<Planet_Inhabitable> toRemoveFromColonizationList = new List<Planet_Inhabitable>();
+        foreach (var planet in ongoingColonization)
+        {
+            if (planet.remainColonizationDay > 0)
+                planet.DecreaseColonizationDay();
+            else
+            {
+                planet.EndColonization();
+                colonizedPlanets.Add(planet);
+                toRemoveFromColonizationList.Add(planet);
+            }
+        }
+
+        foreach (var planet in toRemoveFromColonizationList)
+            ongoingColonization.Remove(planet);
+    }
 }
 
 

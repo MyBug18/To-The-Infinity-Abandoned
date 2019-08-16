@@ -11,19 +11,20 @@ public class YearTest : MonoBehaviour
     public float interval = 0.15f;
     Coroutine cor;
     Game game;
+    Planet_Inhabitable earth;
     
     private void Awake()
     {
         game = GameManager.game;
-        var earth = new Planet_Inhabitable("Earth", 16, game);
-
-        GameManager.game.planets.Add(earth);
-
+        earth = new Planet_Inhabitable("Earth", 16, game);
+        earth.StartColonization();
+        /*
         earth.BuildDistrict(DistrictType.Fuel);
         earth.BuildDistrict(DistrictType.Mineral);
 
         earth.BirthPOP();
         earth.BirthPOP();
+        */
     }
 
     // Start is called before the first frame update
@@ -54,8 +55,7 @@ public class YearTest : MonoBehaviour
 
         // 0: POP 0
         // 1: POP 1
-
-        var earth = GameManager.game.planets[0];
+        
 
         if (Input.GetKeyDown(KeyCode.G))
         {

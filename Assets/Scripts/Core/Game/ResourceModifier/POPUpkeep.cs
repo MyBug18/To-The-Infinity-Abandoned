@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
-public class POPUpkeep : GlobalResourceModifiers
+﻿public class POPUpkeep : GlobalResourceModifiers
 {
 
     public POP pop;

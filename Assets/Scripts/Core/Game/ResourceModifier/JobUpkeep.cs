@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
-public class JobUpkeep : GlobalResourceModifiers
+﻿public class JobUpkeep : GlobalResourceModifiers
 {
 
     public POP pop;

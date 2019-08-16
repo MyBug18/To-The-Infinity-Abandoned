@@ -45,7 +45,6 @@ public class POP
 
     public int remainTrainingDay { get; private set; } = 0;
 
-
     public void DecreaseTrainingDay()
     {
         remainTrainingDay--;
@@ -88,7 +87,7 @@ public class POP
         planet.trainingPOPs.Add(this); // Add POP to the training queue.
     }
 
-    public void MoveJob() // After the training ended, changes it's current job, and allocates this POP to designated workingplace slot. Will be automatically called by Game._ProceedTraining().
+    public void EndTraining() // After the training ended, changes it's current job, and allocates this POP to designated workingplace slot. Will be automatically called by Game._ProceedTraining().
     {
         Debug.Log("MoveJob(): Moving to " + futureWorkingPlace.slotNum + "th slot of " + futureWorkingPlace.workingPlace.name);
 
@@ -106,32 +105,6 @@ public class POP
             return 0;
         else
             return -1;
-    }
-    
-    public static JobType GetJobTypeOfJob(Job job)
-    {
-        switch(job)
-        {
-            case Job.Technician:
-            case Job.Miner:
-            case Job.Farmer:
-                return JobType.Worker;
-            case Job.Physicist:
-            case Job.Sociologist:
-            case Job.Engineer:
-                return JobType.Researcher;
-            case Job.Clerk:
-            case Job.Administrator:
-            case Job.Enforcer:
-                return JobType.PublicServant;
-            case Job.Soldier:
-            case Job.Admiral:
-            case Job.Staff:
-                return JobType.MilitaryPersonnel;
-            default:
-                throw new InvalidOperationException("ERROR: Invalid Job Detected: " + job);
-        }
-
     }
 
     private int _GetTrainingDay()
@@ -199,6 +172,32 @@ public class POP
             training = "not training";
         result = name + ": " + aptitude + " " + employed + training;
         return result;
+    }
+
+    public static JobType GetJobTypeOfJob(Job job)
+    {
+        switch (job)
+        {
+            case Job.Technician:
+            case Job.Miner:
+            case Job.Farmer:
+                return JobType.Worker;
+            case Job.Physicist:
+            case Job.Sociologist:
+            case Job.Engineer:
+                return JobType.Researcher;
+            case Job.Clerk:
+            case Job.Administrator:
+            case Job.Enforcer:
+                return JobType.PublicServant;
+            case Job.Soldier:
+            case Job.Admiral:
+            case Job.Staff:
+                return JobType.MilitaryPersonnel;
+            default:
+                throw new InvalidOperationException("ERROR: Invalid Job Detected: " + job);
+        }
+
     }
 }
 

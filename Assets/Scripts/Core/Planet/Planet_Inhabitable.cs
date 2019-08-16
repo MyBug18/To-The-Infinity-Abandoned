@@ -15,6 +15,8 @@ public class Planet_Inhabitable : Planet
     public float crime { get; private set; } = 0;
     public int amenity { get; private set; } = 0;
 
+    public bool isColonized => pops.Count > 1;
+
     public List<Building> buildings { get; private set; } = new List<Building>();
     public List<District> districts { get; private set; } = new List<District>();
     public List<PlanetaryFeature> features { get; private set; } = new List<PlanetaryFeature>();
@@ -28,7 +30,31 @@ public class Planet_Inhabitable : Planet
 
     public List<JobYield> planetJobYields = new List<JobYield>();
 
-    public float basePOPGrowth => 5;
+    private float _basePOPGrowth => 5;
+    private float _POPGrowthModifier = 1;
+    public float POPGrowthRate => _basePOPGrowth * _POPGrowthModifier;
+
+    public int remainColonizationDay { get; private set; } = 0;
+
+    public void StartColonization()
+    {
+        Debug.Log("Start Colonization");
+
+        remainColonizationDay = game.colonizationDate;
+        game.ongoingColonization.Add(this);
+    }
+
+    public void DecreaseColonizationDay()
+    {
+        remainColonizationDay--;
+    }
+
+    public void EndColonization()
+    {
+        Debug.Log("Colonization Ended");
+        BirthPOP();
+        // build planetary capital.
+    }
 
     public void BirthPOP()
     {
