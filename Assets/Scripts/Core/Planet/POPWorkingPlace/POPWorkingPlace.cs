@@ -10,10 +10,8 @@ public abstract class POPWorkingPlace
     public string name;
 
     public Planet_Inhabitable planet { get; private set; } // The planet where this building is.
-
-    //public POP[] workingPOPList { get; protected set; }
+    
     public int workingPOPSlotNumber { get; protected set; }
-    //public List<JobUpkeep> jobUpkeeps { get; protected set; }
 
     public POPWorkingSlot[] workingPOPList { get; protected set; }
 
@@ -44,8 +42,7 @@ public abstract class POPWorkingPlace
 
     public virtual void AllocatePOP(POP pop, int slotNum) // Allocates POP with slot number, and Add Upkeeps to Global Modifier.
     {
-        //(POP, Job, List<JobUpkeep>) slot = workingPOPList[slotNum];
-
+        workingPOPList[slotNum].isPOPTrainingForHere = false;
         Debug.Log("Allocating " + pop.name + " to " + slotNum + "th slot of " + name + " as " + workingPOPList[slotNum].job);
         workingPOPList[slotNum].pop = pop;
 
@@ -64,14 +61,17 @@ public abstract class POPWorkingPlace
         Debug.Log(this);
     }
 
-    public virtual void MovePOPJob(int slotNum, (POPWorkingPlace, int) futureWorkingPlace) // Removes POPs from the slot, puts it in the training list, and remove Upkeeps.
+    public virtual void MovePOPJob(int fromSlotNum, POPWorkingPlace workingPlace, int toSlotNum) // Removes POPs from the slot, puts it in the training list, and remove Upkeeps.
     {
-        if (futureWorkingPlace.Item1.workingPOPList[futureWorkingPlace.Item2].pop != null)
+        if (workingPlace.workingPOPList[toSlotNum].pop != null)
             throw new InvalidOperationException("Trying to move to already occupied slot!");
 
-        POPWorkingSlot slot = workingPOPList[slotNum];
+        if (workingPlace.workingPOPList[toSlotNum].isPOPTrainingForHere)
+            throw new InvalidOperationException("Someone is already training for there!");
 
-        if (slot.pop == null) throw new InvalidOperationException("Trying to move pop which doesn't exist! (On " + planet.name + ", " + slotNum + "th slot of " + name + ")");
+        POPWorkingSlot slot = workingPOPList[fromSlotNum];
+
+        if (slot.pop == null) throw new InvalidOperationException("Trying to move pop which doesn't exist! (On " + planet.name + ", " + fromSlotNum + "th slot of " + name + ")");
 
 
         POP pop = slot.pop;
@@ -81,15 +81,15 @@ public abstract class POPWorkingPlace
             planet.planetJobUpkeeps.Remove(upkeep);
         }
 
-        foreach (var yield in workingPOPList[slotNum].yields)
+        foreach (var yield in workingPOPList[fromSlotNum].yields)
         {
             yield.pop = null;
             planet.planetJobYields.Remove(yield);
         }
 
-        workingPOPList[slotNum].pop = null;
+        workingPOPList[fromSlotNum].pop = null;
         
-        pop.StartTraining(futureWorkingPlace);
+        pop.StartTraining(workingPlace, toSlotNum);
     }
 
     public Job GetJobOfWorkingSlot(int slotNum) // Gets a Job with slot number.

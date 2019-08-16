@@ -51,27 +51,32 @@ public class POP
         remainTrainingDay--;
     }
     
-    public void ActivatePOP((POPWorkingPlace, int) futureWorkingPlace) // Activate just created POP, which must be unemployed
+    public void ActivatePOP(POPWorkingPlace workingPlace, int slotNum) // Activate just created POP, which must be unemployed
     {
-        if (futureWorkingPlace.Item1.workingPOPList[futureWorkingPlace.Item2].pop != null)
+        if (workingPlace.workingPOPList[slotNum].pop != null)
             throw new InvalidOperationException("Trying to move to already occupied slot!");
+
+        if (workingPlace.workingPOPList[slotNum].isPOPTrainingForHere)
+            throw new InvalidOperationException("Someone is already training for there!");
 
         if (!isUnemployed) throw new InvalidOperationException("Trying to activate employed POP!");
         else
         {
             isUnemployed = false;
-            StartTraining(futureWorkingPlace);
+            StartTraining(workingPlace, slotNum);
             planet.unemployedPOPs.Remove(this);
         }
     }
 
-    public void StartTraining((POPWorkingPlace workingPlace, int slotnum) futureWorkingPlace) // Removes current job, sets future job, and start training.
+    public void StartTraining(POPWorkingPlace workingPlace, int slotNum) // Removes current job, sets future job, and start training.
     {
         if (isTraining) throw new InvalidOperationException("Trying to train POP already training!");
 
-        Debug.Log("Start Training: " + futureWorkingPlace.slotnum + "th slot of " + futureWorkingPlace.workingPlace.name); // mineral, 1
+        workingPlace.workingPOPList[slotNum].isPOPTrainingForHere = true;
 
-        this.futureWorkingPlace = futureWorkingPlace;
+        Debug.Log("Start Training: " + slotNum + "th slot of " + workingPlace.name); // mineral, 1
+
+        futureWorkingPlace = (workingPlace, slotNum);
 
         isTraining = true;
 
@@ -90,7 +95,6 @@ public class POP
         isTraining = false;
         currentWorkingPlace = futureWorkingPlace;
         futureWorkingPlace = (null, 0);
-
         currentWorkingPlace.workingPlace.AllocatePOP(this, currentWorkingPlace.slotNum);
     }
 

@@ -59,22 +59,22 @@ public class YearTest : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.G))
         {
-            earth.pops[0].ActivatePOP((earth.districts[0], 0));
+            earth.pops[0].ActivatePOP(earth.districts[0], 0);
         }
 
         if (Input.GetKeyDown(KeyCode.T))
         {
-            earth.pops[1].ActivatePOP((earth.districts[1], 1));
+            earth.pops[1].ActivatePOP(earth.districts[1], 1);
         }
 
         if (Input.GetKeyDown(KeyCode.H))
         {
-            earth.districts[0].MovePOPJob(0, (earth.districts[1], 0));
+            earth.districts[0].MovePOPJob(0, earth.districts[1], 0);
         }
 
         if (Input.GetKeyDown(KeyCode.Y))
         {
-            earth.districts[1].MovePOPJob(1, (earth.districts[0], 0));
+            earth.districts[1].MovePOPJob(1, earth.districts[0], 0);
         }
 
 
