@@ -8,4 +8,5 @@ public class POPWorkingSlot
     public List<JobUpkeep> upkeeps;
     public List<JobYield> yields;
     public bool isPOPTrainingForHere = false;
+    
 }

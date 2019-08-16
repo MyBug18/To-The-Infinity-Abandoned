@@ -55,11 +55,12 @@ public class YearTest : MonoBehaviour
 
         // 0: POP 0
         // 1: POP 1
-        
+        if (Input.GetKeyDown(KeyCode.V))
+            earth.KillPOP(earth.pops[0]);
 
         if (Input.GetKeyDown(KeyCode.G))
         {
-            earth.pops[0].ActivatePOP(earth.districts[0], 0);
+            earth.BirthPOP();
         }
 
         if (Input.GetKeyDown(KeyCode.T))

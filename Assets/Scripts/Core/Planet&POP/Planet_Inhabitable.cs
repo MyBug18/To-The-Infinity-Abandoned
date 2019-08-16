@@ -33,45 +33,14 @@ public class Planet_Inhabitable : Planet
     private float _basePOPGrowth => 5;
     private float _POPGrowthModifier = 1;
     public float POPGrowthRate => _basePOPGrowth * _POPGrowthModifier;
-
-    public int remainColonizationDay { get; private set; } = 0;
-
-    public void StartColonization()
+    public (int maxFuel, int maxMineral, int maxFood) resourcesDistrictsMaxNum
     {
-        Debug.Log("Start Colonization");
-
-        remainColonizationDay = game.colonizationDate;
-        game.ongoingColonization.Add(this);
-    }
-
-    public void DecreaseColonizationDay()
-    {
-        remainColonizationDay--;
-    }
-
-    public void EndColonization()
-    {
-        Debug.Log("Colonization Ended");
-        BirthPOP();
-        // build planetary capital.
-    }
-
-    public void BirthPOP()
-    {
-        string[] str = System.IO.File.ReadAllText("Assets\\Scripts\\Core\\Planet\\namelist.txt").Split('\n');
-        System.Random r = new System.Random();
-        string popName = str[r.Next() % 1000];
-
-        var pop = new POP(str[r.Next() % 1000], this);
-        pops.Add(pop);
-        unemployedPOPs.Add(pop);
-    }
-
-    public (int maxFuel, int maxMineral, int maxFood) resourcesDistrictsMaxNum { get {
+        get
+        {
             int _fuel = 0, _mineral = 0, _food = 0;
-            foreach(var f in features)
+            foreach (var f in features)
             {
-                switch(f)
+                switch (f)
                 {
                     case PlanetaryFeature.ExtraordinaryOilDeposit:
                         _fuel += 3;
@@ -99,6 +68,59 @@ public class Planet_Inhabitable : Planet
             return (_fuel, _mineral, _food);
         }
     }
+
+    public int remainColonizationDay { get; private set; } = 0;
+
+    public void StartColonization()
+    {
+        Debug.Log("Start Colonization");
+
+        remainColonizationDay = game.colonizationDate;
+        game.ongoingColonization.Add(this);
+    }
+
+    public void DecreaseColonizationDay()
+    {
+        remainColonizationDay--;
+    }
+
+    public void EndColonization()
+    {
+        Debug.Log("Colonization Ended");
+        BirthPOP();
+        // build planetary capital.
+    }
+
+    public void BirthPOP()
+    {
+        string[] str = System.IO.File.ReadAllText("Assets\\Scripts\\Core\\Planet&POP\\namelist.txt").Split('\n');
+        System.Random r = new System.Random();
+        string popName = str[r.Next() % 1000];
+
+        var pop = new POP(str[r.Next() % 1000], this);
+        pops.Add(pop);
+        unemployedPOPs.Add(pop);
+    }
+
+    public void KillPOP(POP pop)
+    {
+        Debug.Log("Killing: " + pop);
+
+        if (pop.isUnemployed) // if unemployed, remove from unemployed pop list.
+            unemployedPOPs.Remove(pop);
+        else
+        {
+            var workingSlot = pop.currentWorkingPlace.workingPlace.workingPOPList[pop.currentWorkingPlace.slotNum];
+            workingSlot.pop = null;
+        }
+
+        if (pop.isTraining) // if training, remove from training pop list.
+            trainingPOPs.Remove(pop);
+
+        pops.Remove(pop);
+        
+    }
+
     public int currentFuelDistrictNum = 0, currentMineralDistrictNum = 0, currentFoodDistrictNum = 0, currentHouseDistrictNum = 0;
     public int availableHouseDistrictNum => size - currentFoodDistrictNum - currentFuelDistrictNum - currentMineralDistrictNum - currentHouseDistrictNum;
 

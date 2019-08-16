@@ -8,7 +8,7 @@ public class POP
 
     public Job aptitude { get; private set; }
 
-    public bool isUnemployed { get; private set; } = true;
+    public bool isUnemployed => currentWorkingPlace.workingPlace == null;
     public bool isTraining { get; private set; } = false;
 
     public (POPWorkingPlace workingPlace, int slotNum) currentWorkingPlace { get; private set; } // Current POP's working place.
@@ -61,7 +61,6 @@ public class POP
         if (!isUnemployed) throw new InvalidOperationException("Trying to activate employed POP!");
         else
         {
-            isUnemployed = false;
             StartTraining(workingPlace, slotNum);
             planet.unemployedPOPs.Remove(this);
         }
