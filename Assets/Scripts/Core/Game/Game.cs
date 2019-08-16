@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
 
 public class Game
 {
@@ -23,6 +21,7 @@ public class Game
     public void AddColonizationSpeedModifier(float v)
     {
         _colonizationDateModifier += v;
+        
     }
     
     public float taxRate;

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using Newtonsoft.Json;
 
 public class YearTest : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class YearTest : MonoBehaviour
     
     private void Awake()
     {
+        string test = System.IO.File.ReadAllText("Assets\\test.txt");
         game = GameManager.game;
         earth = new Planet_Inhabitable("Earth", 16, game);
         earth.StartColonization();
@@ -102,7 +104,17 @@ public class YearTest : MonoBehaviour
                 Debug.Log(y);
         }
 
-
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            Debug.Log("asdf");
+            string test = JsonConvert.SerializeObject(game, new JsonSerializerSettings()
+            {
+                PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+                Formatting = Formatting.Indented
+            });
+            System.IO.File.WriteAllText("test.txt", test);
+            
+        }
 
     }
 
