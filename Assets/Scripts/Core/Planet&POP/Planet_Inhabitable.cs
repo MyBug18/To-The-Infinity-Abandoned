@@ -6,7 +6,14 @@ using UnityEngine;
 public class Planet_Inhabitable : Planet
 {
 
-    public Planet_Inhabitable(string name, int size, Game game) : base(name, size, PlanetType.Inhabitable, game) { }
+    public Planet_Inhabitable(string name, int size, Game game) : base(name, size, PlanetType.Inhabitable, game)
+    {
+        System.Random r = new System.Random();
+        for (int i = 0; i < size / 3 + 1; i++)
+        {
+            features.Add((PlanetaryFeature)(r.Next() % 6));
+        }
+    }
 
     public int maxBuildingSlotNum => 12;
 
@@ -27,12 +34,12 @@ public class Planet_Inhabitable : Planet
 
     public List<JobUpkeep> planetJobUpkeeps = new List<JobUpkeep>();
     public List<WorkingPlaceBaseUpkeep> planetBaseUpkeeps = new List<WorkingPlaceBaseUpkeep>();
-
     public List<JobYield> planetJobYields = new List<JobYield>();
 
     private float _basePOPGrowth => 5;
     private float _POPGrowthModifier = 1;
     public float POPGrowthRate => _basePOPGrowth * _POPGrowthModifier;
+
     public (int maxFuel, int maxMineral, int maxFood) resourcesDistrictsMaxNum
     {
         get
@@ -68,6 +75,11 @@ public class Planet_Inhabitable : Planet
             return (_fuel, _mineral, _food);
         }
     }
+    public int currentFuelDistrictNum = 0, currentMineralDistrictNum = 0, currentFoodDistrictNum = 0, currentHouseDistrictNum = 0;
+    public int availableFuelDistrictNum => resourcesDistrictsMaxNum.maxFuel - currentFuelDistrictNum;
+    public int availableMineralDistrictNum => resourcesDistrictsMaxNum.maxMineral - currentMineralDistrictNum;
+    public int availableFoodDistrictNum => resourcesDistrictsMaxNum.maxFood - currentFoodDistrictNum;
+    public int availableHouseDistrictNum => size - currentFoodDistrictNum - currentFuelDistrictNum - currentMineralDistrictNum - currentHouseDistrictNum;
 
     public int remainColonizationDay { get; private set; } = 0;
 
@@ -120,9 +132,6 @@ public class Planet_Inhabitable : Planet
         pops.Remove(pop);
         
     }
-
-    public int currentFuelDistrictNum = 0, currentMineralDistrictNum = 0, currentFoodDistrictNum = 0, currentHouseDistrictNum = 0;
-    public int availableHouseDistrictNum => size - currentFoodDistrictNum - currentFuelDistrictNum - currentMineralDistrictNum - currentHouseDistrictNum;
 
     public void BuildDistrict(DistrictType type)
     {

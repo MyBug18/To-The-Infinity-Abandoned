@@ -1,6 +1,4 @@
-﻿using System;
-
-public abstract class Planet
+﻿public abstract class Planet
 {
     public string name { get; private set; }
     public int size { get; private set; }
