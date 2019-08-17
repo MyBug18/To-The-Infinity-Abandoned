@@ -36,9 +36,10 @@ public class Planet_Inhabitable : Planet
     public List<WorkingPlaceBaseUpkeep> planetBaseUpkeeps = new List<WorkingPlaceBaseUpkeep>();
     public List<JobYield> planetJobYields = new List<JobYield>();
 
-    private float _basePOPGrowth => 5;
-    private float _POPGrowthModifier = 1;
-    public float POPGrowthRate => _basePOPGrowth * _POPGrowthModifier;
+    public float currentPOPGrowth = 0;
+    private float _basePOPGrowth => 56;
+    public float POPGrowthModifier = 1;
+    public float POPGrowthRate => _basePOPGrowth * POPGrowthModifier;
 
     public (int maxFuel, int maxMineral, int maxFood) resourcesDistrictsMaxNum
     {
@@ -135,21 +136,27 @@ public class Planet_Inhabitable : Planet
 
     public void BuildDistrict(DistrictType type)
     {
-        districts.Add(WorkingPlaceFactory.BuildDistrict(type, this));
-
         switch (type)
         {
             case DistrictType.Food:
+                if (currentFoodDistrictNum >= resourcesDistrictsMaxNum.maxFood) throw new InvalidOperationException("The number of Food District is at max!");
                 currentFoodDistrictNum++;
+                districts.Add(WorkingPlaceFactory.BuildDistrict(type, this));
                 break;
             case DistrictType.Fuel:
+                if (currentFuelDistrictNum >= resourcesDistrictsMaxNum.maxFuel) throw new InvalidOperationException("The number of Fuel District is at max!");
                 currentFuelDistrictNum++;
+                districts.Add(WorkingPlaceFactory.BuildDistrict(type, this));
                 break;
             case DistrictType.Housing:
+                if (currentHouseDistrictNum >= resourcesDistrictsMaxNum.maxFood) throw new InvalidOperationException("The number of House District is at max!");
                 currentHouseDistrictNum++;
+                districts.Add(WorkingPlaceFactory.BuildDistrict(type, this));
                 break;
             case DistrictType.Mineral:
+                if (currentMineralDistrictNum >= resourcesDistrictsMaxNum.maxMineral) throw new InvalidOperationException("The number of Mineral District is at max!");
                 currentMineralDistrictNum++;
+                districts.Add(WorkingPlaceFactory.BuildDistrict(type, this));
                 break;
         }
     }
@@ -169,6 +176,16 @@ public class Planet_Inhabitable : Planet
             {
                 buildings.Remove((Building)workingPlace);
             }
+        }
+    }
+
+    public void ProceedGrowth()
+    {
+        currentPOPGrowth += POPGrowthRate;
+        if (currentPOPGrowth >= 100)
+        {
+            currentPOPGrowth -= 100;
+            BirthPOP();
         }
     }
 }

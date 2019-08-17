@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
-public class WorkingPlaceBaseUpkeep : GlobalResourceModifiers
+﻿public class WorkingPlaceBaseUpkeep : GlobalResourceModifiers
 {
 
     public POPWorkingPlace workingPlace;
@@ -14,5 +11,10 @@ public class WorkingPlaceBaseUpkeep : GlobalResourceModifiers
     public WorkingPlaceBaseUpkeep((GlobalResourceType, float) v, POPWorkingPlace workingPlace) : base(v, ModifierType.Upkeep)
     {
         this.workingPlace = workingPlace;
+    }
+
+    public override float GetModifier()
+    {
+        return 1;
     }
 }

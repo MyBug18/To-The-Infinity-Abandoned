@@ -4,6 +4,9 @@
     public ModifierType modifierType { get; private set; }
     public GlobalResourceType resourceType;
     public float amount; // must be positive.
+    public abstract float GetModifier();
+
+    public (GlobalResourceType type, float amount) value => (resourceType, amount * GetModifier());
 
     public GlobalResourceModifiers(ModifierType type)
     {

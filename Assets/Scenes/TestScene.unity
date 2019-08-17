@@ -548,7 +548,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 0.5
-  m_Text: 'G: BirthPOP()'
+  m_Text: 'G: Create a POP
+
+    K: Kill the first POP
+
+    T: Build Fuel&Mineral districts.'
 --- !u!222 &1230940693
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -793,7 +797,9 @@ MonoBehaviour:
 
     A: All Umemployed POPs
 
-    R: All Job Yields'
+    R: All Job Yields
+
+    E: All Resources'
 --- !u!222 &1675812273
 CanvasRenderer:
   m_ObjectHideFlags: 0

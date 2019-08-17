@@ -1,110 +1,51 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-
-public class Resource
+﻿public class Resource
 {
-    public float fuel { get; private set; } = 0;
-    public float mineral { get; private set; } = 0;
-    public float food { get; private set; } = 0;
-    public float money { get; private set; } = 0;
-    public float alloy { get; private set; } = 0;
-    public float physics { get; private set; } = 0;
-    public float sociology { get; private set; } = 0;
-    public float engineering { get; private set; } = 0;
+    public Game game;
 
-    public float turnFuel { get; private set; } = 0;
-    public float turnMineral { get; private set; } = 0;
-    public float turnFood { get; private set; } = 0;
-    public float turnMoney { get; private set; } = 0;
-    public float turnAlloy { get; private set; } = 0;
-    public float turnPhysics { get; private set; } = 0;
-    public float turnSociology { get; private set; } = 0;
-    public float turnEngineering { get; private set; } = 0;
-
-    public void ModifyResource((GlobalResourceType, float) value)
+    public Resource(Game game)
     {
-        GlobalResourceType type = value.Item1;
-        float amount = value.Item2;
-        switch(type)
-        {
-            case GlobalResourceType.Fuel:
-                fuel += amount;
-                break;
-            case GlobalResourceType.Mineral:
-                mineral += amount;
-                break;
-            case GlobalResourceType.Food:
-                food += amount;
-                break;
-            case GlobalResourceType.Money:
-                money += amount;
-                break;
-            case GlobalResourceType.Alloy:
-                alloy += amount;
-                break;
-            case GlobalResourceType.Physics:
-                physics += amount;
-                break;
-            case GlobalResourceType.Sociology:
-                sociology += amount;
-                break;
-            case GlobalResourceType.Engineering:
-                engineering += amount;
-                break;
-            default:
-                throw new InvalidOperationException("ERROR: Invalid GlobalResourceType Used: " + type);
-
-        }
-    }
-    public void ModifyResourceTurn((GlobalResourceType, float) value)
-    {
-        GlobalResourceType type = value.Item1;
-        float amount = value.Item2;
-        switch (type)
-        {
-            case GlobalResourceType.Fuel:
-                turnFuel += amount;
-                break;
-            case GlobalResourceType.Mineral:
-                turnMineral += amount;
-                break;
-            case GlobalResourceType.Food:
-                turnFood += amount;
-                break;
-            case GlobalResourceType.Money:
-                turnMoney += amount;
-                break;
-            case GlobalResourceType.Alloy:
-                turnAlloy += amount;
-                break;
-            case GlobalResourceType.Physics:
-                turnPhysics += amount;
-                break;
-            case GlobalResourceType.Sociology:
-                turnSociology += amount;
-                break;
-            case GlobalResourceType.Engineering:
-                turnEngineering += amount;
-                break;
-            default:
-                throw new InvalidOperationException("ERROR: Invalid GlobalResourceType Used: " + type);
-
-        }
+        this.game = game;
+        turnResource = new TurnResource(game);
     }
 
-    public void ApplyTurnRecources() // Should be called with _IncreaseOneMonth().
+    public TurnResource turnResource;
+
+    public float fuel = 0;
+    public float mineral = 0;
+    public float food = 0;
+    public float money = 0;
+    public float alloy = 0;
+    public float physics = 0;
+    public float sociology = 0;
+    public float engineering = 0;
+
+    public void ApplyTurnResource()
     {
-        fuel += turnFuel;
-        mineral += turnMineral;
-        food += turnFood;
-        money += turnMoney;
-        alloy += turnAlloy;
-        physics += turnPhysics;
-        sociology += turnSociology;
-        engineering += turnEngineering;
+        turnResource.ApplyAllModifiers();
+
+        fuel += turnResource.turnFuel;
+        mineral += turnResource.turnMineral;
+        food += turnResource.turnFood;
+        money += turnResource.turnMoney;
+        alloy += turnResource.turnAlloy;
+        physics += turnResource.turnPhysics;
+        sociology += turnResource.turnSociology;
+        engineering += turnResource.turnEngineering;
     }
 
+    public override string ToString()
+    {
+        string _fuel = "Fuel: " + fuel + " (" + turnResource.turnFuel + ") ";
+        string _mineral = "Mineral: " + mineral + " (" + turnResource.turnMineral + ") ";
+        string _food = "Food: " + food + " (" + turnResource.turnFood + ") ";
+        string _money = "Money: " + money + " (" + turnResource.turnMoney + ") ";
+        string _alloy = "Alloy: " + alloy + " (" + turnResource.turnAlloy + ") ";
+        string _physics = "Physics: " + physics + " (" + turnResource.turnPhysics + ") ";
+        string _sociology = "Sociology: " + sociology + " (" + turnResource.turnSociology + ") ";
+        string _engineering = "Engineering: " + engineering + " (" + turnResource.turnEngineering + ") ";
+
+        return _fuel + _mineral + _food + _money + _alloy + _physics + _sociology + _engineering;
+    }
 }
 
 public enum GlobalResourceType // Only global resources.

@@ -8,7 +8,7 @@ public class Game
     public int month { get; private set; } = 1;
     public int day { get; private set; } = 1;
     public string date => year + "." + month + "." + day;
-    public Resource globalResource = new Resource();
+    public Resource globalResource;
 
     public List<Planet_Inhabitable> colonizedPlanets = new List<Planet_Inhabitable>();
     public List<Planet_Inhabitable> ongoingColonization = new List<Planet_Inhabitable>();
@@ -20,12 +20,16 @@ public class Game
 
     public void AddColonizationSpeedModifier(float v)
     {
-        _colonizationDateModifier += v;
-        
+        _colonizationDateModifier += v;        
     }
-    
-    public float taxRate;
-    public float popFoodUpkeepRate;
+
+    public float taxRate = 1;
+    public float popFoodUpkeepRate = 1;
+
+    public Game()
+    {
+        globalResource = new Resource(this);
+    }
 
     public void IncreaseOneDay()
     {
@@ -69,8 +73,7 @@ public class Game
             _IncreaseOneMonth();
         }
 
-        _ProceedTraining();
-        _ProceedColonization();
+        _OneDayEvents();
     }
 
     private void _IncreaseOneMonth()
@@ -85,11 +88,31 @@ public class Game
             month = 1;
             _IncreaseOneYear();
         }
+
+        _OneMonthEvents();
     }
 
     private void _IncreaseOneYear()
     {
         year++;
+    }
+
+    private void _OneDayEvents()
+    {
+        _ProceedTraining();
+        _ProceedColonization();
+    }
+
+    private void _OneMonthEvents()
+    {
+        //_ProceedPlanetaryGrowth();
+        globalResource.ApplyTurnResource();
+    }
+
+    private void _ProceedPlanetaryGrowth()
+    {
+        foreach (var planet in colonizedPlanets)
+            planet.ProceedGrowth();
     }
 
     private void _ProceedTraining() // Should be called with IncreaseOneDay()

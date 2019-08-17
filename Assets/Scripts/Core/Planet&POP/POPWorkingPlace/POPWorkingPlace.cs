@@ -106,11 +106,6 @@ public abstract class POPWorkingPlace
         return workingPOPList[slotNum].job;
     }
 
-    public POPWorkingSlot GetNthSlot(int slotNum)
-    {
-        return workingPOPList[slotNum];
-    }
-
     public override string ToString()
     {
         string result = "";
