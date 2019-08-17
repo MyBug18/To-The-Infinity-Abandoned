@@ -14,11 +14,11 @@ public class POP
     public (POPWorkingPlace workingPlace, int slotNum) currentWorkingPlace { get; private set; } // Current POP's working place.
     public (POPWorkingPlace workingPlace, int slotNum) futureWorkingPlace { get; set; } // After training ended, POP will move to this place.
 
-    public float happiness => _basicHappiness + _jobHappiness;
+    public float happiness => _basicHappiness + _jobHappinessModifier + additionalHappinessModifier;
 
     private float _basicHappiness => 50;
 
-    private float _jobHappiness { get {
+    private float _jobHappinessModifier { get {
             if (currentWorkingPlace.workingPlace == null) return -20;
             else switch(_IsAptitudeMatching(currentWorkingPlace.workingPlace.GetJobOfWorkingSlot(currentWorkingPlace.slotNum)))
                 {
@@ -29,6 +29,8 @@ public class POP
                 }
         }
     }
+
+    public float additionalHappinessModifier = 0;
 
     public POP(string name, Planet_Inhabitable planet)
     {

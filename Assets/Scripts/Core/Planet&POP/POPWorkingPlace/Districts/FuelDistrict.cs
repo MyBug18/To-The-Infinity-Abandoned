@@ -37,12 +37,19 @@ public class FuelDistrict : District
         yield1.Add(_technicianYield1);
         workingPOPList[1].yields = yield1;
 
-    }
+    }    
 
-    public override void BeforeDemolish()
+    public override void OnDemolishing()
     {
-        base.BeforeDemolish();
+        base.OnDemolishing();
         planet.currentFuelDistrictNum--;
+        planet.housing -= 3;
     }
 
+    public override void OnConstructing()
+    {
+        base.OnConstructing();
+        planet.currentFuelDistrictNum++;
+        planet.housing += 3;
+    }
 }

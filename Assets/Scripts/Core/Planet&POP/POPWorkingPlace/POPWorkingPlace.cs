@@ -7,6 +7,14 @@ using UnityEngine;
 
 public abstract class POPWorkingPlace
 {
+    public POPWorkingPlace(WorkingPlaceType type, Planet_Inhabitable planet)
+    {
+        this.planet = planet;
+
+        this.type = type;
+        OnConstructing();       
+    }
+
     public string name;
 
     public Planet_Inhabitable planet { get; private set; } // The planet where this building is.
@@ -19,7 +27,13 @@ public abstract class POPWorkingPlace
 
     public WorkingPlaceBaseUpkeep baseUpkeep { get; protected set; }
 
-    public bool isDemolishable() // Must be checked before demolishing this.
+    public virtual void OnConstructing()
+    {
+        baseUpkeep = new WorkingPlaceBaseUpkeep(this);
+        planet.planetBaseUpkeeps.Add(baseUpkeep); // Add Upkeep of this building.
+    }
+
+    public virtual bool IsDemolishable() // Must be checked before demolishing this.
     {
         bool result = true;
         for (int i = 0; i < workingPOPSlotNumber; i++)
@@ -30,14 +44,9 @@ public abstract class POPWorkingPlace
         return result;
     }
 
-    public POPWorkingPlace(WorkingPlaceType type, Planet_Inhabitable planet)
+    public virtual void OnDemolishing() // Must be called before demolishing this.
     {
-        this.planet = planet;
-
-        this.type = type;
-
-        baseUpkeep = new WorkingPlaceBaseUpkeep(this);
-        planet.planetBaseUpkeeps.Add(baseUpkeep); // Add Upkeep of this building.
+        planet.planetBaseUpkeeps.Remove(baseUpkeep); // Remove Upkeep of this building.
     }
 
     public virtual void AllocatePOP(POP pop, int slotNum) // Allocates POP with slot number, and Add Upkeeps to Global Modifier.
@@ -95,11 +104,6 @@ public abstract class POPWorkingPlace
     public Job GetJobOfWorkingSlot(int slotNum) // Gets a Job with slot number.
     {
         return workingPOPList[slotNum].job;
-    }
-
-    public virtual void BeforeDemolish() // Must be called before demolishing this.
-    {
-        planet.planetBaseUpkeeps.Remove(baseUpkeep); // Remove Upkeep of this building.
     }
 
     public POPWorkingSlot GetNthSlot(int slotNum)

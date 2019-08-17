@@ -17,10 +17,10 @@ public class Planet_Inhabitable : Planet
 
     public int maxBuildingSlotNum => 12;
 
-    public int housing { get; private set; } = 0;
-    public float stability { get; private set; } = 50;
-    public float crime { get; private set; } = 0;
-    public int amenity { get; private set; } = 0;
+    public int housing = 0;
+    public float stability = 50;
+    public float crime = 0;
+    public int amenity = 0;
 
     public bool isColonized => pops.Count > 1;
 
@@ -130,14 +130,14 @@ public class Planet_Inhabitable : Planet
             trainingPOPs.Remove(pop);
 
         pops.Remove(pop);
-        
+
     }
 
     public void BuildDistrict(DistrictType type)
     {
         districts.Add(WorkingPlaceFactory.BuildDistrict(type, this));
 
-        switch(type)
+        switch (type)
         {
             case DistrictType.Food:
                 currentFoodDistrictNum++;
@@ -151,6 +151,24 @@ public class Planet_Inhabitable : Planet
             case DistrictType.Mineral:
                 currentMineralDistrictNum++;
                 break;
+        }
+    }
+
+    public void DemolishWorkingPlace(POPWorkingPlace workingPlace)
+    {
+        if (!workingPlace.IsDemolishable()) throw new InvalidOperationException("There is a POP occupying a slot!");
+        else
+        {
+            workingPlace.OnDemolishing();
+            if (workingPlace is District)
+            {
+                districts.Remove((District)workingPlace);
+            }
+
+            if (workingPlace is Building)
+            {
+                buildings.Remove((Building)workingPlace);
+            }
         }
     }
 }

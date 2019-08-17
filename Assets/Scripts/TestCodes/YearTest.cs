@@ -16,7 +16,6 @@ public class YearTest : MonoBehaviour
     
     private void Awake()
     {
-        string test = System.IO.File.ReadAllText("Assets\\test.txt");
         game = GameManager.game;
         earth = new Planet_Inhabitable("Earth", 16, game);
         earth.StartColonization();
@@ -52,11 +51,6 @@ public class YearTest : MonoBehaviour
             }
         }
 
-        // 0: Fuel District (Upkeep: 0 - 0.5, 1 - 1)
-        // 1: Mineral District (Upkeep: 0 - 0.5, 1 - 1)
-
-        // 0: POP 0
-        // 1: POP 1
         if (Input.GetKeyDown(KeyCode.V))
             earth.KillPOP(earth.pops[0]);
 
@@ -106,14 +100,7 @@ public class YearTest : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.M))
         {
-            Debug.Log("asdf");
-            string test = JsonConvert.SerializeObject(game, new JsonSerializerSettings()
-            {
-                PreserveReferencesHandling = PreserveReferencesHandling.Objects,
-                Formatting = Formatting.Indented
-            });
-            System.IO.File.WriteAllText("test.txt", test);
-            
+            GameManager.SaveGame();
         }
 
     }

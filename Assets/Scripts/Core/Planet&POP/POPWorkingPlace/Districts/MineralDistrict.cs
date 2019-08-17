@@ -37,6 +37,17 @@ public class MineralDistrict : District
         workingPOPList[1].yields = yield1;
     }
 
+    public override void OnConstructing()
+    {
+        base.OnConstructing();
+        planet.currentMineralDistrictNum++;
+        planet.housing += 3;
+    }
 
-
+    public override void OnDemolishing()
+    {
+        base.OnDemolishing();
+        planet.currentMineralDistrictNum--;
+        planet.housing -= 3;
+    }
 }

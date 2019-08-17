@@ -2,8 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public abstract class Building
+public abstract class Building : POPWorkingPlace
 {
+    public Building(Planet_Inhabitable planet) : base(WorkingPlaceType.Building, planet) { }
+
     public POP[] workingPOP { get; private set; }
     public BuildingType buildingType { get; private set; }
 
