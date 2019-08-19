@@ -5,8 +5,8 @@ public class POPWorkingSlot
 {
     public POP pop;
     public Job job;
-    public List<JobUpkeep> upkeeps;
-    public List<JobYield> yields;
+    public List<JobUpkeep> upkeeps = new List<JobUpkeep>();
+    public List<JobYield> yields = new List<JobYield>();
     public bool isPOPTrainingForHere = false;
     
 }

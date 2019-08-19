@@ -123,7 +123,7 @@ public class Planet_Inhabitable : Planet
             unemployedPOPs.Remove(pop);
         else
         {
-            var workingSlot = pop.currentWorkingPlace.workingPlace.workingPOPList[pop.currentWorkingPlace.slotNum];
+            var workingSlot = pop.currentWorkingPlace.workingPlace.workingPOPSlotList[pop.currentWorkingPlace.slotNum];
             workingSlot.pop = null;
         }
 
@@ -141,22 +141,22 @@ public class Planet_Inhabitable : Planet
             case DistrictType.Food:
                 if (currentFoodDistrictNum >= resourcesDistrictsMaxNum.maxFood) throw new InvalidOperationException("The number of Food District is at max!");
                 currentFoodDistrictNum++;
-                districts.Add(WorkingPlaceFactory.BuildDistrict(type, this));
+                districts.Add(WorkingPlaceFactory.GetDistrict(type, this));
                 break;
             case DistrictType.Fuel:
                 if (currentFuelDistrictNum >= resourcesDistrictsMaxNum.maxFuel) throw new InvalidOperationException("The number of Fuel District is at max!");
                 currentFuelDistrictNum++;
-                districts.Add(WorkingPlaceFactory.BuildDistrict(type, this));
+                districts.Add(WorkingPlaceFactory.GetDistrict(type, this));
                 break;
             case DistrictType.House:
                 if (currentHouseDistrictNum >= resourcesDistrictsMaxNum.maxFood) throw new InvalidOperationException("The number of House District is at max!");
                 currentHouseDistrictNum++;
-                districts.Add(WorkingPlaceFactory.BuildDistrict(type, this));
+                districts.Add(WorkingPlaceFactory.GetDistrict(type, this));
                 break;
             case DistrictType.Mineral:
                 if (currentMineralDistrictNum >= resourcesDistrictsMaxNum.maxMineral) throw new InvalidOperationException("The number of Mineral District is at max!");
                 currentMineralDistrictNum++;
-                districts.Add(WorkingPlaceFactory.BuildDistrict(type, this));
+                districts.Add(WorkingPlaceFactory.GetDistrict(type, this));
                 break;
         }
     }

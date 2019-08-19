@@ -7,7 +7,7 @@ using UnityEngine;
 
 public abstract class POPWorkingPlace
 {
-    public POPWorkingPlace(WorkingPlaceType type, Planet_Inhabitable planet)
+    protected POPWorkingPlace(WorkingPlaceType type, Planet_Inhabitable planet)
     {
         this.planet = planet;
 
@@ -21,7 +21,7 @@ public abstract class POPWorkingPlace
     
     public int workingPOPSlotNumber { get; protected set; }
 
-    public POPWorkingSlot[] workingPOPList { get; protected set; }
+    public POPWorkingSlot[] workingPOPSlotList { get; protected set; }
 
     public WorkingPlaceType type { get; private set; }
 
@@ -38,7 +38,7 @@ public abstract class POPWorkingPlace
         bool result = true;
         for (int i = 0; i < workingPOPSlotNumber; i++)
         {
-            if (workingPOPList[i].pop != null)
+            if (workingPOPSlotList[i].pop != null)
                 result = false;
         }
         return result;
@@ -49,36 +49,43 @@ public abstract class POPWorkingPlace
         planet.planetBaseUpkeeps.Remove(baseUpkeep); // Remove Upkeep of this building.
     }
 
-    public virtual void AllocatePOP(POP pop, int slotNum) // Allocates POP with slot number, and Add Upkeeps to Global Modifier.
+    public void AllocatePOP(POP pop, int slotNum) // Allocates POP with slot number, and Add Upkeeps to Global Modifier.
     {
-        workingPOPList[slotNum].isPOPTrainingForHere = false;
-        Debug.Log("Allocating " + pop.name + " to " + slotNum + "th slot of " + name + " as " + workingPOPList[slotNum].job);
-        workingPOPList[slotNum].pop = pop;
+        workingPOPSlotList[slotNum].isPOPTrainingForHere = false;
+        Debug.Log("Allocating " + pop.name + " to " + slotNum + "th slot of " + name + " as " + workingPOPSlotList[slotNum].job);
+        workingPOPSlotList[slotNum].pop = pop;
 
-        foreach (var upkeep in workingPOPList[slotNum].upkeeps)
+        foreach (var upkeep in workingPOPSlotList[slotNum].upkeeps)
         {
             upkeep.pop = pop;
             planet.planetJobUpkeeps.Add(upkeep);
         }
 
-        foreach (var yield in workingPOPList[slotNum].yields)
+        foreach (var yield in workingPOPSlotList[slotNum].yields)
         {
             yield.pop = pop;
             planet.planetJobYields.Add(yield);
         }
 
-        Debug.Log(this);
+        switch (workingPOPSlotList[slotNum].job)
+        {
+            case Job.Administrator:
+                planet.stability += 5;
+                planet.amenity += 5;
+                break;
+        }
+
     }
 
-    public virtual void MovePOPJob(int fromSlotNum, POPWorkingPlace workingPlace, int toSlotNum) // Removes POPs from the slot, puts it in the training list, and remove Upkeeps.
+    public void MovePOPJob(int fromSlotNum, POPWorkingPlace workingPlace, int toSlotNum) // Removes POPs from the slot, puts it in the training list, and remove Upkeeps.
     {
-        if (workingPlace.workingPOPList[toSlotNum].pop != null)
+        if (workingPlace.workingPOPSlotList[toSlotNum].pop != null)
             throw new InvalidOperationException("Trying to move to already occupied slot!");
 
-        if (workingPlace.workingPOPList[toSlotNum].isPOPTrainingForHere)
+        if (workingPlace.workingPOPSlotList[toSlotNum].isPOPTrainingForHere)
             throw new InvalidOperationException("Someone is already training for there!");
 
-        POPWorkingSlot slot = workingPOPList[fromSlotNum];
+        POPWorkingSlot slot = workingPOPSlotList[fromSlotNum];
 
         if (slot.pop == null) throw new InvalidOperationException("Trying to move pop which doesn't exist! (On " + planet.name + ", " + fromSlotNum + "th slot of " + name + ")");
 
@@ -90,20 +97,28 @@ public abstract class POPWorkingPlace
             planet.planetJobUpkeeps.Remove(upkeep);
         }
 
-        foreach (var yield in workingPOPList[fromSlotNum].yields)
+        foreach (var yield in workingPOPSlotList[fromSlotNum].yields)
         {
             yield.pop = null;
             planet.planetJobYields.Remove(yield);
         }
 
-        workingPOPList[fromSlotNum].pop = null;
+        workingPOPSlotList[fromSlotNum].pop = null;
+
+        switch(workingPOPSlotList[fromSlotNum].job)
+        {
+            case Job.Administrator:
+                planet.stability -= 5;
+                planet.amenity -= 5;
+                break;
+        }
         
         pop.StartTraining(workingPlace, toSlotNum);
     }
 
     public Job GetJobOfWorkingSlot(int slotNum) // Gets a Job with slot number.
     {
-        return workingPOPList[slotNum].job;
+        return workingPOPSlotList[slotNum].job;
     }
 
     public override string ToString()
@@ -113,7 +128,7 @@ public abstract class POPWorkingPlace
 
         for(int i = 0; i < workingPOPSlotNumber; i++)
         {
-            var slot = workingPOPList[i];
+            var slot = workingPOPSlotList[i];
             if (slot.pop != null)
             {
                 string upkeepStatus = " Upkeeps: ";
@@ -134,10 +149,11 @@ public abstract class POPWorkingPlace
     protected void InitiallizePOPWorkingList(int n)
     {
         workingPOPSlotNumber = n;
-        workingPOPList = new POPWorkingSlot[workingPOPSlotNumber];
+        workingPOPSlotList = new POPWorkingSlot[workingPOPSlotNumber];
         for (int i = 0; i < workingPOPSlotNumber; i++)
-            workingPOPList[i] = new POPWorkingSlot();
+            workingPOPSlotList[i] = new POPWorkingSlot();
     }
+    
 }
 
 public enum WorkingPlaceType

@@ -54,10 +54,10 @@ public class POP
     
     public void ActivatePOP(POPWorkingPlace workingPlace, int slotNum) // Activate just created POP, which must be unemployed
     {
-        if (workingPlace.workingPOPList[slotNum].pop != null)
+        if (workingPlace.workingPOPSlotList[slotNum].pop != null)
             throw new InvalidOperationException("Trying to move to already occupied slot!");
 
-        if (workingPlace.workingPOPList[slotNum].isPOPTrainingForHere)
+        if (workingPlace.workingPOPSlotList[slotNum].isPOPTrainingForHere)
             throw new InvalidOperationException("Someone is already training for there!");
 
         if (!isUnemployed) throw new InvalidOperationException("Trying to activate employed POP!");
@@ -72,7 +72,7 @@ public class POP
     {
         if (isTraining) throw new InvalidOperationException("Trying to train POP already training!");
 
-        workingPlace.workingPOPList[slotNum].isPOPTrainingForHere = true;
+        workingPlace.workingPOPSlotList[slotNum].isPOPTrainingForHere = true;
 
         Debug.Log("Start Training: " + slotNum + "th slot of " + workingPlace.name); // mineral, 1
 
