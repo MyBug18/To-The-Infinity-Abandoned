@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,14 +13,21 @@ public class Planet_Inhabitable : Planet
         {
             features.Add((PlanetaryFeature)(r.Next() % 6));
         }
+        BuildBuilding(BuildingType.ColonizationCenter);
     }
 
     public int maxBuildingSlotNum => 12;
 
     public int housing = 0;
-    public float stability = 50;
-    public float crime = 0;
     public int amenity = 0;
+
+    private float _baseStability => pops.Average(pop => pop.happiness);
+    public float stabilityModifier = 0;
+    public float stability => _baseStability + stabilityModifier;
+
+    private float _crimeByPOP => pops.Count;
+    public float crimeReducedByEnforcer = 0;
+    public float crime => _crimeByPOP - crimeReducedByEnforcer;
 
     public bool isColonized => pops.Count > 1;
 
@@ -37,7 +44,7 @@ public class Planet_Inhabitable : Planet
     public List<JobYield> planetJobYields = new List<JobYield>();
 
     public float currentPOPGrowth = 0;
-    private float _basePOPGrowth => 56;
+    private float _basePOPGrowth => pops.Count > 0 ? 5 : 0;
     public float POPGrowthModifier = 1;
     public float POPGrowthRate => _basePOPGrowth * POPGrowthModifier;
 
@@ -161,6 +168,18 @@ public class Planet_Inhabitable : Planet
         }
     }
 
+    public void BuildBuilding(BuildingType type)
+    {
+        switch(type)
+        {
+            case BuildingType.ColonizationCenter:
+                buildings.Add(WorkingPlaceFactory.GetBuilding(BuildingType.ColonizationCenter, this));
+                break;
+            default:
+                throw new NotImplementedException("Wait");
+        }
+    }
+
     public void DemolishWorkingPlace(POPWorkingPlace workingPlace)
     {
         if (!workingPlace.IsDemolishable()) throw new InvalidOperationException("There is a POP occupying a slot!");
@@ -187,6 +206,21 @@ public class Planet_Inhabitable : Planet
             currentPOPGrowth -= 100;
             BirthPOP();
         }
+    }
+
+    public override string ToString()
+    {
+        string basic =  base.ToString();
+        string values = "Housing : " + housing + ", Amenity: " + amenity + ", Crime: " + crime + ", Stability: " + stability + "\n";
+
+        string _districts = "Districts:\n";
+        foreach (var d in districts)
+            _districts += d.name + "\n";
+
+        string _buildings = "Buildings:\n";
+        foreach (var b in buildings)
+            _buildings += b.name + "\n";
+        return basic + values + _districts + _buildings;
     }
 }
 

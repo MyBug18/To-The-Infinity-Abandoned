@@ -6,8 +6,10 @@ public class ColonizationCenter : Building, IUpgradable
 {
     public ColonizationCenter(Planet_Inhabitable planet) : base(planet, 1f)
     {
+        name = "Colonization Center";
+
         buildingType = BuildingType.ColonizationCenter;
-        InitiallizePOPWorkingList(5);
+        InitiallizePOPWorkingList(6);
 
         workingPOPSlotList[0].upkeeps.Add(new JobUpkeep((GlobalResourceType.Money, 0.5f), null)); // Initiallize Technician job slot.
         workingPOPSlotList[0].yields.Add(new JobYield((GlobalResourceType.Fuel, 1.5f), null));
@@ -72,6 +74,7 @@ public class ColonizationCenter : Building, IUpgradable
 
         Array.Sort(workingPOPSlotList, (POPWorkingSlot a, POPWorkingSlot b) => a.job.CompareTo(b.job));
 
+        name = "Planetary Capital";
         buildingType = BuildingType.PlanetaryCapital;
     }
 }

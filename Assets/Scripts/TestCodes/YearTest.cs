@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
+using System.Linq;
 
 public class YearTest : MonoBehaviour
 {
@@ -78,11 +80,11 @@ public class YearTest : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F))
             foreach (var u in earth.planetJobUpkeeps)
-                Debug.Log(u);        
+                Debug.Log(u);
 
         if (Input.GetKeyDown(KeyCode.D))
-            for(int i = 0; i < 2; i++)
-                Debug.Log(earth.districts[i]);
+            foreach (var d in earth.districts)
+                Debug.Log(d.name);
 
         if (Input.GetKeyDown(KeyCode.S))
             foreach (var p in earth.pops)
@@ -100,6 +102,10 @@ public class YearTest : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
             Debug.Log(game.globalResource);
+
+        if (Input.GetKeyDown(KeyCode.W))
+            foreach (var b in earth.buildings)
+                Debug.Log(b.name);
 
         if (Input.GetKeyDown(KeyCode.M))
         {

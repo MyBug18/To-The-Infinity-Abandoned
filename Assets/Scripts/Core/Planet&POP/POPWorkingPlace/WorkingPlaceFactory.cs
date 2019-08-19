@@ -18,4 +18,15 @@ public static class WorkingPlaceFactory
                 throw new NotImplementedException("Wait");
         }
     }
+
+    public static Building GetBuilding(BuildingType type, Planet_Inhabitable planet)
+    {
+        switch(type)
+        {
+            case BuildingType.ColonizationCenter:
+                return new ColonizationCenter(planet);
+            default:
+                throw new NotImplementedException("Wait");
+        }
+    }
 }

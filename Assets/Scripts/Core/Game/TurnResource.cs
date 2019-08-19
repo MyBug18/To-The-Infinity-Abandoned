@@ -55,7 +55,6 @@ public class TurnResource
 
     private void _ApplyOneModifier(GlobalResourceModifiers grm)
     {
-        Debug.Log("Currently Applying:" + grm);
         var (_type, _amount) = grm.value;
 
         float amount;
@@ -63,9 +62,7 @@ public class TurnResource
         if (grm.modifierType == ModifierType.Upkeep)
             amount = -_amount;
         else
-            amount = _amount;
-
-        Debug.Log(_type + " " + amount);
+            amount = _amount;       
 
         switch(_type)
         {

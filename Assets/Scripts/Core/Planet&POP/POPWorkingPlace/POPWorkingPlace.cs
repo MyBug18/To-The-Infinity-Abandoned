@@ -70,8 +70,15 @@ public abstract class POPWorkingPlace
         switch (workingPOPSlotList[slotNum].job)
         {
             case Job.Administrator:
-                planet.stability += 5;
+                planet.stabilityModifier += 5;
                 planet.amenity += 5;
+                break;
+            case Job.Admiral:
+                planet.game.fleetNum++;
+                break;
+            case Job.Enforcer:
+                planet.crimeReducedByEnforcer += 30;
+                planet.stabilityModifier += 2;
                 break;
         }
 
@@ -108,8 +115,15 @@ public abstract class POPWorkingPlace
         switch(workingPOPSlotList[fromSlotNum].job)
         {
             case Job.Administrator:
-                planet.stability -= 5;
+                planet.stabilityModifier -= 5;
                 planet.amenity -= 5;
+                break;
+            case Job.Admiral:
+                planet.game.fleetNum--;
+                break;
+            case Job.Enforcer:
+                planet.crimeReducedByEnforcer -= 30;
+                planet.stabilityModifier -= 2;
                 break;
         }
         

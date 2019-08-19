@@ -18,13 +18,10 @@ public class Game
 
     public int colonizationDate => (int)(_baseColonizationDate * _colonizationDateModifier);
 
-    public void AddColonizationSpeedModifier(float v)
-    {
-        _colonizationDateModifier += v;        
-    }
-
     public float taxRate = 1;
     public float popFoodUpkeepRate = 1;
+
+    public int fleetNum = 1;
 
     public Game()
     {
@@ -154,6 +151,11 @@ public class Game
 
         foreach (var planet in toRemoveFromColonizationList)
             ongoingColonization.Remove(planet);
+    }
+
+    public void AddColonizationSpeedModifier(float v)
+    {
+        _colonizationDateModifier += v;
     }
 }
 
