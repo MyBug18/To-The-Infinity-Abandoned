@@ -10,14 +10,13 @@ public class MineralDistrict : District
         name = "Mineral District";
 
         districtType = DistrictType.Mineral;
-        workingPOPSlotNumber = 2;
-        InitiallizePOPWorkingList();
+        InitiallizePOPWorkingList(2);
 
         workingPOPList[0].job = Job.Miner;
         workingPOPList[1].job = Job.Miner;
 
         List<JobUpkeep> upkeeps0 = new List<JobUpkeep>();
-        JobUpkeep _minerUpkeep0 = new JobUpkeep((GlobalResourceType.Mineral, 0.5f), null);
+        JobUpkeep _minerUpkeep0 = new JobUpkeep((GlobalResourceType.Money, 0.5f), null);
         upkeeps0.Add(_minerUpkeep0);
         workingPOPList[0].upkeeps = upkeeps0;
 

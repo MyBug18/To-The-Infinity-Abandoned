@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-
-public abstract class District : POPWorkingPlace
+﻿public abstract class District : POPWorkingPlace
 {
     public DistrictType districtType { get; protected set; }
     
@@ -15,5 +11,5 @@ public abstract class District : POPWorkingPlace
 
 public enum DistrictType
 {
-    Fuel, Mineral, Food, Housing
+    Fuel, Mineral, Food, House
 }

@@ -10,8 +10,7 @@ public class FuelDistrict : District
         name = "Fuel District";
 
         districtType = DistrictType.Fuel;
-        workingPOPSlotNumber = 2;
-        InitiallizePOPWorkingList();
+        InitiallizePOPWorkingList(2);
 
         workingPOPList[0].job = Job.Technician;
         workingPOPList[1].job = Job.Technician;
@@ -28,12 +27,12 @@ public class FuelDistrict : District
 
 
         List<JobYield> yield0 = new List<JobYield>();
-        JobYield _technicianYield0 = new JobYield((GlobalResourceType.Fuel, 1.5f), null);
+        JobYield _technicianYield0 = new JobYield((GlobalResourceType.Food, 1.5f), null);
         yield0.Add(_technicianYield0);
         workingPOPList[0].yields = yield0;
 
         List<JobYield> yield1 = new List<JobYield>();
-        JobYield _technicianYield1 = new JobYield((GlobalResourceType.Fuel, 1.5f), null);
+        JobYield _technicianYield1 = new JobYield((GlobalResourceType.Food, 1.5f), null);
         yield1.Add(_technicianYield1);
         workingPOPList[1].yields = yield1;
 

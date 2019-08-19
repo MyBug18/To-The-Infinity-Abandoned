@@ -148,7 +148,7 @@ public class Planet_Inhabitable : Planet
                 currentFuelDistrictNum++;
                 districts.Add(WorkingPlaceFactory.BuildDistrict(type, this));
                 break;
-            case DistrictType.Housing:
+            case DistrictType.House:
                 if (currentHouseDistrictNum >= resourcesDistrictsMaxNum.maxFood) throw new InvalidOperationException("The number of House District is at max!");
                 currentHouseDistrictNum++;
                 districts.Add(WorkingPlaceFactory.BuildDistrict(type, this));

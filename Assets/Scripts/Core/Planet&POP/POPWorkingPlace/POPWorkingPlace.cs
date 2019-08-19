@@ -131,8 +131,9 @@ public abstract class POPWorkingPlace
         return result;
     }
 
-    protected void InitiallizePOPWorkingList()
+    protected void InitiallizePOPWorkingList(int n)
     {
+        workingPOPSlotNumber = n;
         workingPOPList = new POPWorkingSlot[workingPOPSlotNumber];
         for (int i = 0; i < workingPOPSlotNumber; i++)
             workingPOPList[i] = new POPWorkingSlot();
