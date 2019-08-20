@@ -180,7 +180,7 @@ public class Planet_Inhabitable : Planet
 
     public void StartConstruction(BuildingType type, Building fromUpgrade = null)
     {
-        ongoingConstruction.Add(new ConstructionQueueElement(true, (int)type, (int)(WorkingPlaceFactory.GetConstructionTime(type) / game.constructionTimeModifier), fromUpgrade));
+        ongoingConstruction.Add(new ConstructionQueueElement(true, (int)type, WorkingPlaceFactory.GetConstructionTime(type), fromUpgrade));
     }
 
     public void StartConstruction(DistrictType type)
@@ -188,7 +188,7 @@ public class Planet_Inhabitable : Planet
         if (!IsDistrictBuildable(type)) throw new InvalidOperationException(type + " District is already at max number!");
 
         Debug.Log("StartConstruction");
-        ongoingConstruction.Add(new ConstructionQueueElement(false, (int)type, (int)(WorkingPlaceFactory.GetConstructionTime(type) / game.constructionTimeModifier), null));
+        ongoingConstruction.Add(new ConstructionQueueElement(false, (int)type, WorkingPlaceFactory.GetConstructionTime(type), null));
     }
 
     public void StartUpgrade(Building fromUpgrade)
@@ -196,7 +196,8 @@ public class Planet_Inhabitable : Planet
         if (!((IUpgradable)fromUpgrade).IsUpgradable()) throw new InvalidOperationException("This building has not met the upgrade condition!");
         if (!(fromUpgrade is IUpgradable)) throw new InvalidOperationException("This building is not upgradable!");
 
-        ongoingConstruction.Add(new ConstructionQueueElement(true, (int)(fromUpgrade.type + 1),(int)(WorkingPlaceFactory.GetConstructionTime((BuildingType)((int)(fromUpgrade.type) + 1)) / game.constructionTimeModifier), fromUpgrade));
+        ongoingConstruction.Add(new ConstructionQueueElement(true, (int)(fromUpgrade.type + 1), 
+            WorkingPlaceFactory.GetConstructionTime((BuildingType)((int)(fromUpgrade.type) + 1)), fromUpgrade)); // Every upgraded BuildingType is bigger by 1 than a previous one.
     }
 
     public void ProceedConstruction()

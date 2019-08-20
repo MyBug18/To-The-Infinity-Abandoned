@@ -32,16 +32,20 @@ public static class WorkingPlaceFactory
 
     public static int GetConstructionTime(BuildingType type)
     {
+        int result;
         switch(type)
         {
             case BuildingType.ColonizationCenter:
-                return 0;
+                result = 0;
+                break;
             case BuildingType.PlanetaryCapital:
-                return 480;
+                result = 480;
+                break;
             case BuildingType.AlloySmelter:
             case BuildingType.HouseOfWisdom:
             case BuildingType.GovernmentHall:
-                return 240;
+                result = 240;
+                break;
             case BuildingType.AlloyFoundry:
             case BuildingType.ResearchLab:
             case BuildingType.PlanetaryMarket:
@@ -50,71 +54,89 @@ public static class WorkingPlaceFactory
             case BuildingType.CommandCenter:
             case BuildingType.BioPlant:
             case BuildingType.MineralExtractor:
-                return 360;
+                result = 360;
+                break;
             case BuildingType.PoliceStation:
             case BuildingType.ControlTower:
-                return 180;
+                result = 180;
+                break;
             default:
                 throw new InvalidOperationException("Invalid building type detected.");
         }
+        return (int)(result / GameManager.game.constructionTimeModifier);
     }
 
     public static int GetConstructionTime(DistrictType type)
     {
+        int result;
         switch(type)
         {
             case DistrictType.Food:
             case DistrictType.Fuel:
             case DistrictType.Mineral:
-                return 180;
+                result = 180;
+                break;
             case DistrictType.House:
-                return 240;
+                result = 240;
+                break;
             default:
                 throw new InvalidOperationException("Invalid district type detected!");
         }
+        return (int)(result / GameManager.game.constructionTimeModifier);
     }
 
     public static int GetContructionCost(BuildingType type)
     {
+        int result;
         switch(type)
         {
             case BuildingType.ColonizationCenter:
-                return 0;
+                result = 0;
+                break;
             case BuildingType.PlanetaryCapital:
-                return 1000;
+                result = 1000;
+                break;
             case BuildingType.AlloySmelter:
             case BuildingType.HouseOfWisdom:
             case BuildingType.GovernmentHall:
             case BuildingType.PoliceStation:
             case BuildingType.ControlTower:
-                return 200;
+                result = 200;
+                break;
             case BuildingType.AlloyFoundry:
             case BuildingType.ResearchLab:
             case BuildingType.PlanetaryCommHub:
-                return 500;
+                result = 500;
+                break;
             case BuildingType.PlanetaryMarket:
             case BuildingType.CommandCenter:
             case BuildingType.FleetTrainingCenter:
             case BuildingType.BioPlant:
             case BuildingType.MineralExtractor:
-                return 300;
+                result = 300;
+                break;
             default:
                 throw new InvalidOperationException("Invalid BuildingType detected!");
         }
+        return (int)(result / GameManager.game.constructionCostModifier);
     }
 
     public static int GetConstructionCost(DistrictType type)
     {
+        int result;
         switch(type)
         {
             case DistrictType.Food:
             case DistrictType.Fuel:
             case DistrictType.Mineral:
-                return 150;
+                result = 150;
+                break;
             case DistrictType.House:
-                return 200;
+                result = 200;
+                break;
             default:
                 throw new InvalidOperationException("Invalid DistrictType detected!");
         }
+        return (int)(result / GameManager.game.constructionCostModifier);
     }
 }
