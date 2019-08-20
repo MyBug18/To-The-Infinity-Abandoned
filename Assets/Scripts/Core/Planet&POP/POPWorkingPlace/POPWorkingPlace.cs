@@ -17,6 +17,8 @@ public abstract class POPWorkingPlace
 
     public string name;
 
+    public int buildingCost;
+
     public Planet_Inhabitable planet { get; private set; } // The planet where this building is.
     
     public int workingPOPSlotNumber { get; protected set; }
@@ -80,6 +82,9 @@ public abstract class POPWorkingPlace
                 planet.crimeReducedByEnforcer += 30;
                 planet.stabilityModifier += 2;
                 break;
+            case Job.Clerk:
+                planet.amenity += 3;
+                break;
         }
 
     }
@@ -124,6 +129,9 @@ public abstract class POPWorkingPlace
             case Job.Enforcer:
                 planet.crimeReducedByEnforcer -= 30;
                 planet.stabilityModifier -= 2;
+                break;
+            case Job.Clerk:
+                planet.amenity -= 3;
                 break;
         }
         

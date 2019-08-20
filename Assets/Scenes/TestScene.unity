@@ -801,7 +801,9 @@ MonoBehaviour:
 
     R: All Job Yields
 
-    E: All Resources'
+    E: All Resources
+
+    Q: Earth'
 --- !u!222 &1675812273
 CanvasRenderer:
   m_ObjectHideFlags: 0

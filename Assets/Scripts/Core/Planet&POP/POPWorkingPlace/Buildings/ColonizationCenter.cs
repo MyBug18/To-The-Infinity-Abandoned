@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 
 public class ColonizationCenter : Building, IUpgradable
 {
@@ -43,7 +41,11 @@ public class ColonizationCenter : Building, IUpgradable
 
     public void Upgrade()
     {
+        if (!IsUpgradable()) throw new InvalidOperationException("The upgrade condition is not met!");
+
         POPWorkingSlot[] newArray = new POPWorkingSlot[12];
+        for (int i = 0; i < newArray.Length; i++)
+            newArray[i] = new POPWorkingSlot();
 
         for (int i = 0; i < workingPOPSlotList.Length; i++)
             newArray[i] = workingPOPSlotList[i];
@@ -76,5 +78,11 @@ public class ColonizationCenter : Building, IUpgradable
 
         name = "Planetary Capital";
         buildingType = BuildingType.PlanetaryCapital;
+        baseUpkeep.amount = 3;
+    }
+
+    public int GetUpgradeCost()
+    {
+        return 1000;
     }
 }

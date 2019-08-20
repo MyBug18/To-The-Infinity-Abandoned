@@ -73,7 +73,7 @@ public class YearTest : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Y))
         {
-
+            earth.pops[0].ActivatePOP(earth.buildings[0], 5);
         }
 
 
@@ -107,10 +107,17 @@ public class YearTest : MonoBehaviour
             foreach (var b in earth.buildings)
                 Debug.Log(b.name);
 
+        if (Input.GetKeyDown(KeyCode.Q))
+            Debug.Log(earth);
+
         if (Input.GetKeyDown(KeyCode.M))
         {
-            GameManager.SaveGame();
+            for (int i = 0; i < 50; i++)
+                earth.BirthPOP();
         }
+
+        if (Input.GetKeyDown(KeyCode.N))
+            ((ColonizationCenter)(earth.buildings[0])).Upgrade();
 
     }
 

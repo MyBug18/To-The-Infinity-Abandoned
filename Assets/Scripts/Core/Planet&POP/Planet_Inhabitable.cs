@@ -13,7 +13,6 @@ public class Planet_Inhabitable : Planet
         {
             features.Add((PlanetaryFeature)(r.Next() % 6));
         }
-        BuildBuilding(BuildingType.ColonizationCenter);
     }
 
     public int maxBuildingSlotNum => 12;
@@ -106,9 +105,8 @@ public class Planet_Inhabitable : Planet
 
     public void EndColonization()
     {
-        Debug.Log("Colonization Ended");
         BirthPOP();
-        // build planetary capital.
+        BuildBuilding(BuildingType.ColonizationCenter);
     }
 
     public void BirthPOP()
@@ -170,14 +168,7 @@ public class Planet_Inhabitable : Planet
 
     public void BuildBuilding(BuildingType type)
     {
-        switch(type)
-        {
-            case BuildingType.ColonizationCenter:
-                buildings.Add(WorkingPlaceFactory.GetBuilding(BuildingType.ColonizationCenter, this));
-                break;
-            default:
-                throw new NotImplementedException("Wait");
-        }
+        buildings.Add(WorkingPlaceFactory.GetBuilding(type, this));
     }
 
     public void DemolishWorkingPlace(POPWorkingPlace workingPlace)

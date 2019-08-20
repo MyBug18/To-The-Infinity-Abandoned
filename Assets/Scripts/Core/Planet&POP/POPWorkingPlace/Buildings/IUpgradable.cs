@@ -2,4 +2,5 @@
 {
     bool IsUpgradable();
     void Upgrade();
+    int GetUpgradeCost();
 }
