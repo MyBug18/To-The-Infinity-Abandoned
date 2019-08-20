@@ -552,7 +552,9 @@ MonoBehaviour:
 
     K: Kill the first POP
 
-    T: Build Fuel&Mineral districts.'
+    T: Start constructing Fuel district.
+
+    H: Upgrade Colonization Center'
 --- !u!222 &1230940693
 CanvasRenderer:
   m_ObjectHideFlags: 0

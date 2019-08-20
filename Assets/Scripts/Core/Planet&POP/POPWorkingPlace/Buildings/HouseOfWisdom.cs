@@ -6,7 +6,6 @@ public class HouseOfWisdom : Building, IUpgradable
     {
         name = "House of Wisdom";
         buildingType = BuildingType.HouseOfWisdom;
-        buildingCost = 200;
 
         workingPOPSlotList[0].upkeeps.Add(new JobUpkeep((GlobalResourceType.Money, 1.5f), null)); // Initiallize Technician job slot.
         workingPOPSlotList[0].yields.Add(new JobYield((GlobalResourceType.Physics, 4f), null));

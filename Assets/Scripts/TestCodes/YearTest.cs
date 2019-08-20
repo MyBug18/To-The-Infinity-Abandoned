@@ -52,29 +52,22 @@ public class YearTest : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.V))
+        if (Input.GetKeyDown(KeyCode.K))
             earth.KillPOP(earth.pops[0]);
 
         if (Input.GetKeyDown(KeyCode.G))
         {
             earth.BirthPOP();
-        }
+        }       
 
         if (Input.GetKeyDown(KeyCode.T))
         {
-            earth.BuildDistrict(DistrictType.Fuel);
-            earth.BuildDistrict(DistrictType.Mineral);
+            earth.StartConstruction(DistrictType.Fuel);
         }
 
         if (Input.GetKeyDown(KeyCode.H))
-        {
-            earth.pops[0].ActivatePOP(earth.districts[0], 0);
-        }
+            earth.StartUpgrade(earth.buildings[0]);
 
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            earth.pops[0].ActivatePOP(earth.buildings[0], 5);
-        }
 
 
 
@@ -116,8 +109,6 @@ public class YearTest : MonoBehaviour
                 earth.BirthPOP();
         }
 
-        if (Input.GetKeyDown(KeyCode.N))
-            ((ColonizationCenter)(earth.buildings[0])).Upgrade();
 
     }
 

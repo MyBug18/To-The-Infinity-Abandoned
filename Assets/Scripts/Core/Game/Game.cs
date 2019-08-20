@@ -23,6 +23,9 @@ public class Game
 
     public int fleetNum = 1;
 
+    public float constructionTimeModifier = 10;
+    public float constructionCostModifier = 1;
+
     public Game()
     {
         globalResource = new Resource(this);
@@ -98,6 +101,7 @@ public class Game
     {
         _ProceedTraining();
         _ProceedColonization();
+        _ProceedPlanetaryConstruction();
     }
 
     private void _OneMonthEvents()
@@ -151,6 +155,12 @@ public class Game
 
         foreach (var planet in toRemoveFromColonizationList)
             ongoingColonization.Remove(planet);
+    }
+
+    private void _ProceedPlanetaryConstruction()
+    {
+        foreach (var planet in colonizedPlanets)
+            planet.ProceedConstruction();
     }
 
     public void AddColonizationSpeedModifier(float v)

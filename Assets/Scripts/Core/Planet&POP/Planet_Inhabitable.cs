@@ -34,6 +34,8 @@ public class Planet_Inhabitable : Planet
     public List<District> districts { get; private set; } = new List<District>();
     public List<PlanetaryFeature> features { get; private set; } = new List<PlanetaryFeature>();
 
+    public List<ConstructionQueueElement> ongoingConstruction = new List<ConstructionQueueElement>();
+
     public List<POP> pops = new List<POP>();
     public List<POP> unemployedPOPs = new List<POP>();
     public List<POP> trainingPOPs = new List<POP>();
@@ -106,7 +108,7 @@ public class Planet_Inhabitable : Planet
     public void EndColonization()
     {
         BirthPOP();
-        BuildBuilding(BuildingType.ColonizationCenter);
+        _BuildBuilding(BuildingType.ColonizationCenter);
     }
 
     public void BirthPOP()
@@ -139,36 +141,97 @@ public class Planet_Inhabitable : Planet
 
     }
 
-    public void BuildDistrict(DistrictType type)
+    public bool IsDistrictBuildable(DistrictType type)
     {
-        switch (type)
+        bool result;
+        switch(type)
         {
             case DistrictType.Food:
-                if (currentFoodDistrictNum >= resourcesDistrictsMaxNum.maxFood) throw new InvalidOperationException("The number of Food District is at max!");
-                currentFoodDistrictNum++;
-                districts.Add(WorkingPlaceFactory.GetDistrict(type, this));
+                if (availableFoodDistrictNum <= 0) result = false;
+                else result = true;
                 break;
             case DistrictType.Fuel:
-                if (currentFuelDistrictNum >= resourcesDistrictsMaxNum.maxFuel) throw new InvalidOperationException("The number of Fuel District is at max!");
-                currentFuelDistrictNum++;
-                districts.Add(WorkingPlaceFactory.GetDistrict(type, this));
+                if (availableFuelDistrictNum <= 0) result = false;
+                else result = true;
                 break;
             case DistrictType.House:
-                if (currentHouseDistrictNum >= resourcesDistrictsMaxNum.maxFood) throw new InvalidOperationException("The number of House District is at max!");
-                currentHouseDistrictNum++;
-                districts.Add(WorkingPlaceFactory.GetDistrict(type, this));
+                if (availableHouseDistrictNum <= 0) result = false;
+                else result = true;
                 break;
             case DistrictType.Mineral:
-                if (currentMineralDistrictNum >= resourcesDistrictsMaxNum.maxMineral) throw new InvalidOperationException("The number of Mineral District is at max!");
-                currentMineralDistrictNum++;
-                districts.Add(WorkingPlaceFactory.GetDistrict(type, this));
+                if (availableMineralDistrictNum <= 0) result = false;
+                else result = true;
                 break;
+            default: throw new InvalidOperationException("Invalid DistrictType detected!");
+        }
+
+        return result;
+    }
+
+    private void _BuildDistrict(DistrictType type)
+    {
+       districts.Add(WorkingPlaceFactory.GetDistrict(type, this));
+    }
+
+    private void _BuildBuilding(BuildingType type)
+    {
+        buildings.Add(WorkingPlaceFactory.GetBuilding(type, this));
+    }
+
+    public void StartConstruction(BuildingType type, Building fromUpgrade = null)
+    {
+        ongoingConstruction.Add(new ConstructionQueueElement(true, (int)type, (int)(WorkingPlaceFactory.GetConstructionTime(type) / game.constructionTimeModifier), fromUpgrade));
+    }
+
+    public void StartConstruction(DistrictType type)
+    {
+        if (!IsDistrictBuildable(type)) throw new InvalidOperationException(type + " District is already at max number!");
+
+        Debug.Log("StartConstruction");
+        ongoingConstruction.Add(new ConstructionQueueElement(false, (int)type, (int)(WorkingPlaceFactory.GetConstructionTime(type) / game.constructionTimeModifier), null));
+    }
+
+    public void StartUpgrade(Building fromUpgrade)
+    {
+        if (!((IUpgradable)fromUpgrade).IsUpgradable()) throw new InvalidOperationException("This building has not met the upgrade condition!");
+        if (!(fromUpgrade is IUpgradable)) throw new InvalidOperationException("This building is not upgradable!");
+
+        ongoingConstruction.Add(new ConstructionQueueElement(true, (int)(fromUpgrade.type + 1),(int)(WorkingPlaceFactory.GetConstructionTime((BuildingType)((int)(fromUpgrade.type) + 1)) / game.constructionTimeModifier), fromUpgrade));
+    }
+
+    public void ProceedConstruction()
+    {
+        if (ongoingConstruction.Count > 0)
+        {
+            if (ongoingConstruction[0].remainTime > 0)
+            {
+                ongoingConstruction[0].remainTime--;
+                Debug.Log(ongoingConstruction[0].remainTime);
+            }
+            else
+            {
+                EndConstruction();
+                Debug.Log("Construction Ended");
+            }
         }
     }
 
-    public void BuildBuilding(BuildingType type)
+    public void EndConstruction()
     {
-        buildings.Add(WorkingPlaceFactory.GetBuilding(type, this));
+        ConstructionQueueElement justEnded = ongoingConstruction[0];
+        ongoingConstruction.RemoveAt(0);
+
+        if (justEnded.isBuilding == false)
+        {
+            _BuildDistrict((DistrictType)(justEnded.type));
+        }
+        else
+        {
+            if (justEnded.fromUpgrade == null)
+                buildings.Add(WorkingPlaceFactory.GetBuilding((BuildingType)justEnded.type, this));
+            else
+                ((IUpgradable)justEnded.fromUpgrade).Upgrade();
+        }
     }
 
     public void DemolishWorkingPlace(POPWorkingPlace workingPlace)
@@ -201,7 +264,7 @@ public class Planet_Inhabitable : Planet
 
     public override string ToString()
     {
-        string basic =  base.ToString();
+        string basic = base.ToString();
         string values = "Housing : " + housing + ", Amenity: " + amenity + ", Crime: " + crime + ", Stability: " + stability + "\n";
 
         string _districts = "Districts:\n";
@@ -211,7 +274,16 @@ public class Planet_Inhabitable : Planet
         string _buildings = "Buildings:\n";
         foreach (var b in buildings)
             _buildings += b.name + "\n";
-        return basic + values + _districts + _buildings;
+
+        string _currentConstructing = "Currently constructing: ";
+        foreach (var q in ongoingConstruction)
+        {
+            if (q.isBuilding)
+                _currentConstructing += (BuildingType)(q.type);
+            else
+                _currentConstructing += (DistrictType)(q.type);
+        }
+        return basic + values + _districts + _buildings + _currentConstructing;
     }
 }
 

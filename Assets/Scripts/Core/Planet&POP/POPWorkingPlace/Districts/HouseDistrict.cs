@@ -2,7 +2,6 @@
 {
     public HouseDistrict(Planet_Inhabitable planet) : base(planet)
     {
-        buildingCost = 200;
         districtType = DistrictType.House;
         InitiallizePOPWorkingList(0);
     }

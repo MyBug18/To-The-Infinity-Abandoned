@@ -10,14 +10,11 @@ public abstract class POPWorkingPlace
     protected POPWorkingPlace(WorkingPlaceType type, Planet_Inhabitable planet)
     {
         this.planet = planet;
-
         this.type = type;
         OnConstructing();       
     }
 
     public string name;
-
-    public int buildingCost;
 
     public Planet_Inhabitable planet { get; private set; } // The planet where this building is.
     
