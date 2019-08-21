@@ -56,9 +56,5 @@ public class AlloySmelter : Building, IUpgradable
         buildingType = BuildingType.AlloyFoundry;
         baseUpkeep.amount = 2;
     }
-
-    public int GetUpgradeCost()
-    {
-        return 500;
-    }
+    
 }

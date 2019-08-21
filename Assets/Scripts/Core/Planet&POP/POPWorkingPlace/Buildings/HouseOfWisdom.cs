@@ -7,6 +7,8 @@ public class HouseOfWisdom : Building, IUpgradable
         name = "House of Wisdom";
         buildingType = BuildingType.HouseOfWisdom;
 
+        InitiallizePOPWorkingList(3);
+
         workingPOPSlotList[0].upkeeps.Add(new JobUpkeep((GlobalResourceType.Money, 1.5f), null)); // Initiallize Technician job slot.
         workingPOPSlotList[0].yields.Add(new JobYield((GlobalResourceType.Physics, 4f), null));
         workingPOPSlotList[0].job = Job.Physicist;
@@ -53,10 +55,5 @@ public class HouseOfWisdom : Building, IUpgradable
         name = "Research Lab";
         buildingType = BuildingType.ResearchLab;
         baseUpkeep.amount = 2;
-    }
-
-    public int GetUpgradeCost()
-    {
-        return 500;
     }
 }

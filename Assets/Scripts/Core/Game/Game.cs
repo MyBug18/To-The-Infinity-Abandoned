@@ -22,6 +22,8 @@ public class Game
     public float popFoodUpkeepRate = 1;
 
     public int fleetNum = 1;
+    public float defencePlatformAttackModifier = 1;
+    public float fleetAttackModifier = 1;
 
     public float constructionTimeModifier = 10;
     public float constructionCostModifier = 1;

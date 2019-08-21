@@ -25,6 +25,26 @@ public static class WorkingPlaceFactory
         {
             case BuildingType.ColonizationCenter:
                 return new ColonizationCenter(planet);
+            case BuildingType.AlloySmelter:
+                return new AlloySmelter(planet);
+            case BuildingType.HouseOfWisdom:
+                return new HouseOfWisdom(planet);
+            case BuildingType.PlanetaryMarket:
+                return new PlanetaryMarket(planet);
+            case BuildingType.GovernmentHall:
+                return new GovernmentHall(planet);
+            case BuildingType.PoliceStation:
+                return new PoliceStation(planet);
+            case BuildingType.ControlTower:
+                return new ControlTower(planet);
+            case BuildingType.FleetTrainingCenter:
+                return new FleetTrainingCenter(planet);
+            case BuildingType.CommandCenter:
+                return new CommandCenter(planet);
+            case BuildingType.MineralExtractor:
+                return new MineralExtractor(planet);
+            case BuildingType.BioPlant:
+                return new BioPlant(planet);
             default:
                 throw new NotImplementedException("Wait");
         }

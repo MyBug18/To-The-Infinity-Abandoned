@@ -82,6 +82,12 @@ public abstract class POPWorkingPlace
             case Job.Clerk:
                 planet.amenity += 3;
                 break;
+            case Job.Staff:
+                planet.game.fleetAttackModifier += 0.05f;
+                break;
+            case Job.Soldier:
+                planet.game.defencePlatformAttackModifier += 0.05f;
+                break;
         }
 
     }
@@ -129,6 +135,12 @@ public abstract class POPWorkingPlace
                 break;
             case Job.Clerk:
                 planet.amenity -= 3;
+                break;
+            case Job.Staff:
+                planet.game.fleetAttackModifier -= 0.05f;
+                break;
+            case Job.Soldier:
+                planet.game.defencePlatformAttackModifier -= 0.05f;
                 break;
         }
         

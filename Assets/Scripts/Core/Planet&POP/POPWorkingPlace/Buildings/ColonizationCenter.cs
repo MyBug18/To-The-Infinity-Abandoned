@@ -80,9 +80,4 @@ public class ColonizationCenter : Building, IUpgradable
         buildingType = BuildingType.PlanetaryCapital;
         baseUpkeep.amount = 3;
     }
-
-    public int GetUpgradeCost()
-    {
-        return 1000;
-    }
 }
