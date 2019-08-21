@@ -1,6 +1,4 @@
-﻿using System;
-
-public class PlanetaryMarket : Building
+﻿public class PlanetaryMarket : Building
 {
     public PlanetaryMarket(Planet_Inhabitable planet) : base(planet, 1.5f)
     {
