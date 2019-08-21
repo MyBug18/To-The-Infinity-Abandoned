@@ -113,7 +113,7 @@ public class Planet_Inhabitable : Planet
 
     public void BirthPOP()
     {
-        string[] str = System.IO.File.ReadAllText("Assets\\Scripts\\Core\\Planet&POP\\namelist.txt").Split('\n');
+        string[] str = System.IO.File.ReadAllText(Application.dataPath + "\\StreamingAssets\\namelist.txt").Split('\n');
         System.Random r = new System.Random();
         string popName = str[r.Next() % 1000];
 
