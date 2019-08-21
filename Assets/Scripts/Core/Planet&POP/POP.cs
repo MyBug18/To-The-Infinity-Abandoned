@@ -14,11 +14,12 @@ public class POP
     public (POPWorkingPlace workingPlace, int slotNum) currentWorkingPlace { get; private set; } // Current POP's working place.
     public (POPWorkingPlace workingPlace, int slotNum) futureWorkingPlace { get; set; } // After training ended, POP will move to this place.
 
-    public float happiness => _basicHappiness + _jobHappinessModifier + additionalHappinessModifier;
+    public float happiness => _basicHappiness + _jobHappinessModifier + _resourceHappinessModifier + additionalHappinessModifier;
 
     private float _basicHappiness => 50;
 
-    private float _jobHappinessModifier { get {
+    private float _jobHappinessModifier { get
+        {
             if (currentWorkingPlace.workingPlace == null) return -20;
             else switch(_IsAptitudeMatching(currentWorkingPlace.workingPlace.GetJobOfWorkingSlot(currentWorkingPlace.slotNum)))
                 {
@@ -27,6 +28,16 @@ public class POP
                     case 1: return 10;
                     default: throw new InvalidOperationException("ERROR: Invalid Job Code");
                 }
+        }
+    }
+
+    private float _resourceHappinessModifier { get
+        {
+            int _food = 0;
+            int _money = 0;
+            if (planet.game.globalResource.isLackOfFood) _food = -25;
+            if (planet.game.globalResource.isLackOfMoney) _money = -40;
+            return _food + _money;
         }
     }
 

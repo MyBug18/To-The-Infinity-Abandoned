@@ -9,7 +9,6 @@
     }
 
     public TurnResource turnResource;
-
     public float fuel = 0;
     public float mineral = 0;
     public float food = 0;
@@ -19,15 +18,26 @@
     public float sociology = 0;
     public float engineering = 0;
 
+    public bool isLackOfFuel => fuel == 0 && turnResource.turnFuel < 0;
+    public bool isLackOfMineral => mineral == 0 && turnResource.turnMineral < 0;
+    public bool isLackOfFood => food == 0 && turnResource.turnFood < 0;
+    public bool isLackOfMoney => money == 0 && turnResource.turnMoney < 0;
+    public bool isLackOfAlloy => alloy == 0 && turnResource.turnAlloy < 0;
+
     public void ApplyTurnResource()
     {
         turnResource.ApplyAllModifiers();
 
         fuel += turnResource.turnFuel;
+        if (fuel < 0) fuel = 0;
         mineral += turnResource.turnMineral;
+        if (mineral < 0) mineral = 0;
         food += turnResource.turnFood;
+        if (food < 0) food = 0;
         money += turnResource.turnMoney;
+        if (money < 0) money = 0;
         alloy += turnResource.turnAlloy;
+        if (alloy < 0) alloy = 0;
         physics += turnResource.turnPhysics;
         sociology += turnResource.turnSociology;
         engineering += turnResource.turnEngineering;

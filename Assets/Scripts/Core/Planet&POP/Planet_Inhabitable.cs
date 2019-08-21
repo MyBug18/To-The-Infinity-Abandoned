@@ -22,11 +22,11 @@ public class Planet_Inhabitable : Planet
 
     private float _baseStability => pops.Average(pop => pop.happiness);
     public float stabilityModifier = 0;
-    public float stability => _baseStability + stabilityModifier;
+    public float stability => Math.Max(_baseStability + stabilityModifier, 0);
 
     private float _crimeByPOP => pops.Count;
     public float crimeReducedByEnforcer = 0;
-    public float crime => _crimeByPOP - crimeReducedByEnforcer;
+    public float crime => Math.Max(0, _crimeByPOP - crimeReducedByEnforcer);
 
     public bool isColonized => pops.Count > 1;
 
@@ -46,8 +46,8 @@ public class Planet_Inhabitable : Planet
 
     public float currentPOPGrowth = 0;
     private float _basePOPGrowth => pops.Count > 0 ? 5 : 0;
-    public float POPGrowthModifier = 1;
-    public float POPGrowthRate => _basePOPGrowth * POPGrowthModifier;
+    private float _foodPOPGrowthModifier => game.globalResource.isLackOfFood ? 0.25f : 1;
+    public float POPGrowthRate => _basePOPGrowth * _foodPOPGrowthModifier;
 
     public (int maxFuel, int maxMineral, int maxFood) resourcesDistrictsMaxNum
     {

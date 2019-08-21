@@ -93,5 +93,8 @@ public class TurnResource
             default:
                 throw new InvalidOperationException("Undefined GlobalResourceType detected!");
         }
+
+        if (game.globalResource.isLackOfFuel) turnMineral /= 2;
+        if (game.globalResource.isLackOfMineral) turnAlloy /= 4;
     }
 }
