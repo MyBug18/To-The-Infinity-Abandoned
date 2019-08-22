@@ -5,6 +5,21 @@ using UnityEngine;
 
 public class Planet_Inhabitable : Planet
 {
+    public class ConstructionQueueElement
+    {
+        public bool isBuilding;
+        public int type;
+        public int remainTime;
+        public Building fromUpgrade;
+
+        public ConstructionQueueElement(bool isBuilding, int type, int remainTime, Building fromUpgrade)
+        {
+            this.isBuilding = isBuilding;
+            this.type = type;
+            this.remainTime = remainTime;
+            this.fromUpgrade = fromUpgrade;
+        }
+    }
 
     public Planet_Inhabitable(string name, int size, Game game) : base(name, size, PlanetType.Inhabitable, game)
     {

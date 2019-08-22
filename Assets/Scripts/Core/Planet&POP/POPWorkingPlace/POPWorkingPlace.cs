@@ -1,12 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System;
 
 using UnityEngine;
 
 public abstract class POPWorkingPlace
 {
+    public class POPWorkingSlot
+    {
+        public POP pop;
+        public Job job;
+        public List<JobUpkeep> upkeeps = new List<JobUpkeep>();
+        public List<JobYield> yields = new List<JobYield>();
+        public bool isPOPTrainingForHere = false;
+    }
+
     protected POPWorkingPlace(WorkingPlaceType type, Planet_Inhabitable planet)
     {
         this.planet = planet;
@@ -184,7 +191,6 @@ public abstract class POPWorkingPlace
         for (int i = 0; i < workingPOPSlotNumber; i++)
             workingPOPSlotList[i] = new POPWorkingSlot();
     }
-    
 }
 
 public enum WorkingPlaceType
