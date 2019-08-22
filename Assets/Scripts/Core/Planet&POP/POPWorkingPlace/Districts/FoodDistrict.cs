@@ -21,13 +21,13 @@
     {
         base.OnConstructing();
         planet.currentFoodDistrictNum++;
-        planet.housing += 3;
+        planet.providedHousing += 3;
     }
 
     public override void OnDemolishing()
     {
         base.OnDemolishing();
         planet.currentFoodDistrictNum--;
-        planet.housing -= 3;
+        planet.providedHousing -= 3;
     }
 }

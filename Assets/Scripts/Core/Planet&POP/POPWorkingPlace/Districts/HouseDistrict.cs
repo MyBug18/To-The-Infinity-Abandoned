@@ -10,13 +10,13 @@
     {
         base.OnConstructing();
         planet.currentHouseDistrictNum++;
-        planet.housing += 8;
+        planet.providedHousing += 8;
     }
 
     public override void OnDemolishing()
     {
         base.OnDemolishing();
         planet.currentHouseDistrictNum--;
-        planet.housing -= 8;
+        planet.providedHousing -= 8;
     }
 }

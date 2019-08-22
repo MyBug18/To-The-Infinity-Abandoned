@@ -32,8 +32,14 @@ public class Planet_Inhabitable : Planet
 
     public int maxBuildingSlotNum => 12;
 
-    public int housing = 0;
-    public int amenity = 0;
+    public int providedHousing = 0;
+    public int providedAmenity = 0;
+
+    public int consumedHousing = 0;
+    public int consumedAmenity = 0;
+
+    public int housing => providedHousing - consumedHousing;
+    public int amenity => providedAmenity - consumedAmenity;
 
     private float _baseStability => pops.Average(pop => pop.happiness);
     public float stabilityModifier = 0;
@@ -60,9 +66,18 @@ public class Planet_Inhabitable : Planet
     public List<JobYield> planetJobYields = new List<JobYield>();
 
     public float currentPOPGrowth = 0;
-    private float _basePOPGrowth => pops.Count > 0 ? 5 : 0;
-    private float _foodPOPGrowthModifier => game.globalResource.isLackOfFood ? 0.25f : 1;
-    public float POPGrowthRate => _basePOPGrowth * _foodPOPGrowthModifier;
+    public float basePOPGrowth => pops.Count > 0 ? 5 : 0;
+    public float foodPOPGrowthModifier => game.globalResource.isLackOfFood ? 0.25f : 1;
+    public float POPGrowthRate { get
+        {
+            float baseRate = basePOPGrowth * foodPOPGrowthModifier;
+            float result = baseRate * (1 + housingGrowthModifier);
+            return result;
+        }
+    }
+
+    public float additionalGrowthRate => housingGrowthModifier;
+    public float housingGrowthModifier => Math.Min(0, (float)housing / pops.Count);
 
     public (int maxFuel, int maxMineral, int maxFood) resourcesDistrictsMaxNum
     {
@@ -131,10 +146,14 @@ public class Planet_Inhabitable : Planet
         string[] str = System.IO.File.ReadAllText(Application.dataPath + "\\StreamingAssets\\namelist.txt").Split('\n');
         System.Random r = new System.Random();
         string popName = str[r.Next() % 1000];
+        POP pop = new POP(str[r.Next() % 1000], this);
 
-        var pop = new POP(str[r.Next() % 1000], this);
+        consumedAmenity++;
+        consumedHousing++;
+
         pops.Add(pop);
         unemployedPOPs.Add(pop);
+        
     }
 
     public void KillPOP(POP pop)
@@ -152,8 +171,10 @@ public class Planet_Inhabitable : Planet
         if (pop.isTraining) // if training, remove from training pop list.
             trainingPOPs.Remove(pop);
 
-        pops.Remove(pop);
+        consumedAmenity--;
+        consumedHousing--;
 
+        pops.Remove(pop);
     }
 
     public bool IsDistrictBuildable(DistrictType type)
@@ -281,7 +302,7 @@ public class Planet_Inhabitable : Planet
     public override string ToString()
     {
         string basic = base.ToString();
-        string values = "Housing : " + housing + ", Amenity: " + amenity + ", Crime: " + crime + ", Stability: " + stability + "\n";
+        string values = "Housing : " + housing + ", Amenity: " + amenity + ", Crime: " + crime + ", Stability: " + stability + ", POP growth rate: " + POPGrowthRate + "\n";
 
         string _districts = "Districts:\n";
         foreach (var d in districts)

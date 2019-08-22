@@ -14,11 +14,16 @@ public class POP
     public (POPWorkingPlace workingPlace, int slotNum) currentWorkingPlace { get; private set; } // Current POP's working place.
     public (POPWorkingPlace workingPlace, int slotNum) futureWorkingPlace { get; set; } // After training ended, POP will move to this place.
 
-    public float happiness => _basicHappiness + _jobHappinessModifier + _resourceHappinessModifier + additionalHappinessModifier;
+    public float happiness { get
+        {
+            float result = basicHappiness + jobHappinessModifier + resourceHappinessModifier + amenityHappinessModifier + housingHappinessModifier + additionalHappinessModifier;
+            return Math.Min(Math.Max(result, 0), 100);
+        }
+    }
 
-    private float _basicHappiness => 50;
+    public float basicHappiness => 50;
 
-    private float _jobHappinessModifier { get
+    public float jobHappinessModifier { get
         {
             if (currentWorkingPlace.workingPlace == null) return -20;
             else switch(_IsAptitudeMatching(currentWorkingPlace.workingPlace.GetJobOfWorkingSlot(currentWorkingPlace.slotNum)))
@@ -31,13 +36,33 @@ public class POP
         }
     }
 
-    private float _resourceHappinessModifier { get
+    public float resourceHappinessModifier { get
         {
             int _food = 0;
             int _money = 0;
             if (planet.game.globalResource.isLackOfFood) _food = -25;
             if (planet.game.globalResource.isLackOfMoney) _money = -40;
             return _food + _money;
+        }
+    }
+
+    public float amenityHappinessModifier {  get
+        {
+            int popNumber = planet.pops.Count;
+
+            if (popNumber == 0) return 0;
+
+            return (float)planet.amenity / popNumber * 20;
+        }
+    }
+
+    public float housingHappinessModifier { get
+        {
+            int popNumber = planet.pops.Count;
+
+            if (popNumber == 0) return 0;
+
+            return (float)Math.Min(planet.housing, 0) / popNumber * 20;
         }
     }
 
@@ -50,8 +75,6 @@ public class POP
         int aptitude = r.Next() % 12 + 1;
         this.aptitude = (Job)aptitude; // Sets aptitude.
         this.planet = planet;
-
-        Debug.Log(this);
     }    
 
     public Planet_Inhabitable planet { get; private set; }
@@ -173,17 +196,18 @@ public class POP
     {
         string result = "";
 
-        string employed = "";
-        string training = "";
+        string currentJob = "";
 
-        if (isUnemployed) employed = "unemployed ";
+        if (currentWorkingPlace.workingPlace == null) currentJob = "Not Employed";
+        else currentJob = "" + currentWorkingPlace.workingPlace.GetJobOfWorkingSlot(currentWorkingPlace.slotNum);
 
-        if (isTraining)
-            training = "training (" + remainTrainingDay + "days left) ";
-        else
-            training = "not training";
-        result = name + ": " + aptitude + " " + employed + training;
-        return result;
+        result = name + ": " + aptitude + ", Happiness: " + happiness + ", Current Job: " + currentJob;
+
+        string happinessModifiers = 
+            "Basic: " + basicHappiness + ", Job: " + jobHappinessModifier + 
+            ", Resources: " + resourceHappinessModifier + ", Amenity: " + amenityHappinessModifier + 
+            ", Housing: " + housingHappinessModifier;
+        return result + "\n" + happinessModifiers;
     }
 
     public static JobType GetJobTypeOfJob(Job job)

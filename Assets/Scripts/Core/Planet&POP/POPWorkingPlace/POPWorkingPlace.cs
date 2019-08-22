@@ -77,7 +77,7 @@ public abstract class POPWorkingPlace
         {
             case Job.Administrator:
                 planet.stabilityModifier += 5;
-                planet.amenity += 5;
+                planet.providedAmenity += 5;
                 break;
             case Job.Admiral:
                 planet.game.fleetNum++;
@@ -87,7 +87,7 @@ public abstract class POPWorkingPlace
                 planet.stabilityModifier += 2;
                 break;
             case Job.Clerk:
-                planet.amenity += 3;
+                planet.providedAmenity += 3;
                 break;
             case Job.Staff:
                 planet.game.fleetAttackModifier += 0.05f;
@@ -131,7 +131,7 @@ public abstract class POPWorkingPlace
         {
             case Job.Administrator:
                 planet.stabilityModifier -= 5;
-                planet.amenity -= 5;
+                planet.providedAmenity -= 5;
                 break;
             case Job.Admiral:
                 planet.game.fleetNum--;
@@ -141,7 +141,7 @@ public abstract class POPWorkingPlace
                 planet.stabilityModifier -= 2;
                 break;
             case Job.Clerk:
-                planet.amenity -= 3;
+                planet.providedAmenity -= 3;
                 break;
             case Job.Staff:
                 planet.game.fleetAttackModifier -= 0.05f;

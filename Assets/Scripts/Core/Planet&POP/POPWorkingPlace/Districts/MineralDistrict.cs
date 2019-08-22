@@ -40,13 +40,13 @@ public class MineralDistrict : District
     {
         base.OnConstructing();
         planet.currentMineralDistrictNum++;
-        planet.housing += 3;
+        planet.providedHousing += 3;
     }
 
     public override void OnDemolishing()
     {
         base.OnDemolishing();
         planet.currentMineralDistrictNum--;
-        planet.housing -= 3;
+        planet.providedHousing -= 3;
     }
 }

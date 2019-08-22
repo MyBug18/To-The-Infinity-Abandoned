@@ -42,13 +42,13 @@ public class FuelDistrict : District
     {
         base.OnDemolishing();
         planet.currentFuelDistrictNum--;
-        planet.housing -= 3;
+        planet.providedHousing -= 3;
     }
 
     public override void OnConstructing()
     {
         base.OnConstructing();
         planet.currentFuelDistrictNum++;
-        planet.housing += 3;
+        planet.providedHousing += 3;
     }
 }

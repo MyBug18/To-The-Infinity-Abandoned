@@ -79,15 +79,15 @@ public class ColonizationCenter : Building, IUpgradable
         name = "Planetary Capital";
         buildingType = BuildingType.PlanetaryCapital;
         baseUpkeep.amount = 3;
-        planet.housing += 10;
-        planet.amenity += 5;
+        planet.providedHousing += 10;
+        planet.providedAmenity += 5;
     }
 
     public override void OnConstructing()
     {
         base.OnConstructing();
-        planet.housing += 10;
-        planet.amenity += 5;
+        planet.providedHousing += 10;
+        planet.providedAmenity += 5;
     }
 
     public override void OnDemolishing()
