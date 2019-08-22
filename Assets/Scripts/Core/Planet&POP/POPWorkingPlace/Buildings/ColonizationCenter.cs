@@ -79,5 +79,19 @@ public class ColonizationCenter : Building, IUpgradable
         name = "Planetary Capital";
         buildingType = BuildingType.PlanetaryCapital;
         baseUpkeep.amount = 3;
+        planet.housing += 10;
+        planet.amenity += 5;
+    }
+
+    public override void OnConstructing()
+    {
+        base.OnConstructing();
+        planet.housing += 10;
+        planet.amenity += 5;
+    }
+
+    public override void OnDemolishing()
+    {
+        throw new InvalidOperationException("Can't destroy the main building!");
     }
 }
