@@ -9,7 +9,7 @@ public class ColonizationCenter : Building, IUpgradable
         buildingType = BuildingType.ColonizationCenter;
         InitiallizePOPWorkingList(6);
 
-        workingPOPSlotList[0].upkeeps.Add(new JobUpkeep((GlobalResourceType.Money, 0.5f), null)); // Initiallize Technician job slot.
+        workingPOPSlotList[0].upkeeps.Add(new JobUpkeep((GlobalResourceType.Money, 0.5f), null));
         workingPOPSlotList[0].yields.Add(new JobYield((GlobalResourceType.Fuel, 1.5f), null));
         workingPOPSlotList[0].job = Job.Technician;
 

@@ -20,13 +20,6 @@ public class YearTest : MonoBehaviour
         game = GameManager.game;
         earth = new Planet_Inhabitable("Earth", 16, game);
         earth.StartColonization();
-        /*
-        earth.BuildDistrict(DistrictType.Fuel);
-        earth.BuildDistrict(DistrictType.Mineral);
-
-        earth.BirthPOP();
-        earth.BirthPOP();
-        */
     }
 
     // Start is called before the first frame update
