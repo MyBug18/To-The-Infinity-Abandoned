@@ -10,7 +10,7 @@ public class ColonizationCenter : Building, IUpgradable
         InitiallizePOPWorkingList(6);
 
         workingPOPSlotList[0].upkeeps.Add(new JobUpkeep((GlobalResourceType.Money, 0.5f), null));
-        workingPOPSlotList[0].yields.Add(new JobYield((GlobalResourceType.Fuel, 1.5f), null));
+        workingPOPSlotList[0].yields.Add(new JobYield((GlobalResourceType.Electricity, 1.5f), null));
         workingPOPSlotList[0].job = Job.Technician;
 
         workingPOPSlotList[1].upkeeps.Add(new JobUpkeep((GlobalResourceType.Money, 0.5f), null));
@@ -53,7 +53,7 @@ public class ColonizationCenter : Building, IUpgradable
         workingPOPSlotList = newArray; // Resizes workingPOPSlotList.
 
         workingPOPSlotList[6].upkeeps.Add(new JobUpkeep((GlobalResourceType.Money, 0.5f), null)); // Initiallize Technician job slot.
-        workingPOPSlotList[6].yields.Add(new JobYield((GlobalResourceType.Fuel, 1.5f), null));
+        workingPOPSlotList[6].yields.Add(new JobYield((GlobalResourceType.Electricity, 1.5f), null));
         workingPOPSlotList[6].job = Job.Technician;
 
         workingPOPSlotList[7].upkeeps.Add(new JobUpkeep((GlobalResourceType.Money, 0.5f), null));

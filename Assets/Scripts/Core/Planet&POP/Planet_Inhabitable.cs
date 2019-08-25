@@ -20,8 +20,18 @@ public class Planet_Inhabitable : Planet
             this.fromUpgrade = fromUpgrade;
         }
     }
+    public System.Random r = new System.Random();
 
-    public Planet_Inhabitable(string name, int size, Game game) : base(name, size, PlanetType.Inhabitable, game)
+    public Planet_Inhabitable(string name, int size, Game game, StarOrbit orbit) : base(name, size, PlanetType.Inhabitable, game, orbit) // for making special inhabitable planet, such as Earth.
+    {
+        System.Random r = new System.Random();
+        for (int i = 0; i < size / 3 + 1; i++)
+        {
+            features.Add((PlanetaryFeature)(r.Next() % 6));
+        }
+    }
+
+    public Planet_Inhabitable(string name, Game game, StarOrbit orbit) : base(name, game, orbit, true) // for making general inhabitable planets.
     {
         System.Random r = new System.Random();
         for (int i = 0; i < size / 3 + 1; i++)
@@ -41,7 +51,7 @@ public class Planet_Inhabitable : Planet
     public int housing => providedHousing - consumedHousing;
     public int amenity => providedAmenity - consumedAmenity;
 
-    private float _baseStability => pops.Average(pop => pop.happiness);
+    private float _baseStability => pops.Count > 0 ? pops.Average(pop => pop.happiness) : 0;
     public float stabilityModifier = 0;
     public float stability => Math.Max(_baseStability + stabilityModifier, 0);
 
@@ -79,17 +89,17 @@ public class Planet_Inhabitable : Planet
     public float additionalGrowthRate => housingGrowthModifier;
     public float housingGrowthModifier => Math.Min(0, (float)housing / pops.Count);
 
-    public (int maxFuel, int maxMineral, int maxFood) resourcesDistrictsMaxNum
+    public (int maxElectricity, int maxMineral, int maxFood) resourcesDistrictsMaxNum
     {
         get
         {
-            int _fuel = 0, _mineral = 0, _food = 0;
+            int _electricity = 0, _mineral = 0, _food = 0;
             foreach (var f in features)
             {
                 switch (f)
                 {
                     case PlanetaryFeature.ExtraordinaryOilDeposit:
-                        _fuel += 3;
+                        _electricity += 3;
                         break;
                     case PlanetaryFeature.FertileLand:
                         _food += 3;
@@ -104,28 +114,26 @@ public class Planet_Inhabitable : Planet
                         _mineral += 3;
                         break;
                     case PlanetaryFeature.OilDeposit:
-                        _fuel += 2;
+                        _electricity += 2;
                         break;
                     default:
                         throw new InvalidOperationException("ERROR: Invalid Plenetary Feature Detected: " + f);
                 }
             }
 
-            return (_fuel, _mineral, _food);
+            return (_electricity, _mineral, _food);
         }
     }
-    public int currentFuelDistrictNum = 0, currentMineralDistrictNum = 0, currentFoodDistrictNum = 0, currentHouseDistrictNum = 0;
-    public int availableFuelDistrictNum => resourcesDistrictsMaxNum.maxFuel - currentFuelDistrictNum;
+    public int currentElectricityDistrictNum = 0, currentMineralDistrictNum = 0, currentFoodDistrictNum = 0, currentHouseDistrictNum = 0;
+    public int availableElectricityDistrictNum => resourcesDistrictsMaxNum.maxElectricity - currentElectricityDistrictNum;
     public int availableMineralDistrictNum => resourcesDistrictsMaxNum.maxMineral - currentMineralDistrictNum;
     public int availableFoodDistrictNum => resourcesDistrictsMaxNum.maxFood - currentFoodDistrictNum;
-    public int availableHouseDistrictNum => size - currentFoodDistrictNum - currentFuelDistrictNum - currentMineralDistrictNum - currentHouseDistrictNum;
+    public int availableHouseDistrictNum => size - currentFoodDistrictNum - currentElectricityDistrictNum - currentMineralDistrictNum - currentHouseDistrictNum;
 
     public int remainColonizationDay { get; private set; } = 0;
 
     public void StartColonization()
     {
-        Debug.Log("Start Colonization");
-
         remainColonizationDay = game.colonizationDate;
         game.ongoingColonization.Add(this);
     }
@@ -143,7 +151,7 @@ public class Planet_Inhabitable : Planet
 
     public void BirthPOP()
     {
-        string[] str = System.IO.File.ReadAllText(Application.dataPath + "\\StreamingAssets\\namelist.txt").Split('\n');
+        string[] str = System.IO.File.ReadAllLines(UnityEngine.Application.streamingAssetsPath + "\\name_list.txt");
         System.Random r = new System.Random();
         string popName = str[r.Next() % 1000];
         POP pop = new POP(str[r.Next() % 1000], this);
@@ -187,7 +195,7 @@ public class Planet_Inhabitable : Planet
                 else result = true;
                 break;
             case DistrictType.Fuel:
-                if (availableFuelDistrictNum <= 0) result = false;
+                if (availableElectricityDistrictNum <= 0) result = false;
                 else result = true;
                 break;
             case DistrictType.House:

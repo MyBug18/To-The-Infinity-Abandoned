@@ -9,12 +9,12 @@
 
         workingPOPSlotList[0].upkeeps.Add(new JobUpkeep((GlobalResourceType.Money, 0.5f), null));
         workingPOPSlotList[0].upkeeps.Add(new JobUpkeep((GlobalResourceType.Mineral, 3), null));
-        workingPOPSlotList[0].yields.Add(new JobYield((GlobalResourceType.Fuel, 1), null));
+        workingPOPSlotList[0].yields.Add(new JobYield((GlobalResourceType.Electricity, 1), null));
         workingPOPSlotList[0].job = Job.Miner;
 
         workingPOPSlotList[1].upkeeps.Add(new JobUpkeep((GlobalResourceType.Money, 0.5f), null));
         workingPOPSlotList[1].upkeeps.Add(new JobUpkeep((GlobalResourceType.Mineral, 3), null));
-        workingPOPSlotList[1].yields.Add(new JobYield((GlobalResourceType.Fuel, 1), null));
+        workingPOPSlotList[1].yields.Add(new JobYield((GlobalResourceType.Electricity, 1), null));
         workingPOPSlotList[1].job = Job.Miner;
     }
 }

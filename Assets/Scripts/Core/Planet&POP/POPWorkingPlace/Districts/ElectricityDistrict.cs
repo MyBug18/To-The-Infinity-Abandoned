@@ -2,12 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class FuelDistrict : District
+public class ElectricityDistrict : District
 {
 
-    public FuelDistrict(Planet_Inhabitable planet) : base(planet)
+    public ElectricityDistrict(Planet_Inhabitable planet) : base(planet)
     {
-        name = "Fuel District";
+        name = "Electricity District";
 
         districtType = DistrictType.Fuel;
         InitiallizePOPWorkingList(2);
@@ -27,12 +27,12 @@ public class FuelDistrict : District
 
 
         List<JobYield> yield0 = new List<JobYield>();
-        JobYield _technicianYield0 = new JobYield((GlobalResourceType.Food, 1.5f), null);
+        JobYield _technicianYield0 = new JobYield((GlobalResourceType.Electricity, 1.5f), null);
         yield0.Add(_technicianYield0);
         workingPOPSlotList[0].yields = yield0;
 
         List<JobYield> yield1 = new List<JobYield>();
-        JobYield _technicianYield1 = new JobYield((GlobalResourceType.Food, 1.5f), null);
+        JobYield _technicianYield1 = new JobYield((GlobalResourceType.Electricity, 1.5f), null);
         yield1.Add(_technicianYield1);
         workingPOPSlotList[1].yields = yield1;
 
@@ -41,14 +41,14 @@ public class FuelDistrict : District
     public override void OnDemolishing()
     {
         base.OnDemolishing();
-        planet.currentFuelDistrictNum--;
+        planet.currentElectricityDistrictNum--;
         planet.providedHousing -= 3;
     }
 
     public override void OnConstructing()
     {
         base.OnConstructing();
-        planet.currentFuelDistrictNum++;
+        planet.currentElectricityDistrictNum++;
         planet.providedHousing += 3;
     }
 }

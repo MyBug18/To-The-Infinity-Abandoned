@@ -11,7 +11,7 @@ public class Resource
             this.game = game;
         }
 
-        public float turnFuel { get; private set; }
+        public float turnElectricity { get; private set; }
         public float turnMineral { get; private set; }
         public float turnFood { get; private set; }
         public float turnMoney { get; private set; }
@@ -22,7 +22,7 @@ public class Resource
 
         public void ApplyAllModifiers() // should be called with _IncreaseOneMonth().
         {
-            turnFuel = 0;
+            turnElectricity = 0;
             turnMineral = 0;
             turnFood = 0;
             turnMoney = 0;
@@ -75,8 +75,8 @@ public class Resource
                 case GlobalResourceType.Food:
                     turnFood += amount;
                     break;
-                case GlobalResourceType.Fuel:
-                    turnFuel += amount;
+                case GlobalResourceType.Electricity:
+                    turnElectricity += amount;
                     break;
                 case GlobalResourceType.Mineral:
                     turnMineral += amount;
@@ -94,7 +94,7 @@ public class Resource
                     throw new InvalidOperationException("Undefined GlobalResourceType detected!");
             }
 
-            if (game.globalResource.isLackOfFuel) turnMineral /= 2;
+            if (game.globalResource.isLackOfElectricity) turnMineral /= 2;
             if (game.globalResource.isLackOfMineral) turnAlloy /= 4;
         }
     }
@@ -108,7 +108,7 @@ public class Resource
     }
 
     public TurnResource turnResource;
-    public float fuel = 0;
+    public float Electricity = 0;
     public float mineral = 0;
     public float food = 0;
     public float money = 0;
@@ -117,7 +117,7 @@ public class Resource
     public float sociology = 0;
     public float engineering = 0;
 
-    public bool isLackOfFuel => fuel == 0 && turnResource.turnFuel < 0;
+    public bool isLackOfElectricity => Electricity == 0 && turnResource.turnElectricity < 0;
     public bool isLackOfMineral => mineral == 0 && turnResource.turnMineral < 0;
     public bool isLackOfFood => food == 0 && turnResource.turnFood < 0;
     public bool isLackOfMoney => money == 0 && turnResource.turnMoney < 0;
@@ -127,8 +127,8 @@ public class Resource
     {
         turnResource.ApplyAllModifiers();
 
-        fuel += turnResource.turnFuel;
-        if (fuel < 0) fuel = 0;
+        Electricity += turnResource.turnElectricity;
+        if (Electricity < 0) Electricity = 0;
         mineral += turnResource.turnMineral;
         if (mineral < 0) mineral = 0;
         food += turnResource.turnFood;
@@ -144,7 +144,7 @@ public class Resource
 
     public override string ToString()
     {
-        string _fuel = "Fuel: " + fuel + " (" + turnResource.turnFuel + ") ";
+        string _fuel = "Fuel: " + Electricity + " (" + turnResource.turnElectricity + ") ";
         string _mineral = "Mineral: " + mineral + " (" + turnResource.turnMineral + ") ";
         string _food = "Food: " + food + " (" + turnResource.turnFood + ") ";
         string _money = "Money: " + money + " (" + turnResource.turnMoney + ") ";
@@ -159,7 +159,7 @@ public class Resource
 
 public enum GlobalResourceType // Only global resources.
 {
-    Fuel,
+    Electricity,
     Mineral,
     Food,
     Money,

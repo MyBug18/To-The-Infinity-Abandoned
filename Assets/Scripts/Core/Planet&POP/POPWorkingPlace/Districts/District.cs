@@ -4,7 +4,7 @@
     
     public District(Planet_Inhabitable planet) : base(WorkingPlaceType.District, planet) // Every district's upkeep is 0.5 fuel.
     {
-        baseUpkeep.resourceType = GlobalResourceType.Fuel;
+        baseUpkeep.resourceType = GlobalResourceType.Electricity;
         baseUpkeep.amount = 0.5f;
     }
 }

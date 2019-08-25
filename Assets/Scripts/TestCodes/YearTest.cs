@@ -14,18 +14,23 @@ public class YearTest : MonoBehaviour
     Coroutine cor;
     Game game;
     Planet_Inhabitable earth;
+
+    StarSystem sys;
     
     private void Awake()
     {
         game = GameManager.game;
-        earth = new Planet_Inhabitable("Earth", 16, game);
+        earth = new Planet_Inhabitable("Earth", 16, game, null);
         earth.StartColonization();
+        sys = new StarSystem(game);
     }
 
     // Start is called before the first frame update
     void Start()
     {
         cor = StartCoroutine(_StartYear());
+        Debug.Log(sys);
+        Debug.Log(sys.orbits.Count);
     }
 
     // Update is called once per frame

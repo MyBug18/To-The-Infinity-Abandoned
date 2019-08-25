@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Collections;
+using System.IO;
 using System.Collections.Generic;
+using System.Linq;
 
 public class Game
 {
@@ -28,9 +29,36 @@ public class Game
     public float constructionTimeModifier = 10;
     public float constructionCostModifier = 1;
 
+    public float miningStationModifier = 1;
+    public float researchStationModifier = 1;
+
+    private List<string> _unusedStarName;
+    private List<string> _unusedBlackholeName;
+
+
     public Game()
     {
         globalResource = new Resource(this);
+        _unusedStarName = File.ReadAllLines(UnityEngine.Application.streamingAssetsPath + "\\star_name_list.txt").ToList();
+        _unusedBlackholeName = File.ReadAllLines(UnityEngine.Application.streamingAssetsPath + "\\blackhole_name_list.txt").ToList();
+    }
+
+    public string GetStarSystemName()
+    {
+        Random r = new Random();
+        int index = r.Next() % _unusedStarName.Count;
+        string result = _unusedStarName[index];
+        _unusedStarName.RemoveAt(index);
+        return result;
+    }
+
+    public string GetBlackholeName()
+    {
+        Random r = new Random();
+        int index = r.Next() % _unusedBlackholeName.Count;
+        string result = _unusedBlackholeName[index];
+        _unusedBlackholeName.RemoveAt(index);
+        return result;
     }
 
     public void IncreaseOneDay()

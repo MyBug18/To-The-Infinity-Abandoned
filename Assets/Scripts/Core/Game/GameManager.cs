@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 public static class GameManager
 {
     public static Game game = new Game();
+    public static Random r = new Random();
 
     public static void SaveGame()
     {

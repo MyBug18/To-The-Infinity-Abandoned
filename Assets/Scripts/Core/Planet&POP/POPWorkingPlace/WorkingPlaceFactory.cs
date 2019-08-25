@@ -7,7 +7,7 @@ public static class WorkingPlaceFactory
         switch(type)
         {
             case DistrictType.Fuel:
-                return new FuelDistrict(planet);
+                return new ElectricityDistrict(planet);
             case DistrictType.Mineral:
                 return new MineralDistrict(planet);
             case DistrictType.Food:

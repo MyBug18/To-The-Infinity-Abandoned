@@ -2,7 +2,7 @@
 {
     protected Building(Planet_Inhabitable planet, float fuelUpkeep) : base(WorkingPlaceType.Building, planet)
     {
-        baseUpkeep.resourceType = GlobalResourceType.Fuel;
+        baseUpkeep.resourceType = GlobalResourceType.Electricity;
         baseUpkeep.amount = fuelUpkeep;
     }
     public BuildingType buildingType { get; protected set; }
