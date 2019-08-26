@@ -20,7 +20,7 @@ public class YearTest : MonoBehaviour
     private void Awake()
     {
         game = GameManager.game;
-        earth = new Planet_Inhabitable("Earth", 16, game, null);
+        earth = new Planet_Inhabitable("Earth", 16, game, null, 0);
         earth.StartColonization();
         sys = new StarSystem(game);
     }

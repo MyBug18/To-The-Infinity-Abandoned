@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class Planet : CelestialBody
 {
     public int size { get; private set; }
+    public int nthOrbit { get; private set; }
     public PlanetType planetType { get; private set; }
     public float satelliteChance {  get
         {
@@ -14,15 +15,17 @@ public class Planet : CelestialBody
 
     public List<CelestialBody> satellites = new List<CelestialBody>();
 
-    public Planet(string name, int size, PlanetType planetType, Game game, StarOrbit orbit) : base(CelestialBodyType.Planet, orbit, game) // for making special named planets, such as Mercury, Mars.
+    public Planet(string name, int size, PlanetType planetType, Game game, StarOrbit orbit, int nthOrbit) : base(CelestialBodyType.Planet, orbit, game) // for making special named planets, such as Mercury, Mars.
     {
+        this.nthOrbit = nthOrbit;
         this.name = name;
         this.size = size;
         this.planetType = planetType;
     }
 
-    public Planet(string name, Game game, StarOrbit starOrbit, bool isInhabitable = false) : base(CelestialBodyType.Planet, starOrbit, game) // for making general non-inhabitable planets.
+    public Planet(string name, Game game, StarOrbit starOrbit, int nthOrbit, bool isInhabitable = false) : base(CelestialBodyType.Planet, starOrbit, game) // for making general non-inhabitable planets.
     {
+        this.nthOrbit = nthOrbit;
         this.name = name;
         size = GameManager.r.Next() % 15 + 11;
 
@@ -58,7 +61,10 @@ public class Planet : CelestialBody
                     case 1:
                     case 2:
                     case 3:
-                        yields.Add(new CelestialBodyYield((GlobalResourceType.Mineral, GameManager.r.Next() % 4 + 3), this));
+                        if (planetType == PlanetType.GasGiant)
+                            yields.Add(new CelestialBodyYield((GlobalResourceType.Electricity, GameManager.r.Next() % 4 + 3), this));
+                        else
+                            yields.Add(new CelestialBodyYield((GlobalResourceType.Mineral, GameManager.r.Next() % 4 + 3), this));
                         break;
                     case 4:
                         yields.Add(new CelestialBodyYield((GlobalResourceType.Engineering, GameManager.r.Next() % 4 + 3), this));

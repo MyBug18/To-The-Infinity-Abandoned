@@ -50,7 +50,7 @@ public class StarOrbit
         UnityEngine.Debug.Log(nth + ", " + inhabitableRange + ", " + inhabitableChance);
         if (GameManager.r.Next() % 100 < inhabitableChance * 100 && inhabitableRange.min <= nth && inhabitableRange.max >= nth)
         {
-            orbits.Add(new Planet_Inhabitable(_GetPlanetName(nth), system.game, this));
+            orbits.Add(new Planet_Inhabitable(_GetPlanetName(nth), system.game, this, nth));
         }
         else if ((nth == orbitNum || nth == orbitNum / 2) && orbitNum > 4)
         {
@@ -58,7 +58,7 @@ public class StarOrbit
         }
         else
         {
-            var p = new Planet(_GetPlanetName(nth), system.game, this);
+            var p = new Planet(_GetPlanetName(nth), system.game, this, nth);
 
             orbits.Add(p);
         }
