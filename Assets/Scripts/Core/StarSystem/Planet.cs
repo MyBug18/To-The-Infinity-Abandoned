@@ -8,8 +8,9 @@ public class Planet : CelestialBody
     public PlanetType planetType { get; private set; }
     public float satelliteChance {  get
         {
-            if (planetType == PlanetType.GasGiant) return 0.4f;
-            else return 0.25f;
+            if (planetType == PlanetType.GasGiant) return 0.33f;
+            else if (planetType == PlanetType.Broken) return 0.18f;
+            else return 0.12f;
         }
     }
 
@@ -82,20 +83,67 @@ public class Planet : CelestialBody
                 }
             }
         }
+
+        MakeSatellite();
     }
 
     public void MakeSatellite()
     {
+        while(true)
+        {
+            if (satelliteChance * 100 > GameManager.r.Next() % 100)
+            {
+                UnityEngine.Debug.Log("asdf");
+                if (nthOrbit <= starOrbit.inhabitableRange.max && nthOrbit >= starOrbit.inhabitableRange.min && GameManager.r.Next() % 100 < starOrbit.inhabitableChance * 100)
+                {
+                    satellites.Add(new Planet_Inhabitable(_GetSatelliteName(), game, starOrbit, satellites.Count));
+                }
+                else if (GameManager.r.Next() % 10 < 2)
+                {
+                    satellites.Add(new Asteroid(game, starOrbit));
+                }
+                else
+                {
+                    PlanetType type;
+                    switch(GameManager.r.Next() % 9)
+                    {
+                        case 0:
+                            type = PlanetType.Molten;
+                            break;
+                        case 1:
+                        case 2:
+                            type = PlanetType.Frozen;
+                            break;
+                        case 3:
+                        case 4:
+                            type = PlanetType.Broken;
+                            break;
+                        default:
+                            type = PlanetType.Barren;
+                            break;
+                    }
+                    satellites.Add(new Planet(_GetSatelliteName(), GameManager.r.Next(5, size * 2 / 3), type, game, starOrbit, satellites.Count));
+                }
+            }
+            else return;
+        }
+    }
+
+    private string _GetSatelliteName()
+    {
+        return name + (char)('a' + satellites.Count);
     }
 
     public override string ToString()
-    {
-        
+    {        
         string result = "Size: " + size + ", Planet type: " + planetType + ", Orbiting " + starOrbit.center[0].name;
-        result += "\nSatellites: ";
-        foreach (var c in satellites)
+        if (satellites.Count > 0)
         {
-            result += c.name + ", ";
+            result += "\nSatellites: ";
+            foreach (var c in satellites)
+            {
+                result += c.name + ", ";
+            }
         }
         return "Planet name: " + name + "\n" + result;
     }
