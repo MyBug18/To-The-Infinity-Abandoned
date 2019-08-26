@@ -17,38 +17,38 @@ public class StarSystem
 
         name = game.GetStarSystemName();
 
-        int shapeDecider = r.Next() % 10;
+        int shapeDecider = r.Next() % 20;
         
-        if (shapeDecider < 3)
+        if (shapeDecider < 13)
         {
             numberOfOrbits = 1;
             orbits.Add(new StarOrbit(1, this));
         }
-        else if (shapeDecider < 5)
+        else if (shapeDecider < 15)
         {
             numberOfOrbits = 2;
             orbits.Add(new StarOrbit(1, this));
             orbits.Add(new StarOrbit(1, this));
         }
-        else if (shapeDecider < 6)
+        else if (shapeDecider < 16)
         {
             numberOfOrbits = 3;
             orbits.Add(new StarOrbit(1, this));
             orbits.Add(new StarOrbit(1, this));
             orbits.Add(new StarOrbit(1, this));
         }
-        else if (shapeDecider < 8)
+        else if (shapeDecider < 18)
         {
             numberOfOrbits = 1;
             orbits.Add(new StarOrbit(2, this));
         }
-        else if (shapeDecider < 9)
+        else if (shapeDecider < 19)
         {
             numberOfOrbits = 2;
             orbits.Add(new StarOrbit(2, this));
             orbits.Add(new StarOrbit(1, this));
         }
-        else if (shapeDecider < 10)
+        else if (shapeDecider < 20)
         {
             numberOfOrbits = 1;
             orbits.Add(new StarOrbit(3, this));

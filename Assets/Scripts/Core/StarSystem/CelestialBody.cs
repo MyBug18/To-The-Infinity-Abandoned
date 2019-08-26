@@ -17,7 +17,7 @@ public abstract class CelestialBody
 
     public override string ToString()
     {
-        return type + " name: " + name + "\n";
+        return type + " name: " + name + ", ";
     }
 }
 
