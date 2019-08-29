@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlanetWrapper : MonoBehaviour
+public class StarSystemWrapper : MonoBehaviour
 {
-    public Planet planet;
+    public StarSystem system;
+
     // Start is called before the first frame update
-    protected void Start()
+    void Start()
     {
         
     }
 
     // Update is called once per frame
-    protected void Update()
+    void Update()
     {
         
     }
