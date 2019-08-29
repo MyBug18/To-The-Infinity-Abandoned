@@ -19,12 +19,12 @@ public class StarSystem
 
         int shapeDecider = r.Next() % 20;
         
-        if (shapeDecider < 13)
+        if (shapeDecider < 8)
         {
             numberOfOrbits = 1;
             orbits.Add(new StarOrbit(1, this));
         }
-        else if (shapeDecider < 15)
+        else if (shapeDecider < 13)
         {
             numberOfOrbits = 2;
             orbits.Add(new StarOrbit(1, this));
@@ -53,6 +53,8 @@ public class StarSystem
             numberOfOrbits = 1;
             orbits.Add(new StarOrbit(3, this));
         }
+
+        orbits.Sort((a, b) => b.orbits.Count.CompareTo(a.orbits.Count));
     }
 
     public string GetStarName()

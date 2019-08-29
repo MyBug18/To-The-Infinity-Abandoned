@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
@@ -9,28 +10,29 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     Text date;
 
+    [SerializeField]
+    Transform starSystemPrefab, parentOfAllSystems;
+
     public bool isPaused = false;
     public float interval = 0.15f;
 
     private Coroutine _gameProceeder;
     private Game _game;
 
-    StarSystem sys;
-
-    [SerializeField]
-    Transform starSystemPrefab;
+    public List<StarSystemWrapper> systems = new List<StarSystemWrapper>();
 
     private void Awake()
     {
         _game = GameDataHolder.game;
         _game.AddRandomStarSystem();
-        sys = _game.systems[0];
     }
 
     // Start is called before the first frame update
     void Start()
     {
         _gameProceeder = StartCoroutine(_StartYear());
+        InstantiateStarSystem(_game.systems[0]);
+        
     }
 
     // Update is called once per frame
@@ -75,4 +77,11 @@ public class GameManager : MonoBehaviour
         }
     }
     
+
+    public void InstantiateStarSystem(StarSystem system) // Position should be modified.
+    {
+        Transform sys = Instantiate(starSystemPrefab, new Vector3(0, 0), Quaternion.identity, parentOfAllSystems);
+        sys.name = system.name;
+        sys.GetComponent<StarSystemWrapper>().system = system;
+    }
 }

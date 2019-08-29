@@ -45,7 +45,7 @@ public class StarOrbit
         }
     }
 
-    public void _MakeOrbits(int nth)
+    private void _MakeOrbits(int nth)
     {
         if (GameDataHolder.r.Next() % 100 < inhabitableChance * 100 && inhabitableRange.min <= nth && inhabitableRange.max >= nth)
         {
