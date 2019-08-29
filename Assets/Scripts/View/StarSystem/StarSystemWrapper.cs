@@ -5,6 +5,7 @@ using UnityEngine;
 public class StarSystemWrapper : MonoBehaviour
 {
     public StarSystem system;
+    public Transform starOrbitPrefab;
 
     // Start is called before the first frame update
     void Start()

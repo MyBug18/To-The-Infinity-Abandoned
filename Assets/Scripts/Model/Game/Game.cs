@@ -35,6 +35,8 @@ public class Game
     private List<string> _unusedStarName;
     private List<string> _unusedBlackholeName;
 
+    public List<StarSystem> systems { get; private set; } = new List<StarSystem>();
+
 
     public Game()
     {
@@ -59,6 +61,11 @@ public class Game
         string result = _unusedBlackholeName[index];
         _unusedBlackholeName.RemoveAt(index);
         return result;
+    }
+
+    public void AddRandomStarSystem()
+    {
+        systems.Add(new StarSystem(this));
     }
 
     public void IncreaseOneDay()
