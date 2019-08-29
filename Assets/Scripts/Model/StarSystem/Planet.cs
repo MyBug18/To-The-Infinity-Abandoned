@@ -93,7 +93,6 @@ public class Planet : CelestialBody
         {
             if (satelliteChance * 100 > GameManager.r.Next() % 100)
             {
-                UnityEngine.Debug.Log("asdf");
                 if (nthOrbit <= starOrbit.inhabitableRange.max && nthOrbit >= starOrbit.inhabitableRange.min && GameManager.r.Next() % 100 < starOrbit.inhabitableChance * 100)
                 {
                     satellites.Add(new Planet_Inhabitable(_GetSatelliteName(), game, starOrbit, satellites.Count));

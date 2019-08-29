@@ -47,7 +47,6 @@ public class StarOrbit
 
     public void _MakeOrbits(int nth)
     {
-        UnityEngine.Debug.Log(nth + ", " + inhabitableRange + ", " + inhabitableChance);
         if (GameManager.r.Next() % 100 < inhabitableChance * 100 && inhabitableRange.min <= nth && inhabitableRange.max >= nth)
         {
             orbits.Add(new Planet_Inhabitable(_GetPlanetName(nth), system.game, this, nth));
