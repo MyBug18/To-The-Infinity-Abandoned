@@ -19,7 +19,7 @@ public class YearTest : MonoBehaviour
     
     private void Awake()
     {
-        game = GameManager.game;
+        game = GameDataHolder.game;
         earth = new Planet_Inhabitable("Earth", 16, game, null, 0);
         earth.StartColonization();
         sys = new StarSystem(game);
@@ -115,8 +115,8 @@ public class YearTest : MonoBehaviour
         while(true)
         {
             yield return new WaitForSeconds(interval);
-            GameManager.game.IncreaseOneDay();
-            date.text = GameManager.game.date;
+            GameDataHolder.game.IncreaseOneDay();
+            date.text = GameDataHolder.game.date;
         }
     }
     

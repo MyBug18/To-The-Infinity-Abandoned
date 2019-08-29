@@ -83,7 +83,7 @@ public static class WorkingPlaceFactory
             default:
                 throw new InvalidOperationException("Invalid building type detected.");
         }
-        return (int)(result / GameManager.game.constructionTimeModifier);
+        return (int)(result / GameDataHolder.game.constructionTimeModifier);
     }
 
     public static int GetConstructionTime(DistrictType type)
@@ -102,7 +102,7 @@ public static class WorkingPlaceFactory
             default:
                 throw new InvalidOperationException("Invalid district type detected!");
         }
-        return (int)(result / GameManager.game.constructionTimeModifier);
+        return (int)(result / GameDataHolder.game.constructionTimeModifier);
     }
 
     public static int GetContructionCost(BuildingType type)
@@ -138,7 +138,7 @@ public static class WorkingPlaceFactory
             default:
                 throw new InvalidOperationException("Invalid BuildingType detected!");
         }
-        return (int)(result / GameManager.game.constructionCostModifier);
+        return (int)(result / GameDataHolder.game.constructionCostModifier);
     }
 
     public static int GetConstructionCost(DistrictType type)
@@ -157,6 +157,6 @@ public static class WorkingPlaceFactory
             default:
                 throw new InvalidOperationException("Invalid DistrictType detected!");
         }
-        return (int)(result / GameManager.game.constructionCostModifier);
+        return (int)(result / GameDataHolder.game.constructionCostModifier);
     }
 }
