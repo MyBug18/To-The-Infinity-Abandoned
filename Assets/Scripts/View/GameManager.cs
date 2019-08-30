@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     private Coroutine _gameProceeder;
     private Game _game;
 
+    private float currentInterval = 0;
+
     public List<StarSystemWrapper> systems = new List<StarSystemWrapper>();
 
     private void Awake()
@@ -33,6 +35,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (GameDataHolder.isPaused)
@@ -45,33 +48,29 @@ public class GameManager : MonoBehaviour
             }
         }
         
-
+        if (!GameDataHolder.isPaused)
+        {
+            currentInterval += Time.deltaTime;
+            if (currentInterval > GameDataHolder.interval)
+            {
+                GameDataHolder.game.IncreaseOneDay();
+                date.text = GameDataHolder.game.date;
+                currentInterval = 0;
+            }
+        }
     }
     
     public void PlayGame()
     {
         if (!GameDataHolder.isPaused) return;
         GameDataHolder.isPaused = false;
-        _gameProceeder = StartCoroutine(_StartYear());
     }
 
     public void PauseGame()
     {
         if (GameDataHolder.isPaused) return;
         GameDataHolder.isPaused = true;
-        StopCoroutine(_gameProceeder);
-    }
-
-    IEnumerator _StartYear()
-    {
-        while(true)
-        {
-            yield return new WaitForSeconds(GameDataHolder.interval);
-            GameDataHolder.game.IncreaseOneDay();
-            date.text = GameDataHolder.game.date;
-        }
-    }
-    
+    }    
 
     public void InstantiateStarSystem(StarSystem system) // Position should be modified.
     {

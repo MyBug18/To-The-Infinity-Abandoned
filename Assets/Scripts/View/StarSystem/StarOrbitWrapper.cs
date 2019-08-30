@@ -30,6 +30,13 @@ public class StarOrbitWrapper : MonoBehaviour
             int radius = i + 2;
             Transform orbitLine = Instantiate(orbitLinePrefab, transform.position, Quaternion.identity, parentOfAllOrbitLines);
             orbitLine.GetComponent<DrawOrbitLine>().radius = radius;
+
+            CelestialBody body = starOrbit.orbits[i];
+
+            switch(body.type)
+            {
+
+            }
         }
     }
 }
