@@ -8,6 +8,8 @@ public class StarOrbitWrapper : MonoBehaviour
 
     [SerializeField]
     Transform orbitLinePrefab, parentOfAllCelestialBodies;
+    [SerializeField]
+    Transform starPrefab, planetPrefab;
 
     // Start is called before the first frame update
     void Start()
