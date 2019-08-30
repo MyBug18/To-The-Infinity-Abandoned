@@ -13,9 +13,6 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     Transform starSystemPrefab, parentOfAllSystems;
 
-    public bool isPaused = false;
-    public float interval = 0.15f;
-
     private Coroutine _gameProceeder;
     private Game _game;
 
@@ -30,9 +27,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _gameProceeder = StartCoroutine(_StartYear());
         InstantiateStarSystem(_game.systems[0]);
-        
     }
 
     // Update is called once per frame
@@ -40,7 +35,7 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (isPaused)
+            if (GameDataHolder.isPaused)
             {
                 PlayGame();
             }
@@ -52,18 +47,18 @@ public class GameManager : MonoBehaviour
         
 
     }
-
+    
     public void PlayGame()
     {
-        if (!isPaused) return;
-        isPaused = false;
+        if (!GameDataHolder.isPaused) return;
+        GameDataHolder.isPaused = false;
         _gameProceeder = StartCoroutine(_StartYear());
     }
 
     public void PauseGame()
     {
-        if (isPaused) return;
-        isPaused = true;
+        if (GameDataHolder.isPaused) return;
+        GameDataHolder.isPaused = true;
         StopCoroutine(_gameProceeder);
     }
 
@@ -71,7 +66,7 @@ public class GameManager : MonoBehaviour
     {
         while(true)
         {
-            yield return new WaitForSeconds(interval);
+            yield return new WaitForSeconds(GameDataHolder.interval);
             GameDataHolder.game.IncreaseOneDay();
             date.text = GameDataHolder.game.date;
         }

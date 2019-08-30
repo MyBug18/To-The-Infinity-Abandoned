@@ -5,6 +5,8 @@ public static class GameDataHolder
 {
     public static Game game = new Game();
     public static Random r = new Random();
+    public static bool isPaused = true;
+    public static float interval = 0.15f;
 
     public static void SaveGame()
     {

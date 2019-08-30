@@ -6,6 +6,8 @@ public abstract class CelestialBodyWrapper : MonoBehaviour
 {
     public CelestialBody body;
 
+    public int orbitRadius;
+
     // Start is called before the first frame update
     protected virtual void Start()
     {
