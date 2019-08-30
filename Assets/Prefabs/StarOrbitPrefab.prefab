@@ -27,9 +27,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 5269571451571591257}
-  - {fileID: 8702089715683830020}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -45,69 +43,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbcab90d274e3984b8fe6d5d805a6982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orbitLinePrefab: {fileID: 2983937802759384275, guid: 08a5ba6cb91b185488b6b410a87ffd4f,
+  objectInOrbitPrefab: {fileID: 46999527707606254, guid: 9886460a582c58e41ad15ebfa546c092,
     type: 3}
-  parentOfAllCelestialBodies: {fileID: 5269571451571591257}
-  parentOfAllOrbitLines: {fileID: 8702089715683830020}
-  starPrefab: {fileID: 0}
-  planetPrefab: {fileID: 0}
---- !u!1 &7959987785659753122
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8702089715683830020}
-  m_Layer: 0
-  m_Name: OrbitLines
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8702089715683830020
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7959987785659753122}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 7256627608046333064}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &8678460119532533794
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5269571451571591257}
-  m_Layer: 0
-  m_Name: CelestialBodies
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5269571451571591257
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8678460119532533794}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 7256627608046333064}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  starPrefab: {fileID: 6924683766217095404, guid: f946e5eacca0b0f42bab08951578e969,
+    type: 3}
+  planetPrefab: {fileID: 5586881634075197075, guid: fcea3d9cd9cb6d94ebee1362d590fdae,
+    type: 3}
+  asteroidPrefab: {fileID: 2113715693219681025, guid: c032a803116c65147a17a0327cea5faa,
+    type: 3}
+  asteroidBeltPrefab: {fileID: 5040051073476674096, guid: c798408106285fb40b1147d113463d03,
+    type: 3}

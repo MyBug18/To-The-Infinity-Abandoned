@@ -11,9 +11,12 @@ public class StarOrbit
     public float inhabitableChance;
     public (int min, int max) inhabitableRange;
 
+    public (float x, float y) positionInStarSystem;
+
     public StarOrbit(int starNum, StarSystem system)
     {
         this.system = system;
+        //positionInStarSystem = position;
         orbits = new List<CelestialBody>();
 
         for (int i = 0; i < starNum; i++)
@@ -49,15 +52,15 @@ public class StarOrbit
     {
         if (GameDataHolder.r.Next() % 100 < inhabitableChance * 100 && inhabitableRange.min <= nth && inhabitableRange.max >= nth)
         {
-            orbits.Add(new Planet_Inhabitable(_GetPlanetName(nth), system.game, this, nth));
+            orbits.Add(new Planet_Inhabitable(_GetPlanetName(nth), system.game, this, nth, false));
         }
         else if ((nth == orbitNum || nth == orbitNum / 2) && orbitNum > 4)
         {
-            orbits.Add(new AsteroidBelt(system.game, this));
+            orbits.Add(new AsteroidBelt(system.game, this, nth));
         }
         else
         {
-            var p = new Planet(_GetPlanetName(nth), system.game, this, nth);
+            var p = new Planet(_GetPlanetName(nth), system.game, this, nth, false);
 
             orbits.Add(p);
         }

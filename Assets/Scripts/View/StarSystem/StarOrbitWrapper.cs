@@ -7,14 +7,14 @@ public class StarOrbitWrapper : MonoBehaviour
     public StarOrbit starOrbit;
 
     [SerializeField]
-    Transform orbitLinePrefab, parentOfAllCelestialBodies, parentOfAllOrbitLines;
+    Transform objectInOrbitPrefab;
     [SerializeField]
     Transform starPrefab, planetPrefab, asteroidPrefab, asteroidBeltPrefab;
 
     // Start is called before the first frame update
     void Start()
     {
-        _DrawOrbitLines();
+        _InstantiateFirstOrbits();
     }
 
     // Update is called once per frame
@@ -23,18 +23,24 @@ public class StarOrbitWrapper : MonoBehaviour
         
     }
 
-    private void _DrawOrbitLines()
+    private void _InstantiateFirstOrbits()
     {
         for (int i = 0; i < starOrbit.orbits.Count; i++)
         {
-            int radius = i + 2;
-            Transform orbitLine = Instantiate(orbitLinePrefab, transform.position, Quaternion.identity, parentOfAllOrbitLines);
-            orbitLine.GetComponent<DrawOrbitLine>().radius = radius;
-
             CelestialBody body = starOrbit.orbits[i];
+            Transform objectInOrbit = Instantiate(objectInOrbitPrefab, transform);
+            objectInOrbit.GetComponent<ObjectInOrbit>().orbitLine.radius = body.orbitRadius;
+
+            Transform parent = objectInOrbit.GetComponent<ObjectInOrbit>().orbitRotator;
 
             switch(body.type)
             {
+                case CelestialBodyType.Planet:
+                    Transform planet = Instantiate(planetPrefab, parent);
+                    planet.GetComponent<PlanetWrapper>().body = body;
+                    planet.localPosition = new Vector3(body.positionComparedToOrbitHost.x, body.positionComparedToOrbitHost.y);
+                    planet.name = body.name;
+                    break;
 
             }
         }

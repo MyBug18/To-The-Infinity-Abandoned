@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         InstantiateStarSystem(_game.systems[0]);
+        Debug.Log(_game.systems[0]);
     }
 
     // Update is called once per frame

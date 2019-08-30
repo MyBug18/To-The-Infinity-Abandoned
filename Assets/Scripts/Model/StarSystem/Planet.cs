@@ -14,21 +14,37 @@ public class Planet : CelestialBody
         }
     }
 
+    public bool isSatellite;
+
     public List<CelestialBody> satellites = new List<CelestialBody>();
 
-    public Planet(string name, int size, PlanetType planetType, Game game, StarOrbit orbit, int nthOrbit) : base(CelestialBodyType.Planet, orbit, game) // for making special named planets, such as Mercury, Mars.
+    public Planet(string name, int size, PlanetType planetType, Game game, StarOrbit orbit, int nthOrbit, bool isSatellite) : base(CelestialBodyType.Planet, orbit, game) // for making special named planets, such as Mercury, Mars.
     {
         this.nthOrbit = nthOrbit;
         this.name = name;
         this.size = size;
         this.planetType = planetType;
+        if (!isSatellite)
+            orbitRadius = (nthOrbit + 2) * 1.5f;
+        else
+            orbitRadius = nthOrbit + 1;
+
+        double randomizer = GameDataHolder.r.NextDouble();
+        positionComparedToOrbitHost = (orbitRadius * (float)Math.Cos(Math.PI * 2 * randomizer), orbitRadius * (float)Math.Sin(Math.PI * 2 * randomizer));
     }
 
-    public Planet(string name, Game game, StarOrbit starOrbit, int nthOrbit, bool isInhabitable = false) : base(CelestialBodyType.Planet, starOrbit, game) // for making general non-inhabitable planets.
+    public Planet(string name, Game game, StarOrbit starOrbit, int nthOrbit, bool isSatellite, bool isInhabitable = false) : base(CelestialBodyType.Planet, starOrbit, game) // for making general non-inhabitable planets.
     {
         this.nthOrbit = nthOrbit;
         this.name = name;
         size = GameDataHolder.r.Next() % 15 + 11;
+        if (!isSatellite)
+            orbitRadius = (nthOrbit + 2) * 1.5f;
+        else
+            orbitRadius = nthOrbit + 1;
+
+        double randomizer = GameDataHolder.r.NextDouble();
+        positionComparedToOrbitHost = (orbitRadius * (float)Math.Cos(Math.PI * 2 * randomizer), orbitRadius * (float)Math.Sin(Math.PI * 2 * randomizer));
 
         if (isInhabitable)                       // sets planetType.
             planetType = PlanetType.Inhabitable;
@@ -89,17 +105,14 @@ public class Planet : CelestialBody
 
     public void MakeSatellite()
     {
+        int nth = 0;
         while(true)
         {
             if (satelliteChance * 100 > GameDataHolder.r.Next() % 100)
             {
                 if (nthOrbit <= starOrbit.inhabitableRange.max && nthOrbit >= starOrbit.inhabitableRange.min && GameDataHolder.r.Next() % 100 < starOrbit.inhabitableChance * 100)
                 {
-                    satellites.Add(new Planet_Inhabitable(_GetSatelliteName(), game, starOrbit, satellites.Count));
-                }
-                else if (GameDataHolder.r.Next() % 10 < 2)
-                {
-                    satellites.Add(new Asteroid(game, starOrbit));
+                    satellites.Add(new Planet_Inhabitable(_GetSatelliteName(), game, starOrbit, nth, true));
                 }
                 else
                 {
@@ -121,10 +134,12 @@ public class Planet : CelestialBody
                             type = PlanetType.Barren;
                             break;
                     }
-                    satellites.Add(new Planet(_GetSatelliteName(), GameDataHolder.r.Next(5, size * 2 / 3), type, game, starOrbit, satellites.Count));
+                    satellites.Add(new Planet(_GetSatelliteName(), GameDataHolder.r.Next(5, size * 2 / 3), type, game, starOrbit, satellites.Count, true));
                 }
             }
             else return;
+
+            nth++;
         }
     }
 

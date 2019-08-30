@@ -11,6 +11,9 @@ public abstract class CelestialBody
     public int orbitalPeriod = GameDataHolder.r.Next(120, 720);
     public float rotationCycle = GameDataHolder.r.Next(30, 300) / 100;
 
+    public float orbitRadius;
+    public (float x, float y) positionComparedToOrbitHost;
+
     protected CelestialBody(CelestialBodyType type, StarOrbit starOrbit, Game game)
     {
         this.starOrbit = starOrbit;

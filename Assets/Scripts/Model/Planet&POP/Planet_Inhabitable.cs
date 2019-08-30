@@ -22,7 +22,7 @@ public class Planet_Inhabitable : Planet
     }
     public System.Random r = new System.Random();
 
-    public Planet_Inhabitable(string name, int size, Game game, StarOrbit orbit, int nthOrbit) : base(name, size, PlanetType.Inhabitable, game, orbit, nthOrbit) // for making special inhabitable planet, such as Earth.
+    public Planet_Inhabitable(string name, int size, Game game, StarOrbit orbit, int nthOrbit, bool isSatellite) : base(name, size, PlanetType.Inhabitable, game, orbit, nthOrbit, isSatellite) // for making special inhabitable planet, such as Earth.
     {
         System.Random r = new System.Random();
         for (int i = 0; i < size / 3 + 1; i++)
@@ -31,7 +31,7 @@ public class Planet_Inhabitable : Planet
         }
     }
 
-    public Planet_Inhabitable(string name, Game game, StarOrbit orbit, int nthOrbit) : base(name, game, orbit, nthOrbit, true) // for making general inhabitable planets.
+    public Planet_Inhabitable(string name, Game game, StarOrbit orbit, int nthOrbit, bool isSatellite) : base(name, game, orbit, nthOrbit, isSatellite, true) // for making general inhabitable planets.
     {
         System.Random r = new System.Random();
         for (int i = 0; i < size / 3 + 1; i++)

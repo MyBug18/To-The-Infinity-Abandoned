@@ -18,6 +18,9 @@ public class StarSystem
         name = game.GetStarSystemName();
 
         int shapeDecider = r.Next() % 20;
+
+        float secondOrbitAngle = (float)(Math.PI / 2 * GameDataHolder.r.NextDouble());
+        float thirdOrbitAngle = (float)(Math.PI / 2 * GameDataHolder.r.NextDouble() + Math.PI);
         
         if (shapeDecider < 8)
         {
@@ -55,6 +58,21 @@ public class StarSystem
         }
 
         orbits.Sort((a, b) => b.orbits.Count.CompareTo(a.orbits.Count));
+
+        float _orbitDistance;
+
+        orbits[0].positionInStarSystem = (0, 0);
+        if (orbits.Count > 1)
+        {
+            _orbitDistance = orbits[0].orbits[orbits[0].orbits.Count - 1].orbitRadius + orbits[1].orbits[orbits[1].orbits.Count - 1].orbitRadius + 1;
+            orbits[1].positionInStarSystem = (_orbitDistance * (float)Math.Cos(secondOrbitAngle), _orbitDistance * (float)Math.Sin(secondOrbitAngle));
+
+            if (orbits.Count > 2)
+            {
+                _orbitDistance = orbits[0].orbits[orbits[0].orbits.Count - 1].orbitRadius + orbits[2].orbits[orbits[2].orbits.Count - 1].orbitRadius + 1;
+                orbits[2].positionInStarSystem = (_orbitDistance * (float)Math.Cos(thirdOrbitAngle), _orbitDistance * (float)Math.Sin(thirdOrbitAngle));
+            }
+        }
     }
 
     public string GetStarName()

@@ -4,7 +4,7 @@ public class Asteroid : CelestialBody
 {
     private Random _r = new Random();
 
-    public Asteroid(Game game, StarOrbit starOrbit) : base(CelestialBodyType.Asteroid, starOrbit, game)
+    public Asteroid(Game game, StarOrbit starOrbit, (float x, float y) position) : base(CelestialBodyType.Asteroid, starOrbit, game)
     {
         name = _GenerateAsteroidName();
         switch(_r.Next(0, 4))
@@ -16,6 +16,8 @@ public class Asteroid : CelestialBody
                 yields.Add(new CelestialBodyYield((GlobalResourceType.Mineral, _r.Next(3, 7)), this));
                 break;
         }
+
+        positionComparedToOrbitHost = position;
     }
 
     private string _GenerateAsteroidName()
