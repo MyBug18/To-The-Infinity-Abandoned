@@ -25,12 +25,11 @@ public class StarOrbitWrapper : MonoBehaviour
 
     private void _InstantiateFirstOrbits()
     {
-        for (int i = 0; i < starOrbit.orbits.Count; i++)
+        foreach (var body in starOrbit.orbits)
         {
-            CelestialBody body = starOrbit.orbits[i];
             Transform objectInOrbit = Instantiate(objectInOrbitPrefab, transform);
             objectInOrbit.GetComponent<ObjectInOrbit>().orbitLine.radius = body.orbitRadius;
-
+            objectInOrbit.name = body.name + " Orbit";
             Transform parent = objectInOrbit.GetComponent<ObjectInOrbit>().orbitRotator;
 
             switch(body.type)
@@ -40,8 +39,28 @@ public class StarOrbitWrapper : MonoBehaviour
                     planet.GetComponent<PlanetWrapper>().body = body;
                     planet.localPosition = new Vector3(body.positionComparedToOrbitHost.x, body.positionComparedToOrbitHost.y);
                     planet.name = body.name;
-                    break;
 
+                    Transform satellites = planet.GetComponent<PlanetWrapper>().satellites;
+                
+                    foreach(var sat in ((Planet)body).satellites)
+                    {
+                        Transform objectInOrbitSat = Instantiate(objectInOrbitPrefab, satellites);
+                        objectInOrbitSat.GetComponent<ObjectInOrbit>().orbitLine.radius = sat.orbitRadius;
+
+                        Transform parentSat = objectInOrbitSat.GetComponent<ObjectInOrbit>().orbitRotator;
+
+                        Transform satellite = Instantiate(planetPrefab, parentSat);
+                        satellite.GetComponent<PlanetWrapper>().body = sat;
+                        satellite.localPosition = new Vector3(sat.positionComparedToOrbitHost.x, sat.positionComparedToOrbitHost.y);
+                        satellite.name = sat.name;
+                    }
+
+                    break;
+                case CelestialBodyType.AsteroidBelt:
+                    Transform asteroidBelt = Instantiate(asteroidBeltPrefab, parent);
+                    asteroidBelt.GetComponent<AsteroidBeltWrapper>().body = body;
+                    asteroidBelt.name = body.name;
+                    break;
             }
         }
     }

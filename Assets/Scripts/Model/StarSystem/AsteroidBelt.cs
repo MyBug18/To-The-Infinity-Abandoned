@@ -11,11 +11,12 @@ public class AsteroidBelt : CelestialBody
 
         orbitRadius = (nthOrbit + 2) * 1.5f;
 
-        int asteroidNum = GameDataHolder.r.Next(4, 9);
+        int asteroidNum = GameDataHolder.r.Next(7, 9);
 
         for (int i = 0; i < asteroidNum; i++)
         {
-            asteroids.Add(new Asteroid(game, starOrbit, (orbitRadius * (float)Math.Cos(Math.PI * 2 * GameDataHolder.r.NextDouble()), orbitRadius * (float)Math.Sin(Math.PI * 2 * GameDataHolder.r.NextDouble()))));
+            var angle = 2 * Math.PI / asteroidNum;
+            asteroids.Add(new Asteroid(game, starOrbit, ((float)(orbitRadius * Math.Cos(angle * i)), (float)(orbitRadius * Math.Sin(angle * i)))));
         }
         positionComparedToOrbitHost = (0, 0);
     }

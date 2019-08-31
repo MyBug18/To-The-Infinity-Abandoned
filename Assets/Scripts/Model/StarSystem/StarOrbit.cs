@@ -68,7 +68,7 @@ public class StarOrbit
 
     private string _GetPlanetName(int orbitNum)
     {
-        return center[0].name + " " + _toRoman(orbitNum);
+        return center[0].name + " " + _toRoman(orbitNum + 1);
     }
 
     public override string ToString()

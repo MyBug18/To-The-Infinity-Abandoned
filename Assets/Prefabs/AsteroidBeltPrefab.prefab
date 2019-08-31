@@ -44,5 +44,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   orbitRadius: 0
-  asteroidPrefabs:
-  - {fileID: 2113715693219681025, guid: c032a803116c65147a17a0327cea5faa, type: 3}
+  asteroidPrefab: {fileID: 2113715693219681025, guid: c032a803116c65147a17a0327cea5faa,
+    type: 3}

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class DrawOrbitLine : MonoBehaviour
 {
-    float theta_scale = 0.01f;        //Set lower to add more points
+    float theta_scale = 0.02f;        //Set lower to add more points
     int size; //Total number of points in circle
 
     LineRenderer lineRenderer;
@@ -25,6 +25,10 @@ public class DrawOrbitLine : MonoBehaviour
         lineRenderer.endWidth = 0.01f;
         lineRenderer.positionCount = size;
 
+    }
+
+    private void Update()
+    {
         Vector3 pos;
         float theta = 0f;
         for (int i = 0; i < size; i++)

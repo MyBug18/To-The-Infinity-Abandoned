@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlanetWrapper : CelestialBodyWrapper
 {
     public Planet planet;
+    public Transform satellites;
     // Start is called before the first frame update
     protected override void Start()
     {

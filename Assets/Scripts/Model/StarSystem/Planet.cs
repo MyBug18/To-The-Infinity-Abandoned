@@ -24,13 +24,12 @@ public class Planet : CelestialBody
         this.name = name;
         this.size = size;
         this.planetType = planetType;
-        if (!isSatellite)
-            orbitRadius = (nthOrbit + 2) * 1.5f;
-        else
-            orbitRadius = nthOrbit + 1;
+        this.isSatellite = isSatellite;
 
-        double randomizer = GameDataHolder.r.NextDouble();
-        positionComparedToOrbitHost = (orbitRadius * (float)Math.Cos(Math.PI * 2 * randomizer), orbitRadius * (float)Math.Sin(Math.PI * 2 * randomizer));
+        _SetRadiusAndPosition();
+
+        if (isSatellite)
+            UnityEngine.Debug.Log("radius: " + orbitRadius + ", " + positionComparedToOrbitHost + "Squared: " + Math.Sqrt((Math.Pow(positionComparedToOrbitHost.x, 2) + Math.Pow(positionComparedToOrbitHost.y, 2))) );
     }
 
     public Planet(string name, Game game, StarOrbit starOrbit, int nthOrbit, bool isSatellite, bool isInhabitable = false) : base(CelestialBodyType.Planet, starOrbit, game) // for making general non-inhabitable planets.
@@ -38,13 +37,9 @@ public class Planet : CelestialBody
         this.nthOrbit = nthOrbit;
         this.name = name;
         size = GameDataHolder.r.Next() % 15 + 11;
-        if (!isSatellite)
-            orbitRadius = (nthOrbit + 2) * 1.5f;
-        else
-            orbitRadius = nthOrbit + 1;
+        this.isSatellite = isSatellite;
 
-        double randomizer = GameDataHolder.r.NextDouble();
-        positionComparedToOrbitHost = (orbitRadius * (float)Math.Cos(Math.PI * 2 * randomizer), orbitRadius * (float)Math.Sin(Math.PI * 2 * randomizer));
+        _SetRadiusAndPosition();
 
         if (isInhabitable)                       // sets planetType.
             planetType = PlanetType.Inhabitable;
@@ -141,6 +136,17 @@ public class Planet : CelestialBody
 
             nth++;
         }
+    }
+
+    private void _SetRadiusAndPosition()
+    {
+        if (!isSatellite)
+            orbitRadius = (nthOrbit + 2) * 1.5f;
+        else
+            orbitRadius = (float)(nthOrbit + 2) / 2;
+
+        double randomizer = GameDataHolder.r.NextDouble();
+        positionComparedToOrbitHost = (orbitRadius * (float)Math.Cos(Math.PI * 2 * randomizer), orbitRadius * (float)Math.Sin(Math.PI * 2 * randomizer));
     }
 
     private string _GetSatelliteName()

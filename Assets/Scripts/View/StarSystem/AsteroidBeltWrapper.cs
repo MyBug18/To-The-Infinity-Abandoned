@@ -5,9 +5,8 @@ using UnityEngine;
 public class AsteroidBeltWrapper : CelestialBodyWrapper
 {
     public AsteroidBelt asteroidBelt;
-
-    [SerializeField]
-    Transform[] asteroidPrefabs;
+    
+    public Transform asteroidPrefab;
 
     // Start is called before the first frame update
     protected override void Start()
@@ -28,9 +27,11 @@ public class AsteroidBeltWrapper : CelestialBodyWrapper
     {
         for (int i = 0; i < asteroidBelt.asteroids.Count; i++)
         {
-            int idx = GameDataHolder.r.Next(0, asteroidPrefabs.Length);
-            Vector3 pos = new Vector3(orbitRadius * Mathf.Cos(i * Mathf.PI / asteroidBelt.asteroids.Count), orbitRadius * Mathf.Sin(i * Mathf.PI / asteroidBelt.asteroids.Count));
-            Transform asteroid = Instantiate(asteroidPrefabs[idx], pos, Quaternion.identity, transform);
+            Asteroid ast = asteroidBelt.asteroids[i];
+
+            Transform asteroid = Instantiate(asteroidPrefab, transform);
+            asteroid.GetComponent<AsteroidWrapper>().body = ast;
+            asteroid.localPosition = new Vector3(ast.positionComparedToOrbitHost.x, ast.positionComparedToOrbitHost.y);
         }
     }
 }
