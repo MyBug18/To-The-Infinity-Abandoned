@@ -6,6 +6,7 @@ public class StarSystemWrapper : MonoBehaviour
 {
     public StarSystem system;
     public Transform starOrbitPrefab;
+    public GameManager gameManager;
 
     public List<StarOrbitWrapper> starOrbits = new List<StarOrbitWrapper>();
 
@@ -29,6 +30,7 @@ public class StarSystemWrapper : MonoBehaviour
         {
             Transform orbit = Instantiate(starOrbitPrefab, transform);
             orbit.GetComponent<StarOrbitWrapper>().starOrbit = orb;
+            orbit.GetComponent<StarOrbitWrapper>().gameManager = gameManager;
             orbit.localPosition = new Vector3(orb.positionInStarSystem.x, orb.positionInStarSystem.y);
             starOrbits.Add(orbit.GetComponent<StarOrbitWrapper>());
         }

@@ -17,8 +17,13 @@ public class GameManager : MonoBehaviour
     private Game _game;
 
     private float currentInterval = 0;
+    private int currentFrameCounter = 0;
 
     public List<StarSystemWrapper> systems = new List<StarSystemWrapper>();
+
+    public delegate void ObjectInOrbitRotationEvent();
+
+    public ObjectInOrbitRotationEvent objectInOrbitRotationEvents;
 
     private void Awake()
     {
@@ -57,10 +62,24 @@ public class GameManager : MonoBehaviour
                 GameDataHolder.game.IncreaseOneDay();
                 date.text = GameDataHolder.game.date;
                 currentInterval = 0;
+                
             }
+            
+            currentFrameCounter++;
+            if (currentFrameCounter > GameDataHolder.gameSpeed)
+            {
+                _CalledByGameFrame();
+                currentFrameCounter = 0;
+            }
+            
         }
     }
     
+    private void _CalledByGameFrame()
+    {
+        objectInOrbitRotationEvents();
+    }
+
     public void PlayGame()
     {
         if (!GameDataHolder.isPaused) return;
@@ -78,5 +97,6 @@ public class GameManager : MonoBehaviour
         Transform sys = Instantiate(starSystemPrefab, new Vector3(0, 0), Quaternion.identity, parentOfAllSystems);
         sys.name = system.name;
         sys.GetComponent<StarSystemWrapper>().system = system;
+        sys.GetComponent<StarSystemWrapper>().gameManager = this;
     }
 }

@@ -27,9 +27,6 @@ public class Planet : CelestialBody
         this.isSatellite = isSatellite;
 
         _SetRadiusAndPosition();
-
-        if (isSatellite)
-            UnityEngine.Debug.Log("radius: " + orbitRadius + ", " + positionComparedToOrbitHost + "Squared: " + Math.Sqrt((Math.Pow(positionComparedToOrbitHost.x, 2) + Math.Pow(positionComparedToOrbitHost.y, 2))) );
     }
 
     public Planet(string name, Game game, StarOrbit starOrbit, int nthOrbit, bool isSatellite, bool isInhabitable = false) : base(CelestialBodyType.Planet, starOrbit, game) // for making general non-inhabitable planets.
@@ -141,7 +138,7 @@ public class Planet : CelestialBody
     private void _SetRadiusAndPosition()
     {
         if (!isSatellite)
-            orbitRadius = (nthOrbit + 2) * 1.5f;
+            orbitRadius = (nthOrbit + 2) * 2f;
         else
             orbitRadius = (float)(nthOrbit + 2) / 2;
 

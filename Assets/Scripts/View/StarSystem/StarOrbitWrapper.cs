@@ -11,6 +11,8 @@ public class StarOrbitWrapper : MonoBehaviour
     [SerializeField]
     Transform starPrefab, planetPrefab, asteroidPrefab, asteroidBeltPrefab;
 
+    public GameManager gameManager;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,6 +38,8 @@ public class StarOrbitWrapper : MonoBehaviour
             {
                 case CelestialBodyType.Planet:
                     Transform planet = Instantiate(planetPrefab, parent);
+                    parent.parent.GetComponent<ObjectInOrbit>().holdingBody = body;
+                    parent.parent.GetComponent<ObjectInOrbit>().gameManager = gameManager;
                     planet.GetComponent<PlanetWrapper>().body = body;
                     planet.localPosition = new Vector3(body.positionComparedToOrbitHost.x, body.positionComparedToOrbitHost.y);
                     planet.name = body.name;
@@ -48,7 +52,8 @@ public class StarOrbitWrapper : MonoBehaviour
                         objectInOrbitSat.GetComponent<ObjectInOrbit>().orbitLine.radius = sat.orbitRadius;
 
                         Transform parentSat = objectInOrbitSat.GetComponent<ObjectInOrbit>().orbitRotator;
-
+                        parentSat.parent.GetComponent<ObjectInOrbit>().holdingBody = body;
+                        parentSat.parent.GetComponent<ObjectInOrbit>().gameManager = gameManager;
                         Transform satellite = Instantiate(planetPrefab, parentSat);
                         satellite.GetComponent<PlanetWrapper>().body = sat;
                         satellite.localPosition = new Vector3(sat.positionComparedToOrbitHost.x, sat.positionComparedToOrbitHost.y);
@@ -59,6 +64,8 @@ public class StarOrbitWrapper : MonoBehaviour
                 case CelestialBodyType.AsteroidBelt:
                     Transform asteroidBelt = Instantiate(asteroidBeltPrefab, parent);
                     asteroidBelt.GetComponent<AsteroidBeltWrapper>().body = body;
+                    parent.parent.GetComponent<ObjectInOrbit>().gameManager = gameManager;
+                    parent.parent.GetComponent<ObjectInOrbit>().holdingBody = body;
                     asteroidBelt.name = body.name;
                     break;
             }

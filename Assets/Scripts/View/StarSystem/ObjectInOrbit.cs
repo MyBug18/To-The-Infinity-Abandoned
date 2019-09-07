@@ -7,15 +7,20 @@ public class ObjectInOrbit : MonoBehaviour
     public Transform orbitRotator;
     public DrawOrbitLine orbitLine;
 
+    public CelestialBody holdingBody;
+
+    public GameManager gameManager;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        gameManager.objectInOrbitRotationEvents += new GameManager.ObjectInOrbitRotationEvent(_RotateThroughOrbit);
     }
 
-    // Update is called once per frame
-    void Update()
+
+    private void _RotateThroughOrbit()
     {
-        
+        float angleByOneDay = 360f / holdingBody.orbitalPeriod;
+        orbitRotator.transform.Rotate(0, 0, angleByOneDay * Time.deltaTime);
     }
 }
