@@ -66,7 +66,7 @@ public class POP
         }
     }
 
-    public float additionalHappinessModifier = 0;
+    public float additionalHappinessModifier { get; set; } = 0;
 
     public POP(string name, Planet_Inhabitable planet)
     {
@@ -101,49 +101,6 @@ public class POP
             planet.unemployedPOPs.Remove(this);
         }
     }
-    private void _AllocatePOPToFutureSlot()
-    {
-        futureWorkingSlot.isPOPTrainingForHere = false;
-        futureWorkingSlot.pop = this;
-
-        foreach (var upkeep in futureWorkingSlot.upkeeps)
-        {
-            upkeep.pop = this;
-            planet.planetJobUpkeeps.Add(upkeep);
-        }
-
-        foreach (var yield in futureWorkingSlot.yields)
-        {
-            yield.pop = this;
-            planet.planetJobYields.Add(yield);
-        }
-
-        switch (futureWorkingSlot.job)
-        {
-            case Job.Administrator:
-                planet.stabilityModifier += 5;
-                planet.providedAmenity += 5;
-                break;
-            case Job.Admiral:
-                planet.game.fleetNum++;
-                break;
-            case Job.Enforcer:
-                planet.crimeReducedByEnforcer += 30;
-                planet.stabilityModifier += 2;
-                break;
-            case Job.Clerk:
-                planet.providedAmenity += 3;
-                break;
-            case Job.Staff:
-                planet.game.fleetAttackModifier += 0.05f;
-                break;
-            case Job.Soldier:
-                planet.game.defencePlatformAttackModifier += 0.05f;
-                break;
-        }
-
-    }
-
     public void MovePOPJob(POPWorkingPlace.POPWorkingSlot futureSlot)
     {
         if (futureWorkingSlot.pop != null)
@@ -194,6 +151,50 @@ public class POP
 
         _StartTraining(futureSlot);
     }
+
+    private void _AllocatePOPToFutureSlot()
+    {
+        futureWorkingSlot.isPOPTrainingForHere = false;
+        futureWorkingSlot.pop = this;
+
+        foreach (var upkeep in futureWorkingSlot.upkeeps)
+        {
+            upkeep.pop = this;
+            planet.planetJobUpkeeps.Add(upkeep);
+        }
+
+        foreach (var yield in futureWorkingSlot.yields)
+        {
+            yield.pop = this;
+            planet.planetJobYields.Add(yield);
+        }
+
+        switch (futureWorkingSlot.job)
+        {
+            case Job.Administrator:
+                planet.stabilityModifier += 5;
+                planet.providedAmenity += 5;
+                break;
+            case Job.Admiral:
+                planet.game.fleetNum++;
+                break;
+            case Job.Enforcer:
+                planet.crimeReducedByEnforcer += 30;
+                planet.stabilityModifier += 2;
+                break;
+            case Job.Clerk:
+                planet.providedAmenity += 3;
+                break;
+            case Job.Staff:
+                planet.game.fleetAttackModifier += 0.05f;
+                break;
+            case Job.Soldier:
+                planet.game.defencePlatformAttackModifier += 0.05f;
+                break;
+        }
+
+    }
+
 
     private void _StartTraining(POPWorkingPlace.POPWorkingSlot futureSlot) // Removes current job, sets future job, and start training.
     {

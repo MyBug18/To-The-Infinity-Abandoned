@@ -152,8 +152,8 @@ public class Planet : CelestialBody
     }
 
     public override string ToString()
-    {        
-        string result = "Size: " + size + ", Planet type: " + planetType + ", Orbiting " + starOrbit.center[0].name;
+    {
+        string result = "Size: " + size + ", Planet type: " + planetType + ", Orbiting ";// + starOrbit.center[0].name;
         if (satellites.Count > 0)
         {
             result += "\nSatellites: ";

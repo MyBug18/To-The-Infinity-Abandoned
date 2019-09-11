@@ -90,7 +90,7 @@ public class Game
                 _lastDayOfMonth = 30;
                 break;
             case 2:
-                if (year % 4 == 0)
+                if (year % 100 != 0 && year % 4 == 0)
                     _lastDayOfMonth = 29;
                 else
                     _lastDayOfMonth = 28;

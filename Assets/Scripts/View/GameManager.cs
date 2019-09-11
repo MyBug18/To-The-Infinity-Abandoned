@@ -25,6 +25,11 @@ public class GameManager : MonoBehaviour
 
     public ObjectInOrbitRotationEvent objectInOrbitRotationEvents;
 
+
+
+    public Planet_Inhabitable earth;
+
+
     private void Awake()
     {
         _game = GameDataHolder.game;
@@ -36,6 +41,10 @@ public class GameManager : MonoBehaviour
     {
         InstantiateStarSystem(_game.systems[0]);
         Debug.Log(_game.systems[0]);
+
+        earth = new Planet_Inhabitable("earth", _game, null, 0, false);
+        earth.BirthPOP();
+        Debug.Log(earth);
     }
 
     // Update is called once per frame
