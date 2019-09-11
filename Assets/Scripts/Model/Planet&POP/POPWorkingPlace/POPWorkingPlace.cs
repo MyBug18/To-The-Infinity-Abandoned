@@ -58,7 +58,6 @@ public abstract class POPWorkingPlace
     public void AllocatePOP(POP pop, int slotNum) // Allocates POP with slot number, and Add Upkeeps to Global Modifier.
     {
         workingPOPSlotList[slotNum].isPOPTrainingForHere = false;
-        Debug.Log("Allocating " + pop.name + " to " + slotNum + "th slot of " + name + " as " + workingPOPSlotList[slotNum].job);
         workingPOPSlotList[slotNum].pop = pop;
 
         foreach (var upkeep in workingPOPSlotList[slotNum].upkeeps)
@@ -99,12 +98,12 @@ public abstract class POPWorkingPlace
 
     }
 
-    public void MovePOPJob(int fromSlotNum, POPWorkingPlace workingPlace, int toSlotNum) // Removes POPs from the slot, puts it in the training list, and remove Upkeeps.
+    public void MovePOPJob(int fromSlotNum, POPWorkingPlace futureWorkingPlace, int toSlotNum) // Removes POPs from the slot, puts it in the training list, and remove Upkeeps.
     {
-        if (workingPlace.workingPOPSlotList[toSlotNum].pop != null)
+        if (futureWorkingPlace.workingPOPSlotList[toSlotNum].pop != null)
             throw new InvalidOperationException("Trying to move to already occupied slot!");
 
-        if (workingPlace.workingPOPSlotList[toSlotNum].isPOPTrainingForHere)
+        if (futureWorkingPlace.workingPOPSlotList[toSlotNum].isPOPTrainingForHere)
             throw new InvalidOperationException("Someone is already training for there!");
 
         POPWorkingSlot slot = workingPOPSlotList[fromSlotNum];
@@ -151,7 +150,7 @@ public abstract class POPWorkingPlace
                 break;
         }
         
-        pop.StartTraining(workingPlace, toSlotNum);
+        pop.StartTraining(futureWorkingPlace, toSlotNum);
     }
 
     public Job GetJobOfWorkingSlot(int slotNum) // Gets a Job with slot number.

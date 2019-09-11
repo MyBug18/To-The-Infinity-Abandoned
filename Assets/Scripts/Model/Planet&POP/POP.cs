@@ -8,11 +8,11 @@ public class POP
 
     public Job aptitude { get; private set; }
 
-    public bool isUnemployed => currentWorkingPlace.workingPlace == null;
+    public bool isUnemployed => currentWorkingSlot.workingPlace == null;
     public bool isTraining { get; private set; } = false;
 
-    public (POPWorkingPlace workingPlace, int slotNum) currentWorkingPlace { get; private set; } // Current POP's working place.
-    public (POPWorkingPlace workingPlace, int slotNum) futureWorkingPlace { get; set; } // After training ended, POP will move to this place.
+    public (POPWorkingPlace workingPlace, int slotNum) currentWorkingSlot { get; private set; } // Current POP's working place.
+    public (POPWorkingPlace workingPlace, int slotNum) futureWorkingSlot { get; set; } // After training ended, POP will move to this place.
 
     public float happiness { get
         {
@@ -25,8 +25,8 @@ public class POP
 
     public float jobHappinessModifier { get
         {
-            if (currentWorkingPlace.workingPlace == null) return -20;
-            else switch(_IsAptitudeMatching(currentWorkingPlace.workingPlace.GetJobOfWorkingSlot(currentWorkingPlace.slotNum)))
+            if (currentWorkingSlot.workingPlace == null) return -20;
+            else switch(_IsAptitudeMatching(currentWorkingSlot.workingPlace.GetJobOfWorkingSlot(currentWorkingSlot.slotNum)))
                 {
                     case -1: return -10;
                     case 0: return 0;
@@ -108,28 +108,23 @@ public class POP
 
         workingPlace.workingPOPSlotList[slotNum].isPOPTrainingForHere = true;
 
-        Debug.Log("Start Training: " + slotNum + "th slot of " + workingPlace.name); // mineral, 1
-
-        futureWorkingPlace = (workingPlace, slotNum);
+        futureWorkingSlot = (workingPlace, slotNum);
 
         isTraining = true;
 
         remainTrainingDay = _GetTrainingDay();
-        Debug.Log("StartTraining: remainTrainingDay = " + remainTrainingDay);
 
-        currentWorkingPlace = (null, 0);
+        currentWorkingSlot = (null, 0);
 
         planet.trainingPOPs.Add(this); // Add POP to the training queue.
     }
 
     public void EndTraining() // After the training ended, changes it's current job, and allocates this POP to designated workingplace slot. Will be automatically called by Game._ProceedTraining().
     {
-        Debug.Log("MoveJob(): Moving to " + futureWorkingPlace.slotNum + "th slot of " + futureWorkingPlace.workingPlace.name);
-
         isTraining = false;
-        currentWorkingPlace = futureWorkingPlace;
-        futureWorkingPlace = (null, 0);
-        currentWorkingPlace.workingPlace.AllocatePOP(this, currentWorkingPlace.slotNum);
+        currentWorkingSlot = futureWorkingSlot;
+        futureWorkingSlot = (null, 0);
+        currentWorkingSlot.workingPlace.AllocatePOP(this, currentWorkingSlot.slotNum);
     }
 
     private int _IsAptitudeMatching(Job test) // 1 if perfectly matches. 0 if they are in same JobType. -1 if doesn't matches.
@@ -146,11 +141,11 @@ public class POP
     {
         int _result = 0;
 
-        var futurePlace = futureWorkingPlace.workingPlace;
+        var futurePlace = futureWorkingSlot.workingPlace;
 
-        if (currentWorkingPlace.workingPlace == null)
+        if (currentWorkingSlot.workingPlace == null)
         {
-            switch(_IsAptitudeMatching(futurePlace.GetJobOfWorkingSlot(futureWorkingPlace.slotNum)))
+            switch(_IsAptitudeMatching(futurePlace.GetJobOfWorkingSlot(futureWorkingSlot.slotNum)))
             {
                 case 1:
                     _result = 30;
@@ -166,8 +161,8 @@ public class POP
         }
         else
         {
-            Job currentJob = currentWorkingPlace.workingPlace.GetJobOfWorkingSlot(currentWorkingPlace.slotNum);
-            Job futureJob = futureWorkingPlace.workingPlace.GetJobOfWorkingSlot(futureWorkingPlace.slotNum);
+            Job currentJob = currentWorkingSlot.workingPlace.GetJobOfWorkingSlot(currentWorkingSlot.slotNum);
+            Job futureJob = futureWorkingSlot.workingPlace.GetJobOfWorkingSlot(futureWorkingSlot.slotNum);
 
             if (currentJob == futureJob)
                 _result = 60;
@@ -176,7 +171,7 @@ public class POP
             else
                 _result = 180;
 
-            switch (_IsAptitudeMatching(futurePlace.GetJobOfWorkingSlot(futureWorkingPlace.slotNum)))
+            switch (_IsAptitudeMatching(futurePlace.GetJobOfWorkingSlot(futureWorkingSlot.slotNum)))
             {
                 case 1:
                     _result = _result / 3;
@@ -198,8 +193,8 @@ public class POP
 
         string currentJob = "";
 
-        if (currentWorkingPlace.workingPlace == null) currentJob = "Not Employed";
-        else currentJob = "" + currentWorkingPlace.workingPlace.GetJobOfWorkingSlot(currentWorkingPlace.slotNum);
+        if (currentWorkingSlot.workingPlace == null) currentJob = "Not Employed";
+        else currentJob = "" + currentWorkingSlot.workingPlace.GetJobOfWorkingSlot(currentWorkingSlot.slotNum);
 
         result = name + ": " + aptitude + ", Happiness: " + happiness + ", Current Job: " + currentJob;
 

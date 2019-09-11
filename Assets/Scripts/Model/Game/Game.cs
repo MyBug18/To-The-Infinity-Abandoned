@@ -166,7 +166,6 @@ public class Game
                 {
                     pop.EndTraining();
                     toRemoveFromTrainingList.Add(pop);
-
                 }
             }
 

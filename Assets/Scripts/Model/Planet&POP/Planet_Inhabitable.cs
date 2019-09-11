@@ -172,7 +172,7 @@ public class Planet_Inhabitable : Planet
             unemployedPOPs.Remove(pop);
         else
         {
-            var workingSlot = pop.currentWorkingPlace.workingPlace.workingPOPSlotList[pop.currentWorkingPlace.slotNum];
+            var workingSlot = pop.currentWorkingSlot.workingPlace.workingPOPSlotList[pop.currentWorkingSlot.slotNum];
             workingSlot.pop = null;
         }
 
