@@ -64,12 +64,12 @@ public class StarSystem
         orbits[0].positionInStarSystem = (0, 0);
         if (orbits.Count > 1)
         {
-            _orbitDistance = orbits[0].orbits[orbits[0].orbits.Count - 1].orbitRadius + orbits[1].orbits[orbits[1].orbits.Count - 1].orbitRadius + 1;
+            _orbitDistance = orbits[0].orbits[orbits[0].orbits.Count - 1].orbitRadius + orbits[1].orbits[orbits[1].orbits.Count - 1].orbitRadius + 3;
             orbits[1].positionInStarSystem = (_orbitDistance * (float)Math.Cos(secondOrbitAngle), _orbitDistance * (float)Math.Sin(secondOrbitAngle));
 
             if (orbits.Count > 2)
             {
-                _orbitDistance = orbits[0].orbits[orbits[0].orbits.Count - 1].orbitRadius + orbits[2].orbits[orbits[2].orbits.Count - 1].orbitRadius + 1;
+                _orbitDistance = orbits[0].orbits[orbits[0].orbits.Count - 1].orbitRadius + orbits[2].orbits[orbits[2].orbits.Count - 1].orbitRadius + 3;
                 orbits[2].positionInStarSystem = (_orbitDistance * (float)Math.Cos(thirdOrbitAngle), _orbitDistance * (float)Math.Sin(thirdOrbitAngle));
             }
         }

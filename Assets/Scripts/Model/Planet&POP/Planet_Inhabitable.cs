@@ -221,9 +221,9 @@ public class Planet_Inhabitable : Planet
         buildings.Add(WorkingPlaceFactory.GetBuilding(type, this));
     }
 
-    public void StartConstruction(BuildingType type, Building fromUpgrade = null)
+    public void StartConstruction(BuildingType type)
     {
-        ongoingConstruction.Add(new ConstructionQueueElement(true, (int)type, WorkingPlaceFactory.GetConstructionTime(type), fromUpgrade));
+        ongoingConstruction.Add(new ConstructionQueueElement(true, (int)type, WorkingPlaceFactory.GetConstructionTime(type), null));
     }
 
     public void StartConstruction(DistrictType type)

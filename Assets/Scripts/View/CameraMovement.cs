@@ -42,7 +42,7 @@ public class CameraMovement : MonoBehaviour
         if (Input.mouseScrollDelta.y > 0 && Camera.main.orthographicSize > 1)
             Camera.main.orthographicSize--;
 
-        if (Input.mouseScrollDelta.y < 0 && Camera.main.orthographicSize < 12)
+        if (Input.mouseScrollDelta.y < 0 && Camera.main.orthographicSize < 25)
             Camera.main.orthographicSize++;
     }
 }

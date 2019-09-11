@@ -138,7 +138,7 @@ public class Planet : CelestialBody
     private void _SetRadiusAndPosition()
     {
         if (!isSatellite)
-            orbitRadius = (nthOrbit + 2) * 2f;
+            orbitRadius = (nthOrbit + 1) * 3f;
         else
             orbitRadius = (float)(nthOrbit + 2) / 2;
 

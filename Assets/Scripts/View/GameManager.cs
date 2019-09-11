@@ -42,14 +42,40 @@ public class GameManager : MonoBehaviour
         InstantiateStarSystem(_game.systems[0]);
         Debug.Log(_game.systems[0]);
 
-        earth = new Planet_Inhabitable("earth", _game, null, 0, false);
+
+
+        earth = new Planet_Inhabitable("earth", 15, _game, null, 0, false);
+        _game.colonizedPlanets.Add(earth);
         earth.BirthPOP();
         Debug.Log(earth);
+
+        foreach (var p in earth.unemployedPOPs)
+            Debug.Log(p);
+
+        earth.StartConstruction(BuildingType.ColonizationCenter);
+        earth.StartConstruction(DistrictType.Mineral);
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.Q))
+            Debug.Log(_game.globalResource);
+
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            earth.pops[0].ActivatePOP(earth.buildings[0].workingPOPSlotList[0]);
+            Debug.Log(earth.buildings[0]);
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            earth.pops[0].MovePOPJob(earth.districts[0].workingPOPSlotList[0]);
+            Debug.Log(earth.districts[0]);
+        }
+
+
         
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -71,7 +97,6 @@ public class GameManager : MonoBehaviour
                 GameDataHolder.game.IncreaseOneDay();
                 date.text = GameDataHolder.game.date;
                 currentInterval = 0;
-                
             }
             
             currentFrameCounter++;

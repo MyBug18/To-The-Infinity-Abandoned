@@ -196,7 +196,9 @@ public class Game
     private void _ProceedPlanetaryConstruction()
     {
         foreach (var planet in colonizedPlanets)
+        {
             planet.ProceedConstruction();
+        }
     }
 
     public void AddColonizationSpeedModifier(float v)

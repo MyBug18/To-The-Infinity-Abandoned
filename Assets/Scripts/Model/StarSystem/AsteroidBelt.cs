@@ -9,7 +9,7 @@ public class AsteroidBelt : CelestialBody
     {
         name = starOrbit.center[0].name + " Belt";
 
-        orbitRadius = (nthOrbit + 2) * 2f;
+        orbitRadius = (nthOrbit + 1) * 3f;
 
         int asteroidNum = GameDataHolder.r.Next(7, 9);
 

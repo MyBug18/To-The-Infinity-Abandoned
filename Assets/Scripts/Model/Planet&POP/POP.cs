@@ -1,7 +1,5 @@
 ﻿using System;
 
-using UnityEngine;
-
 public class POP
 {
     public string name { get; private set; }
@@ -83,6 +81,7 @@ public class POP
 
     public void DecreaseTrainingDay()
     {
+        UnityEngine.Debug.Log("Remaining training day of " + name + " : " + remainTrainingDay);
         remainTrainingDay--;
     }
     
@@ -99,10 +98,13 @@ public class POP
         {
             _StartTraining(futureSlot);
             planet.unemployedPOPs.Remove(this);
+            UnityEngine.Debug.Log("Start Training.");
         }
     }
     public void MovePOPJob(POPWorkingPlace.POPWorkingSlot futureSlot)
     {
+        futureWorkingSlot = futureSlot;
+
         if (futureWorkingSlot.pop != null)
             throw new InvalidOperationException("Trying to move to already occupied slot!");
 
@@ -152,24 +154,24 @@ public class POP
         _StartTraining(futureSlot);
     }
 
-    private void _AllocatePOPToFutureSlot()
+    private void _AllocatePOPToCurrentSlot() // After the POP's current working slot is designated, fully allocate POP to current working slot.
     {
-        futureWorkingSlot.isPOPTrainingForHere = false;
-        futureWorkingSlot.pop = this;
+        currentWorkingSlot.isPOPTrainingForHere = false;
+        currentWorkingSlot.pop = this;
 
-        foreach (var upkeep in futureWorkingSlot.upkeeps)
+        foreach (var upkeep in currentWorkingSlot.upkeeps)
         {
             upkeep.pop = this;
             planet.planetJobUpkeeps.Add(upkeep);
         }
 
-        foreach (var yield in futureWorkingSlot.yields)
+        foreach (var yield in currentWorkingSlot.yields)
         {
             yield.pop = this;
             planet.planetJobYields.Add(yield);
         }
 
-        switch (futureWorkingSlot.job)
+        switch (currentWorkingSlot.job)
         {
             case Job.Administrator:
                 planet.stabilityModifier += 5;
@@ -218,7 +220,7 @@ public class POP
         isTraining = false;
         currentWorkingSlot = futureWorkingSlot;
         futureWorkingSlot = null;
-        _AllocatePOPToFutureSlot();
+        _AllocatePOPToCurrentSlot();
     }
 
     private int _IsAptitudeMatching(Job test) // 1 if perfectly matches. 0 if they are in same JobType. -1 if doesn't matches.
