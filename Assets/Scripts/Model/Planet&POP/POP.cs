@@ -8,11 +8,11 @@ public class POP
 
     public Job aptitude { get; private set; }
 
-    public bool isUnemployed => currentWorkingSlot.workingPlace == null;
+    public bool isUnemployed => currentWorkingSlot == null;
     public bool isTraining { get; private set; } = false;
 
-    public (POPWorkingPlace workingPlace, int slotNum) currentWorkingSlot { get; private set; } // Current POP's working place.
-    public (POPWorkingPlace workingPlace, int slotNum) futureWorkingSlot { get; set; } // After training ended, POP will move to this place.
+    public POPWorkingPlace.POPWorkingSlot currentWorkingSlot { get; private set; } // Current POP's working place.
+    public POPWorkingPlace.POPWorkingSlot futureWorkingSlot { get; set; } // After training ended, POP will move to this place.
 
     public float happiness { get
         {
@@ -25,8 +25,8 @@ public class POP
 
     public float jobHappinessModifier { get
         {
-            if (currentWorkingSlot.workingPlace == null) return -20;
-            else switch(_IsAptitudeMatching(currentWorkingSlot.workingPlace.GetJobOfWorkingSlot(currentWorkingSlot.slotNum)))
+            if (currentWorkingSlot == null) return -20;
+            else switch(_IsAptitudeMatching(currentWorkingSlot.job))
                 {
                     case -1: return -10;
                     case 0: return 0;
@@ -86,35 +86,128 @@ public class POP
         remainTrainingDay--;
     }
     
-    public void ActivatePOP(POPWorkingPlace workingPlace, int slotNum) // Activate just created POP, which must be unemployed
+    public void ActivatePOP(POPWorkingPlace.POPWorkingSlot futureSlot) // Activate just created POP, which must be unemployed
     {
-        if (workingPlace.workingPOPSlotList[slotNum].pop != null)
+        if (futureSlot.pop != null)
             throw new InvalidOperationException("Trying to move to already occupied slot!");
 
-        if (workingPlace.workingPOPSlotList[slotNum].isPOPTrainingForHere)
+        if (futureSlot.isPOPTrainingForHere)
             throw new InvalidOperationException("Someone is already training for there!");
 
         if (!isUnemployed) throw new InvalidOperationException("Trying to activate employed POP!");
         else
         {
-            StartTraining(workingPlace, slotNum);
+            _StartTraining(futureSlot);
             planet.unemployedPOPs.Remove(this);
         }
     }
+    private void _AllocatePOPToFutureSlot()
+    {
+        futureWorkingSlot.isPOPTrainingForHere = false;
+        futureWorkingSlot.pop = this;
 
-    public void StartTraining(POPWorkingPlace workingPlace, int slotNum) // Removes current job, sets future job, and start training.
+        foreach (var upkeep in futureWorkingSlot.upkeeps)
+        {
+            upkeep.pop = this;
+            planet.planetJobUpkeeps.Add(upkeep);
+        }
+
+        foreach (var yield in futureWorkingSlot.yields)
+        {
+            yield.pop = this;
+            planet.planetJobYields.Add(yield);
+        }
+
+        switch (futureWorkingSlot.job)
+        {
+            case Job.Administrator:
+                planet.stabilityModifier += 5;
+                planet.providedAmenity += 5;
+                break;
+            case Job.Admiral:
+                planet.game.fleetNum++;
+                break;
+            case Job.Enforcer:
+                planet.crimeReducedByEnforcer += 30;
+                planet.stabilityModifier += 2;
+                break;
+            case Job.Clerk:
+                planet.providedAmenity += 3;
+                break;
+            case Job.Staff:
+                planet.game.fleetAttackModifier += 0.05f;
+                break;
+            case Job.Soldier:
+                planet.game.defencePlatformAttackModifier += 0.05f;
+                break;
+        }
+
+    }
+
+    public void MovePOPJob(POPWorkingPlace.POPWorkingSlot futureSlot)
+    {
+        if (futureWorkingSlot.pop != null)
+            throw new InvalidOperationException("Trying to move to already occupied slot!");
+
+        if (futureWorkingSlot.isPOPTrainingForHere)
+            throw new InvalidOperationException("Someone is already training for there!");
+
+        if (currentWorkingSlot.pop == null) throw new InvalidOperationException("Trying to move pop which doesn't exist!");
+
+        foreach (var upkeep in currentWorkingSlot.upkeeps)
+        {
+            upkeep.pop = null;
+            planet.planetJobUpkeeps.Remove(upkeep);
+        }
+
+        foreach (var yield in currentWorkingSlot.yields)
+        {
+            yield.pop = null;
+            planet.planetJobYields.Remove(yield);
+        }
+
+        currentWorkingSlot.pop = null;
+
+        switch (currentWorkingSlot.job)
+        {
+            case Job.Administrator:
+                planet.stabilityModifier -= 5;
+                planet.providedAmenity -= 5;
+                break;
+            case Job.Admiral:
+                planet.game.fleetNum--;
+                break;
+            case Job.Enforcer:
+                planet.crimeReducedByEnforcer -= 30;
+                planet.stabilityModifier -= 2;
+                break;
+            case Job.Clerk:
+                planet.providedAmenity -= 3;
+                break;
+            case Job.Staff:
+                planet.game.fleetAttackModifier -= 0.05f;
+                break;
+            case Job.Soldier:
+                planet.game.defencePlatformAttackModifier -= 0.05f;
+                break;
+        }
+
+        _StartTraining(futureSlot);
+    }
+
+    private void _StartTraining(POPWorkingPlace.POPWorkingSlot futureSlot) // Removes current job, sets future job, and start training.
     {
         if (isTraining) throw new InvalidOperationException("Trying to train POP already training!");
 
-        workingPlace.workingPOPSlotList[slotNum].isPOPTrainingForHere = true;
+        futureSlot.isPOPTrainingForHere = true;
 
-        futureWorkingSlot = (workingPlace, slotNum);
+        futureWorkingSlot = futureSlot;
 
         isTraining = true;
 
         remainTrainingDay = _GetTrainingDay();
 
-        currentWorkingSlot = (null, 0);
+        currentWorkingSlot = null;
 
         planet.trainingPOPs.Add(this); // Add POP to the training queue.
     }
@@ -123,8 +216,8 @@ public class POP
     {
         isTraining = false;
         currentWorkingSlot = futureWorkingSlot;
-        futureWorkingSlot = (null, 0);
-        currentWorkingSlot.workingPlace.AllocatePOP(this, currentWorkingSlot.slotNum);
+        futureWorkingSlot = null;
+        _AllocatePOPToFutureSlot();
     }
 
     private int _IsAptitudeMatching(Job test) // 1 if perfectly matches. 0 if they are in same JobType. -1 if doesn't matches.
@@ -141,11 +234,9 @@ public class POP
     {
         int _result = 0;
 
-        var futurePlace = futureWorkingSlot.workingPlace;
-
-        if (currentWorkingSlot.workingPlace == null)
+        if (currentWorkingSlot == null)
         {
-            switch(_IsAptitudeMatching(futurePlace.GetJobOfWorkingSlot(futureWorkingSlot.slotNum)))
+            switch(_IsAptitudeMatching(futureWorkingSlot.job))
             {
                 case 1:
                     _result = 30;
@@ -161,8 +252,8 @@ public class POP
         }
         else
         {
-            Job currentJob = currentWorkingSlot.workingPlace.GetJobOfWorkingSlot(currentWorkingSlot.slotNum);
-            Job futureJob = futureWorkingSlot.workingPlace.GetJobOfWorkingSlot(futureWorkingSlot.slotNum);
+            Job currentJob = currentWorkingSlot.job;
+            Job futureJob = futureWorkingSlot.job;
 
             if (currentJob == futureJob)
                 _result = 60;
@@ -171,7 +262,7 @@ public class POP
             else
                 _result = 180;
 
-            switch (_IsAptitudeMatching(futurePlace.GetJobOfWorkingSlot(futureWorkingSlot.slotNum)))
+            switch (_IsAptitudeMatching(futureWorkingSlot.job))
             {
                 case 1:
                     _result = _result / 3;
@@ -193,8 +284,8 @@ public class POP
 
         string currentJob = "";
 
-        if (currentWorkingSlot.workingPlace == null) currentJob = "Not Employed";
-        else currentJob = "" + currentWorkingSlot.workingPlace.GetJobOfWorkingSlot(currentWorkingSlot.slotNum);
+        if (currentWorkingSlot == null) currentJob = "Not Employed";
+        else currentJob = "" + currentWorkingSlot.job;
 
         result = name + ": " + aptitude + ", Happiness: " + happiness + ", Current Job: " + currentJob;
 
