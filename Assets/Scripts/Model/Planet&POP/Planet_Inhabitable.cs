@@ -255,7 +255,6 @@ public class Planet_Inhabitable : Planet
             else
             {
                 EndConstruction();
-                Debug.Log("Construction Ended");
             }
         }
     }
@@ -276,6 +275,7 @@ public class Planet_Inhabitable : Planet
             else
                 ((IUpgradable)justEnded.fromUpgrade).Upgrade();
         }
+        Debug.Log("Construction Ended");
     }
 
     public void DemolishWorkingPlace(POPWorkingPlace workingPlace)

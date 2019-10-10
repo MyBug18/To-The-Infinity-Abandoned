@@ -94,8 +94,8 @@ public class GameManager : MonoBehaviour
             currentInterval += Time.deltaTime;
             if (currentInterval > GameDataHolder.interval)
             {
-                GameDataHolder.game.IncreaseOneDay();
-                date.text = GameDataHolder.game.date;
+                _game.IncreaseOneDay();
+                date.text = _game.date;
                 currentInterval = 0;
             }
             

@@ -10,11 +10,13 @@ public class StarSystem
 
     public int numberOfOrbits;
 
+    public (int, int) coordinate;
+
     public StarSystem(Game game)
     {
         Random r = new Random();
         this.game = game;
-
+        _SetCoordinate();
         name = game.GetStarSystemName();
 
         int shapeDecider = r.Next() % 20;
@@ -87,6 +89,14 @@ public class StarSystem
             default:
                 return name + " C";
         }
+    }
+
+    private void _SetCoordinate()
+    {
+        int c = game.systems.Count;
+        int x = c / 10;
+        int y = c % 10;
+        coordinate = (x * 70, y * 70);
     }
 
     public override string ToString()

@@ -21,8 +21,8 @@ public class DrawOrbitLine : MonoBehaviour
         size++;
         lineRenderer = gameObject.AddComponent<LineRenderer>();
         lineRenderer.material = mat;
-        lineRenderer.startWidth = 0.01f;
-        lineRenderer.endWidth = 0.01f;
+        lineRenderer.startWidth = 0.03f;
+        lineRenderer.endWidth = 0.02f;
         lineRenderer.positionCount = size;
 
     }
