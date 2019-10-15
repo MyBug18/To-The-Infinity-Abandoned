@@ -24,7 +24,7 @@ public class DrawOrbitLine : MonoBehaviour
         lineRenderer.startWidth = 0.03f;
         lineRenderer.endWidth = 0.02f;
         lineRenderer.positionCount = size;
-
+        lineRenderer.useWorldSpace = false;
     }
 
     private void Update()
@@ -36,10 +36,8 @@ public class DrawOrbitLine : MonoBehaviour
             theta += (2.0f * Mathf.PI * theta_scale);
             float x = radius * Mathf.Cos(theta);
             float y = radius * Mathf.Sin(theta);
-            x += gameObject.transform.position.x;
-            y += gameObject.transform.position.y;
             pos = new Vector3(x, y, 0);
             lineRenderer.SetPosition(i, pos);
-        }
+        }        
     }
 }

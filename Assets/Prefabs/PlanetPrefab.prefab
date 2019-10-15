@@ -40,6 +40,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5586881632708306986}
   - component: {fileID: 5586881632708306987}
+  - component: {fileID: 6653031989145335110}
   m_Layer: 0
   m_Name: InhabitablePlanet
   m_TagString: Untagged
@@ -110,6 +111,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!58 &6653031989145335110
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5586881632708306981}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.6399999
 --- !u!1 &5586881634075197069
 GameObject:
   m_ObjectHideFlags: 0
@@ -155,5 +172,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee9325fe59635974ba2669182a45e08d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orbitRadius: 0
   satellites: {fileID: 7218164779941188751}
+  planetSprite: {fileID: 5586881632708306986}

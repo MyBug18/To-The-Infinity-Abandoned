@@ -104,7 +104,7 @@ public class Planet : CelestialBody
             {
                 if (nthOrbit <= starOrbit.inhabitableRange.max && nthOrbit >= starOrbit.inhabitableRange.min && GameDataHolder.r.Next() % 100 < starOrbit.inhabitableChance * 100)
                 {
-                    satellites.Add(new Planet_Inhabitable(_GetSatelliteName(), game, starOrbit, nth, true));
+                    satellites.Add(new Planet_Inhabitable(_GetSatelliteName(), GameDataHolder.r.Next(5, size * 2 / 3), game, starOrbit, nth, true));
                 }
                 else
                 {
@@ -138,7 +138,7 @@ public class Planet : CelestialBody
     private void _SetRadiusAndPosition()
     {
         if (!isSatellite)
-            orbitRadius = (nthOrbit + 1) * 3f;
+            orbitRadius = (nthOrbit + 2.5f) * 3.5f;
         else
             orbitRadius = (float)(nthOrbit + 2) / 2;
 
