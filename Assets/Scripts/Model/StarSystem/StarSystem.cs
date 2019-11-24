@@ -1,6 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 
+// A single star system can contain many stars, up to 3.
+// Each star can act as a host of an orbit, or many stars can form an orbit together.
+// To prevent the confusion of the term "Star System", which may refer to an orbit formed by a star, or the cluster of (up to 3) orbits,
+// I'll call the orbit formed by star (or stars) "Star Orbit".
+// So, in a single star system, there may exist up to 3 star orbits.
+
 public class StarSystem
 {
     public Game game;
@@ -10,7 +16,7 @@ public class StarSystem
 
     public int numberOfOrbits;
 
-    public (int, int) coordinate;
+    public (int, int) coordinate; // The identifier of star system
 
     public StarSystem(Game game)
     {
