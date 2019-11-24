@@ -6,7 +6,7 @@ public class PlanetWrapper : CelestialBodyWrapper
 {
     public Planet planet;
     public Transform satellites;
-    public Transform planetSprite;
+    public Transform planetMesh;
 
     private Vector3 _initialScale;
     // Start is called before the first frame update
@@ -15,7 +15,7 @@ public class PlanetWrapper : CelestialBodyWrapper
         base.Start();
         planet = (Planet)body;
 
-        planetSprite.localScale *= planet.size / 15.0f;
+        planetMesh.localScale *= planet.size / 15.0f;
     }
 
     // Update is called once per frame

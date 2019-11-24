@@ -21,16 +21,16 @@ Material:
     m_TexEnvs: []
     m_Floats:
     - _Camera: 0
-    - _DarkSide: 0.8
+    - _DarkSide: 0.666
     - _Lighting: 0
     - _LiquidHeight: 0.99
     - _PolyLiquid: 0
     - _RimOpacity: 1
-    - _RimPower: 2
+    - _RimPower: 3
     - _SpecularHighlight: 3
     - _TerrainColoring: 0
     m_Colors:
-    - _CoreColor: {r: 0.9760905, g: 1, b: 0.39999998, a: 1}
+    - _CoreColor: {r: 0.722, g: 1, b: 0.3551724, a: 1}
     - _LightDirection: {r: -1, g: -1, b: 0, a: 1}
     - _LiquidColor: {r: 0, g: 0.5, b: 1, a: 1}
     - _RimColor: {r: 0, g: 0, b: 0, a: 1}
