@@ -535,6 +535,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   Boundary: 50
+  rotLimit: 50
+  mouseSensitivityX: 5
+  mouseSensitivityY: 5
+  mainCamera: {fileID: 963194228}
 --- !u!1 &1286085375
 GameObject:
   m_ObjectHideFlags: 0
