@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: PPC_PlanetWRim
   m_Shader: {fileID: 4800000, guid: 91be1f21cb9396b4c98c5c61b3764ec4, type: 3}
-  m_ShaderKeywords: _CAMERA_PERSPECTIVE _LIGHTING_UNITY _POLYLIQUID_ON _RIMCOLORING_PLAIN
+  m_ShaderKeywords: _CAMERA_PERSPECTIVE _LIGHTING_CUSTOM _POLYLIQUID_ON _RIMCOLORING_PLAIN
     _TERRAINCOLORING_AVERAGE
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0

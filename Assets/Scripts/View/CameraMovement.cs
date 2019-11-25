@@ -39,10 +39,10 @@ public class CameraMovement : MonoBehaviour
             transform.Translate(0, -speed * Time.deltaTime, 0); // move on -Z axis
         }
 
-        if (Input.mouseScrollDelta.y > 0 && Camera.main.orthographicSize > 1)
-            Camera.main.orthographicSize--;
+        if (Input.mouseScrollDelta.y > 0 && transform.position.z < -10)
+            transform.position += new Vector3(0, 0, 10);
 
-        if (Input.mouseScrollDelta.y < 0 && Camera.main.orthographicSize < 25)
-            Camera.main.orthographicSize++;
+        if (Input.mouseScrollDelta.y < 0 && transform.position.z > -100)
+            transform.position += new Vector3(0, 0, -10);
     }
 }

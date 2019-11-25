@@ -21,6 +21,6 @@ public class PlanetWrapper : CelestialBodyWrapper
     // Update is called once per frame
     protected override void Update()
     {
-        
+        planetMesh.GetComponent<MeshRenderer>().material.SetVector("_LightDirection", new Vector4(transform.position.x, transform.position.y, 0, 1));
     }
 }
