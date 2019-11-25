@@ -9,6 +9,15 @@ public class CameraMovement : MonoBehaviour
     public int speed = 1;
     public int Boundary = 50;
 
+    public float rotLimit = 50;
+
+    public float mouseSensitivityX = 5.0f;
+    public float mouseSensitivityY = 5.0f;
+    float rotY = 0.0f;
+
+    [SerializeField]
+    private Transform mainCamera;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,10 +48,27 @@ public class CameraMovement : MonoBehaviour
             transform.Translate(0, -speed * Time.deltaTime, 0); // move on -Z axis
         }
 
-        if (Input.mouseScrollDelta.y > 0 && transform.position.z < -10)
-            transform.position += new Vector3(0, 0, 10);
+        if (Input.mouseScrollDelta.y > 0 && mainCamera.localPosition.z < -10)
+            mainCamera.position += new Vector3(0, 0, 10);
 
-        if (Input.mouseScrollDelta.y < 0 && transform.position.z > -100)
-            transform.position += new Vector3(0, 0, -10);
+        if (Input.mouseScrollDelta.y < 0 && mainCamera.localPosition.z > -100)
+            mainCamera.position += new Vector3(0, 0, -10);
+
+        if (Input.GetMouseButton(1))
+        {
+            float rotX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * mouseSensitivityX;
+            rotY += Input.GetAxis("Mouse Y") * mouseSensitivityY;
+            rotY = Mathf.Clamp(rotY, -89.5f, 89.5f);
+
+            if (-rotY < -rotLimit) rotY = rotLimit;
+            if (-rotY > rotLimit) rotY = -rotLimit;
+
+            if (rotX < 360 - rotLimit && rotX > 180) rotX = 360 - rotLimit;
+            if (rotX > rotLimit && rotX < 180) rotX = rotLimit;
+
+            Vector3 toRot = new Vector3(-rotY, rotX, 0.0f);
+
+            transform.localEulerAngles = toRot;
+        }
     }
 }

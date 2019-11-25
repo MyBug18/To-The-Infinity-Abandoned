@@ -240,7 +240,7 @@ public class Planet_Inhabitable : Planet
         if (!(fromUpgrade is IUpgradable)) throw new InvalidOperationException("This building is not upgradable!");
 
         ongoingConstruction.Add(new ConstructionQueueElement(true, (int)(fromUpgrade.type + 1), 
-            WorkingPlaceFactory.GetConstructionTime((BuildingType)((int)(fromUpgrade.type) + 1)), fromUpgrade)); // Every upgraded BuildingType is bigger by 1 than a previous one.
+            WorkingPlaceFactory.GetConstructionTime((BuildingType)((int)fromUpgrade.type + 1)), fromUpgrade)); // Every upgraded BuildingType is bigger by 1 than a previous one.
     }
 
     public void ProceedConstruction()
