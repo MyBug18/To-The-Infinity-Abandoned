@@ -22,24 +22,24 @@ Material:
     m_TexEnvs: []
     m_Floats:
     - _Camera: 0
-    - _DarkSide: 0.8
+    - _DarkSide: 0
     - _Lighting: 0
-    - _LiquidHeight: 1.09
+    - _LiquidHeight: 0.99
     - _ObjectScale: 1
-    - _OuterRimOffset: -0.09
+    - _OuterRimOffset: 0
     - _OuterRimOpacity: 1
-    - _OuterRimRadius: 0.1
+    - _OuterRimRadius: 1
     - _PolyLiquid: 0
     - _RimColoring: 0
     - _RimOpacity: 1
-    - _RimPower: 3
+    - _RimPower: 1
     - _RimRadius: 1
-    - _SpecularHighlight: 3
+    - _SpecularHighlight: 1
     - _TerrainColoring: 0
     m_Colors:
     - _CoreColor: {r: 1, g: 0.8, b: 0.4, a: 1}
     - _LightDirection: {r: -1, g: -1, b: 0, a: 1}
-    - _LiquidColor: {r: 0, g: 0.5, b: 1, a: 1}
-    - _OuterRimColor: {r: 0.6, g: 0.9, b: 1, a: 1}
-    - _RimColor: {r: 0.6, g: 0.9, b: 1, a: 1}
-    - _SpecularColor: {r: 0.6, g: 0.9, b: 1, a: 1}
+    - _LiquidColor: {r: 1, g: 1, b: 1, a: 1}
+    - _OuterRimColor: {r: 1, g: 0.8, b: 0.4, a: 1}
+    - _RimColor: {r: 1, g: 0.6666666, b: 0, a: 1}
+    - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
