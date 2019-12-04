@@ -56,6 +56,7 @@ public class Resource
         private void _ApplyOneModifier(GlobalResourceModifiers grm)
         {
             var (_type, _amount) = grm.value;
+            UnityEngine.Debug.Log(grm.modifierType + " " + _type.ToString() + " " + _amount);
 
             float amount;
 
@@ -79,6 +80,7 @@ public class Resource
                     turnElectricity += amount;
                     break;
                 case GlobalResourceType.Mineral:
+                    UnityEngine.Debug.Log(turnMineral + " " + amount);
                     turnMineral += amount;
                     break;
                 case GlobalResourceType.Money:
@@ -108,7 +110,7 @@ public class Resource
     }
 
     public TurnResource turnResource;
-    public float Electricity = 0;
+    public float electricity = 0;
     public float mineral = 0;
     public float food = 0;
     public float money = 0;
@@ -117,7 +119,7 @@ public class Resource
     public float sociology = 0;
     public float engineering = 0;
 
-    public bool isLackOfElectricity => Electricity == 0 && turnResource.turnElectricity < 0;
+    public bool isLackOfElectricity => electricity == 0 && turnResource.turnElectricity < 0;
     public bool isLackOfMineral => mineral == 0 && turnResource.turnMineral < 0;
     public bool isLackOfFood => food == 0 && turnResource.turnFood < 0;
     public bool isLackOfMoney => money == 0 && turnResource.turnMoney < 0;
@@ -127,8 +129,8 @@ public class Resource
     {
         turnResource.ApplyAllModifiers();
 
-        Electricity += turnResource.turnElectricity;
-        if (Electricity < 0) Electricity = 0;
+        electricity += turnResource.turnElectricity;
+        if (electricity < 0) electricity = 0;
         mineral += turnResource.turnMineral;
         if (mineral < 0) mineral = 0;
         food += turnResource.turnFood;
@@ -144,7 +146,7 @@ public class Resource
 
     public override string ToString()
     {
-        string _fuel = "Fuel: " + Electricity + " (" + turnResource.turnElectricity + ") ";
+        string _fuel = "Fuel: " + electricity + " (" + turnResource.turnElectricity + ") ";
         string _mineral = "Mineral: " + mineral + " (" + turnResource.turnMineral + ") ";
         string _food = "Food: " + food + " (" + turnResource.turnFood + ") ";
         string _money = "Money: " + money + " (" + turnResource.turnMoney + ") ";

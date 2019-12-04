@@ -14,7 +14,7 @@ public class ObjectInOrbit : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameManager.objectInOrbitRotationEvents += new GameManager.ObjectInOrbitRotationEvent(_RotateThroughOrbit);
+        gameManager.objectInOrbitRotationEvents += _RotateThroughOrbit;
     }
 
 

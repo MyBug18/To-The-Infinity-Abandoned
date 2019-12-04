@@ -37,7 +37,7 @@ public class Game
 
     public List<StarSystem> systems { get; private set; } = new List<StarSystem>();
 
-
+    public event Action DayEvents, MonthEvents, YearEvents;
     public Game()
     {
         globalResource = new Resource(this);
@@ -132,6 +132,8 @@ public class Game
     private void _IncreaseOneYear()
     {
         year++;
+
+        _OneYearEvents();
     }
 
     private void _OneDayEvents()
@@ -139,12 +141,21 @@ public class Game
         _ProceedTraining();
         _ProceedColonization();
         _ProceedPlanetaryConstruction();
+
+        DayEvents?.Invoke();
     }
 
     private void _OneMonthEvents()
     {
-        //_ProceedPlanetaryGrowth();
+        _ProceedPlanetaryGrowth();
         globalResource.ApplyTurnResource();
+
+        MonthEvents?.Invoke();
+    }
+
+    private void _OneYearEvents()
+    {
+        YearEvents?.Invoke();
     }
 
     private void _ProceedPlanetaryGrowth()

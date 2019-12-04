@@ -8,22 +8,16 @@ using System.Linq;
 public class GameManager : MonoBehaviour
 {
     [SerializeField]
-    Text date;
-
-    [SerializeField]
     Transform starSystemPrefab, parentOfAllSystems;
 
-    private Coroutine _gameProceeder;
-    private Game _game;
+    public Game game;
 
     private float currentInterval = 0;
     private int currentFrameCounter = 0;
 
     public List<StarSystemWrapper> systems = new List<StarSystemWrapper>();
 
-    public delegate void ObjectInOrbitRotationEvent();
-
-    public ObjectInOrbitRotationEvent objectInOrbitRotationEvents;
+    public event Action objectInOrbitRotationEvents;
 
 
 
@@ -32,20 +26,20 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        _game = GameDataHolder.game;
-        _game.AddRandomStarSystem();
+        game = GameDataHolder.game;
+        game.AddRandomStarSystem();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        InstantiateStarSystem(_game.systems[0]);
-        Debug.Log(_game.systems[0]);
+        InstantiateStarSystem(game.systems[0]);
+        Debug.Log(game.systems[0]);
 
 
-
-        earth = new Planet_Inhabitable("earth", 15, _game, null, 0, false);
-        _game.colonizedPlanets.Add(earth);
+        
+        earth = new Planet_Inhabitable("earth", 15, game, null, 0, false);
+        game.colonizedPlanets.Add(earth);
         earth.BirthPOP();
         Debug.Log(earth);
 
@@ -54,14 +48,14 @@ public class GameManager : MonoBehaviour
 
         earth.StartConstruction(BuildingType.ColonizationCenter);
         earth.StartConstruction(DistrictType.Mineral);
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-
         if (Input.GetKeyDown(KeyCode.Q))
-            Debug.Log(_game.globalResource);
+            Debug.Log(earth.planetJobYields[0].value.amount);
 
         if (Input.GetKeyDown(KeyCode.W))
         {
@@ -94,8 +88,7 @@ public class GameManager : MonoBehaviour
             currentInterval += Time.deltaTime;
             if (currentInterval > GameDataHolder.interval)
             {
-                _game.IncreaseOneDay();
-                date.text = _game.date;
+                game.IncreaseOneDay();
                 currentInterval = 0;
             }
             
@@ -111,7 +104,7 @@ public class GameManager : MonoBehaviour
     
     private void _CalledByGameFrame()
     {
-        objectInOrbitRotationEvents();
+        objectInOrbitRotationEvents?.Invoke();
     }
 
     public void PlayGame()

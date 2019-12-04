@@ -81,7 +81,6 @@ public class POP
 
     public void DecreaseTrainingDay()
     {
-        UnityEngine.Debug.Log("Remaining training day of " + name + " : " + remainTrainingDay);
         remainTrainingDay--;
     }
     
