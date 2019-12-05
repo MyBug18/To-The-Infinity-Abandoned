@@ -15,6 +15,8 @@ public class CameraMovement : MonoBehaviour
     public float mouseSensitivityY = 5.0f;
     float rotY = 0.0f;
 
+    private Vector3 cameraVector => transform.position - mainCamera.localPosition;
+
     [SerializeField]
     private Transform mainCamera;
 
@@ -48,11 +50,11 @@ public class CameraMovement : MonoBehaviour
             transform.Translate(0, -speed * Time.deltaTime, 0); // move on -Z axis
         }
 
-        if (Input.mouseScrollDelta.y > 0 && mainCamera.localPosition.z < -10)
-            mainCamera.position += new Vector3(0, 0, 10);
+        if (Input.mouseScrollDelta.y > 0 && cameraVector.magnitude > 10)
+            mainCamera.localPosition += new Vector3(0, 0, 10);
 
-        if (Input.mouseScrollDelta.y < 0 && mainCamera.localPosition.z > -100)
-            mainCamera.position += new Vector3(0, 0, -10);
+        if (Input.mouseScrollDelta.y < 0 && cameraVector.magnitude < 100)
+            mainCamera.localPosition += new Vector3(0, 0, -10);
 
         if (Input.GetMouseButton(1))
         {
