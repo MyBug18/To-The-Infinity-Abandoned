@@ -19,7 +19,8 @@ public class InhabitablePlanetUIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (gameObject.activeSelf && Input.GetKeyDown(KeyCode.Escape))
+            gameObject.SetActive(false);
     }
 
     private void _Initiallize()
