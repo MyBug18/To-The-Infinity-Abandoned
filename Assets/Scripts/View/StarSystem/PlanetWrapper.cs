@@ -7,6 +7,7 @@ public class PlanetWrapper : CelestialBodyWrapper
     public Planet planet;
     public Transform satellites;
     public Transform planetMesh;
+    public Transform InhabitablePlanetUI;
 
     private Vector3 _initialScale;
     // Start is called before the first frame update

@@ -174,5 +174,9 @@ public enum PlanetType
     GasGiant,
     Frozen,
     Molten,
-    Broken
+    Broken,
+    Crystal,
+    Robotic,
+    Shrouded,
+    Biological
 }

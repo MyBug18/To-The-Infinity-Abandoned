@@ -58,6 +58,22 @@ public class Planet_Inhabitable : Planet
     public float crimeReducedByEnforcer = 0;
     public float crime => Math.Max(0, _crimeByPOP - crimeReducedByEnforcer);
 
+    public int remainingJobSlotNum { get
+        {
+            int count = 0;
+            foreach (POPWorkingPlace p in buildings)
+                foreach (POPWorkingPlace.POPWorkingSlot s in p.workingPOPSlotList)
+                    if (s.pop == null && !s.isPOPTrainingForHere)
+                        count++;
+
+            foreach (POPWorkingPlace p in districts)
+                foreach (POPWorkingPlace.POPWorkingSlot s in p.workingPOPSlotList)
+                    if (s.pop == null && !s.isPOPTrainingForHere)
+                        count++;
+            return count;
+        }
+    }
+
     public bool isColonized => pops.Count > 1;
 
     public List<Building> buildings { get; private set; } = new List<Building>();
@@ -152,7 +168,6 @@ public class Planet_Inhabitable : Planet
     {
         string[] str = System.IO.File.ReadAllLines(UnityEngine.Application.streamingAssetsPath + "\\name_list.txt");
         System.Random r = new System.Random();
-        string popName = str[r.Next() % 1000];
         POP pop = new POP(str[r.Next() % 1000], this);
 
         consumedAmenity++;
