@@ -9,7 +9,7 @@ public class CameraMovement : MonoBehaviour
     public int speed = 1;
     public int Boundary = 50;
 
-    public float rotLimit = 50;
+    public float rotLimit = 70;
 
     public float mouseSensitivityX = 5.0f;
     public float mouseSensitivityY = 5.0f;

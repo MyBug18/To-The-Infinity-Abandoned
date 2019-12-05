@@ -987,7 +987,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   Boundary: 50
-  rotLimit: 50
+  rotLimit: 70
   mouseSensitivityX: 5
   mouseSensitivityY: 5
   mainCamera: {fileID: 963194228}
@@ -1155,6 +1155,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1199584736}
   - component: {fileID: 1199584735}
+  - component: {fileID: 1199584737}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -1196,6 +1197,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1199584737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1199584734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b20cc96c67f831347a8ba82908ab04c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 442769790}
+  mainUI: {fileID: 7514933389905811047, guid: f36e2e270dc4d544bb25c555132c6101, type: 3}
 --- !u!1 &1220750949
 GameObject:
   m_ObjectHideFlags: 0
