@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InhabitablePlanetUIManager : MonoBehaviour
+public class InhabitablePlanetUI : MonoBehaviour
 {
     public Planet_Inhabitable planet { private get; set; }
 

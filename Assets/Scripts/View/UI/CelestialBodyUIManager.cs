@@ -9,7 +9,9 @@ public class CelestialBodyUIManager : MonoBehaviour
     private Transform canvas;
 
     [SerializeField]
-    private InhabitablePlanetUIManager ipm;
+    private InhabitablePlanetUI ipm;
+
+    [SerializeField]
 
 
     // Start is called before the first frame update
@@ -37,6 +39,7 @@ public class CelestialBodyUIManager : MonoBehaviour
                     }
                     else
                     {
+
                     }
                 }
             }
