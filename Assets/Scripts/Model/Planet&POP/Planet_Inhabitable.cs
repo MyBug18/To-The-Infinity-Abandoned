@@ -33,10 +33,9 @@ public class Planet_Inhabitable : Planet
 
     public Planet_Inhabitable(string name, Game game, StarOrbit orbit, int nthOrbit, bool isSatellite) : base(name, game, orbit, nthOrbit, isSatellite, true) // for making general inhabitable planets.
     {
-        System.Random r = new System.Random();
         for (int i = 0; i < size / 3 + 1; i++)
         {
-            features.Add((PlanetaryFeature)(r.Next() % 6));
+            features.Add((PlanetaryFeature)(GameDataHolder.r.Next() % 6));
         }
     }
 
