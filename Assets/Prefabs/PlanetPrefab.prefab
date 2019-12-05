@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 8645341098026865056}
   - component: {fileID: 4674528187678179162}
   - component: {fileID: 2956367281604085374}
-  - component: {fileID: 8356439843997681655}
+  - component: {fileID: 6101088067468899329}
   m_Layer: 0
   m_Name: PlanetMesh
   m_TagString: Untagged
@@ -140,7 +140,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 0}
---- !u!114 &8356439843997681655
+--- !u!114 &6101088067468899329
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -149,10 +149,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 4113094679658101073}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba36594105fb5814ebb864651c729ca3, type: 3}
+  m_Script: {fileID: 11500000, guid: a01aee58e1a3cae499f05c5da58629a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _planetWrapper: {fileID: 5586881634075197074}
+  canvas: {fileID: 0}
+  mainUI: {fileID: 7514933389905811047, guid: f36e2e270dc4d544bb25c555132c6101, type: 3}
 --- !u!1 &5586881634075197069
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIManager : MonoBehaviour
+public class ResourceUIManager : MonoBehaviour
 {
     [SerializeField]
     private GameManager gm;
@@ -23,12 +23,6 @@ public class UIManager : MonoBehaviour
         _game.DayEvents += () => { date.text = _game.date; };
         _game.MonthEvents += _UpdateResourceInfo;
         _UpdateResourceInfo();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private string _MinusOrPlus(float v)

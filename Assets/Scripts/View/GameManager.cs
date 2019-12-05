@@ -19,8 +19,6 @@ public class GameManager : MonoBehaviour
 
     public event Action objectInOrbitRotationEvents;
 
-
-
     public Planet_Inhabitable earth;
 
 
