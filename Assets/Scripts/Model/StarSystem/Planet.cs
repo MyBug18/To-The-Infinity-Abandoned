@@ -178,5 +178,5 @@ public enum PlanetType
     Crystal,
     Robotic,
     Shrouded,
-    Biological
+    Hive
 }

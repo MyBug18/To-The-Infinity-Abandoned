@@ -6,10 +6,18 @@ using UnityEngine.UI;
 
 public class InhabitablePlanetUI : MonoBehaviour
 {
+    [SerializeField]
+    private GameManager gm;
+
     public Planet_Inhabitable planet { private get; set; }
 
     [SerializeField]
-    private Text planetNameT, planetSizeT, stabilityT, crimeT, remainingJobSlotT, amenityT, housingT, unemployedPopT, averageHappinessT; 
+    private Text planetNameT, planetSizeT, stabilityT, crimeT, remainingJobSlotT, amenityT, housingT, unemployedPopT, averageHappinessT;
+
+    private void Start()
+    {
+        gm.game.MonthEvents += _MonthlyUpdateUI;
+    }
 
     void OnEnable()
     {
@@ -19,8 +27,6 @@ public class InhabitablePlanetUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameObject.activeSelf && Input.GetKeyDown(KeyCode.Escape))
-            gameObject.SetActive(false);
     }
 
     private void _Initiallize()
@@ -28,11 +34,11 @@ public class InhabitablePlanetUI : MonoBehaviour
         planetNameT.text = planet.name;
         planetSizeT.text = planet.size.ToString();
 
-        _UpdateUI();
+        _MonthlyUpdateUI();
 
     }
 
-    private void _UpdateUI()
+    private void _MonthlyUpdateUI()
     {
 
         stabilityT.text = planet.stability.ToString("0.0");

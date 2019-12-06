@@ -50,7 +50,7 @@ public class StarOrbit
 
     private void _MakeOrbits(int nth)
     {
-        if (true)//GameDataHolder.r.Next() % 100 < inhabitableChance * 100 && inhabitableRange.min <= nth && inhabitableRange.max >= nth)
+        if (GameDataHolder.r.Next() % 100 < inhabitableChance * 100 && inhabitableRange.min <= nth && inhabitableRange.max >= nth)
         {
             orbits.Add(new Planet_Inhabitable(_GetPlanetName(nth), system.game, this, nth, false));
         }
