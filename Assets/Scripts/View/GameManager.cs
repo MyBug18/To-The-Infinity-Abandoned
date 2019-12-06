@@ -46,12 +46,15 @@ public class GameManager : MonoBehaviour
 
         earth.StartConstruction(BuildingType.ColonizationCenter);
         earth.StartConstruction(DistrictType.Mineral);
+
+        game.systems[0].orbits[0].orbits[0] = earth;
         
     }
 
     // Update is called once per frame
     void Update()
     {
+        /*
         if (Input.GetKeyDown(KeyCode.Q))
             Debug.Log(earth.planetJobYields[0].value.amount);
 
@@ -66,7 +69,7 @@ public class GameManager : MonoBehaviour
             earth.pops[0].MovePOPJob(earth.districts[0].workingPOPSlotList[0]);
             Debug.Log(earth.districts[0]);
         }
-
+        */
 
         
         if (Input.GetKeyDown(KeyCode.Space))

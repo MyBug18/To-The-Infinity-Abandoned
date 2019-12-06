@@ -1431,6 +1431,7 @@ MonoBehaviour:
   planetSizeT: {fileID: 1814038568}
   stabilityT: {fileID: 1536060514}
   crimeT: {fileID: 1968559190}
+  popT: {fileID: 1325898716}
   remainingJobSlotT: {fileID: 1359813669}
   amenityT: {fileID: 1454085635}
   housingT: {fileID: 999859732}

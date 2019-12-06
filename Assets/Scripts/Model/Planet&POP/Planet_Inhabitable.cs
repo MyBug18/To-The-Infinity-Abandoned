@@ -74,7 +74,7 @@ public class Planet_Inhabitable : Planet
         }
     }
 
-    public bool isColonized => pops.Count > 1;
+    public bool isColonized => pops.Count > 0;
 
     public List<Building> buildings { get; private set; } = new List<Building>();
     public List<District> districts { get; private set; } = new List<District>();

@@ -12,7 +12,7 @@ public class InhabitablePlanetUI : MonoBehaviour
     public Planet_Inhabitable planet { private get; set; }
 
     [SerializeField]
-    private Text planetNameT, planetSizeT, stabilityT, crimeT, remainingJobSlotT, amenityT, housingT, unemployedPopT, averageHappinessT;
+    private Text planetNameT, planetSizeT, stabilityT, crimeT, popT, remainingJobSlotT, amenityT, housingT, unemployedPopT, averageHappinessT;
 
     private void Start()
     {
@@ -47,5 +47,7 @@ public class InhabitablePlanetUI : MonoBehaviour
         amenityT.text = planet.amenity.ToString("0.0");
         unemployedPopT.text = planet.unemployedPOPs.Count.ToString();
         averageHappinessT.text = planet.pops.Average(p => p.happiness).ToString("0.0");
+        housingT.text = planet.housing.ToString();
+        popT.text = planet.pops.Count.ToString();
     }
 }
