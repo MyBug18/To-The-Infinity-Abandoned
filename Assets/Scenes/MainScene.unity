@@ -472,7 +472,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00077819824, y: -0.000015258789}
+  m_AnchoredPosition: {x: -0.00077819824, y: 0}
   m_SizeDelta: {x: -12.19, y: 0}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &120833830
@@ -749,8 +749,8 @@ GameObject:
   m_Component:
   - component: {fileID: 150461092}
   - component: {fileID: 150461095}
-  - component: {fileID: 150461094}
   - component: {fileID: 150461093}
+  - component: {fileID: 150461094}
   m_Layer: 5
   m_Name: Scrollbar
   m_TagString: Untagged
@@ -775,8 +775,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 155.45996, y: 0}
-  m_SizeDelta: {x: 14.79, y: 388.96}
+  m_AnchoredPosition: {x: 155.53, y: 0}
+  m_SizeDelta: {x: 14.64, y: 388.96}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &150461093
 MonoBehaviour:
@@ -820,7 +820,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 311358155}
   m_HandleRect: {fileID: 311358154}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -835,7 +835,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 150461091}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -844,16 +844,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_Texture: {fileID: 2800000, guid: 8aba130899bf31b4c8645515a3349834, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
 --- !u!222 &150461095
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1253,8 +1250,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: -1.9955444}
-  m_SizeDelta: {x: -0.7900009, y: 3.0311584}
+  m_AnchoredPosition: {x: -3.4, y: -3.9900055}
+  m_SizeDelta: {x: 9, y: 388}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &311358155
 MonoBehaviour:
@@ -3650,9 +3647,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1256468032}
   - component: {fileID: 1256468034}
-  - component: {fileID: 1256468033}
   - component: {fileID: 1256468036}
   - component: {fileID: 1256468035}
+  - component: {fileID: 1256468033}
   m_Layer: 5
   m_Name: ScrollRect
   m_TagString: Untagged
@@ -3675,10 +3672,10 @@ RectTransform:
   m_Father: {fileID: 1296167291}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -7.39, y: 0}
-  m_SizeDelta: {x: -14.79, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -7.3899994, y: 0}
+  m_SizeDelta: {x: 311.21002, y: 396}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1256468033
 MonoBehaviour:
@@ -3689,25 +3686,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 1256468031}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_Texture: {fileID: 2800000, guid: c29eac8873a4c0f4788a6536d72614ae, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
 --- !u!222 &1256468034
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3949,8 +3943,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.21000671, y: -31.59999}
-  m_SizeDelta: {x: -17.23, y: -95}
+  m_AnchoredPosition: {x: 0.21000671, y: -35.66}
+  m_SizeDelta: {x: -17.23, y: -86.87}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1296167292
 MonoBehaviour:
