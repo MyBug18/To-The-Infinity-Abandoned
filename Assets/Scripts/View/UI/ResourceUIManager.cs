@@ -21,8 +21,8 @@ public class ResourceUIManager : MonoBehaviour
         _game = gm.game;
         _resourceInfo = _game.globalResource;
         _game.DayEvents += () => { date.text = _game.date; };
-        _game.MonthEvents += _UpdateResourceInfo;
-        _UpdateResourceInfo();
+        _game.MonthEvents += () => UpdateResourceUI();
+        UpdateResourceUI();
     }
 
     private string _MinusOrPlus(float v)
@@ -31,7 +31,7 @@ public class ResourceUIManager : MonoBehaviour
         else return "(+" + v.ToString("0.00") + ")";
     }
 
-    private void _UpdateResourceInfo()
+    public void UpdateResourceUI()
     {
         electricityText.text = _resourceInfo.electricity.ToString("0.00") + " " + _MinusOrPlus(_resourceInfo.turnResource.turnElectricity);
         mineralText.text = _resourceInfo.mineral.ToString("0.00") + " " + _MinusOrPlus(_resourceInfo.turnResource.turnMineral);

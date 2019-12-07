@@ -16,7 +16,7 @@ public class InhabitablePlanetUI : MonoBehaviour
 
     private void Start()
     {
-        gm.game.MonthEvents += _MonthlyUpdateUI;
+        gm.game.DayEvents += () => UpdatePlanetUI();
     }
 
     void OnEnable()
@@ -34,11 +34,11 @@ public class InhabitablePlanetUI : MonoBehaviour
         planetNameT.text = planet.name;
         planetSizeT.text = planet.size.ToString();
 
-        _MonthlyUpdateUI();
+        UpdatePlanetUI();
 
     }
 
-    private void _MonthlyUpdateUI()
+    public void UpdatePlanetUI()
     {
 
         stabilityT.text = planet.stability.ToString("0.0");
