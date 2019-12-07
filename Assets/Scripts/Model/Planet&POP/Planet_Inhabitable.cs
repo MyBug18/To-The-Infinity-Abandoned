@@ -62,12 +62,12 @@ public class Planet_Inhabitable : Planet
         {
             int count = 0;
             foreach (POPWorkingPlace p in buildings)
-                foreach (POPWorkingPlace.POPWorkingSlot s in p.workingPOPSlotList)
+                foreach (POPWorkingSlot s in p.workingPOPSlotList)
                     if (s.pop == null && !s.isPOPTrainingForHere)
                         count++;
 
             foreach (POPWorkingPlace p in districts)
-                foreach (POPWorkingPlace.POPWorkingSlot s in p.workingPOPSlotList)
+                foreach (POPWorkingSlot s in p.workingPOPSlotList)
                     if (s.pop == null && !s.isPOPTrainingForHere)
                         count++;
             return count;
