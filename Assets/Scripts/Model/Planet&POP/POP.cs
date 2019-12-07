@@ -9,8 +9,8 @@ public class POP
     public bool isUnemployed => currentWorkingSlot == null;
     public bool isTraining { get; private set; } = false;
 
-    public POPWorkingPlace.POPWorkingSlot currentWorkingSlot { get; private set; } // Current POP's working place.
-    public POPWorkingPlace.POPWorkingSlot futureWorkingSlot { get; set; } // After training ended, POP will move to this place.
+    public POPWorkingSlot currentWorkingSlot { get; private set; } // Current POP's working place.
+    public POPWorkingSlot futureWorkingSlot { get; set; } // After training ended, POP will move to this place.
 
     public float happiness { get
         {
@@ -84,7 +84,7 @@ public class POP
         remainTrainingDay--;
     }
     
-    public void ActivatePOP(POPWorkingPlace.POPWorkingSlot futureSlot) // Activate just created POP, which must be unemployed
+    public void ActivatePOP(POPWorkingSlot futureSlot) // Activate just created POP, which must be unemployed
     {
         if (futureSlot.pop != null)
             throw new InvalidOperationException("Trying to move to already occupied slot!");
@@ -100,7 +100,7 @@ public class POP
             UnityEngine.Debug.Log("Start Training.");
         }
     }
-    public void MovePOPJob(POPWorkingPlace.POPWorkingSlot futureSlot)
+    public void MovePOPJob(POPWorkingSlot futureSlot)
     {
         futureWorkingSlot = futureSlot;
 
@@ -197,7 +197,7 @@ public class POP
     }
 
 
-    private void _StartTraining(POPWorkingPlace.POPWorkingSlot futureSlot) // Removes current job, sets future job, and start training.
+    private void _StartTraining(POPWorkingSlot futureSlot) // Removes current job, sets future job, and start training.
     {
         if (isTraining) throw new InvalidOperationException("Trying to train POP already training!");
 

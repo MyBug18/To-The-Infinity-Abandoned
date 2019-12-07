@@ -5,15 +5,6 @@ using UnityEngine;
 
 public abstract class POPWorkingPlace
 {
-    public class POPWorkingSlot
-    {
-        public POP pop;
-        public Job job;
-        public List<JobUpkeep> upkeeps = new List<JobUpkeep>();
-        public List<JobYield> yields = new List<JobYield>();
-        public bool isPOPTrainingForHere = false;
-    }
-
     protected POPWorkingPlace(WorkingPlaceType type, Planet_Inhabitable planet)
     {
         this.planet = planet;
@@ -97,4 +88,12 @@ public abstract class POPWorkingPlace
 public enum WorkingPlaceType
 {
     Building, District
+}
+public class POPWorkingSlot
+{
+    public POP pop;
+    public Job job;
+    public List<JobUpkeep> upkeeps = new List<JobUpkeep>();
+    public List<JobYield> yields = new List<JobYield>();
+    public bool isPOPTrainingForHere = false;
 }
