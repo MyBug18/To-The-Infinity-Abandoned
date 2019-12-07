@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
 
 
         
-        earth = new Planet_Inhabitable("earth", 15, game, null, 0, false);
+        earth = new Planet_Inhabitable("Earth", 15, game, null, 0, false);
         game.colonizedPlanets.Add(earth);
         earth.BirthPOP();
         Debug.Log(earth);
