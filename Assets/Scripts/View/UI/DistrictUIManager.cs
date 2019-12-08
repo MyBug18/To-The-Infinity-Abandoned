@@ -15,7 +15,7 @@ public class DistrictUIManager : MonoBehaviour
     private Transform housingSqrs, electricitySqrs, mineralSqrs, foodSqrs;
 
     [SerializeField]
-    private Button housePlus, houseMinus, elecPlus, elecMinus, mineralPlus, mineralMinus, foodPlus, foodMinus;
+    private Button housePlus, elecPlus, mineralPlus, foodPlus;
 
 
     // Start is called before the first frame update
@@ -121,13 +121,8 @@ public class DistrictUIManager : MonoBehaviour
         }
     }
 
-    private void _EnableOrDisableButton()
-    {
-        if (planet.currentHouseDistrictNum == 0) houseMinus.interactable = false; else houseMinus.interactable = true;
-        if (planet.currentMineralDistrictNum == 0) mineralMinus.interactable = false; else mineralMinus.interactable = true;
-        if (planet.currentElectricityDistrictNum == 0) elecMinus.interactable = false; else elecMinus.interactable = true;
-        if (planet.currentFoodDistrictNum == 0) foodMinus.interactable = false; else foodMinus.interactable = true;
-
+    private void _EnableOrDisableButton() 
+    { 
         if (planet.IsDistrictBuildable(DistrictType.Electricity)) elecPlus.interactable = true; else elecPlus.interactable = false;
         if (planet.IsDistrictBuildable(DistrictType.Mineral)) mineralPlus.interactable = true; else mineralPlus.interactable = false;
         if (planet.IsDistrictBuildable(DistrictType.Food)) foodPlus.interactable = true; else foodPlus.interactable = false;
