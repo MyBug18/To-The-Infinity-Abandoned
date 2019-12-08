@@ -70,9 +70,29 @@ public class DistrictUIManager : MonoBehaviour
 
     public void BuildDistrict(int a)
     {
-        Debug.Log("Building: " + (DistrictType)a);
-        Action OnTimerEnded = () => _AddSquare((DistrictType)a);
-        planet.StartConstruction((DistrictType)a, OnTimerEnded);
+        DistrictType type = (DistrictType)a;
+
+        Action OnTimerEnded = () => _AddSquare(type);
+        planet.StartConstruction(type, OnTimerEnded);
+
+        switch (type)
+        {
+            case DistrictType.Electricity:
+                electricityNum.text = (planet.currentElectricityDistrictNum + planet.plannedElectricityDistrictNum) + "/" + planet.resourcesDistrictsMaxNum.maxElectricity;
+                housingNum.text = (planet.currentHouseDistrictNum + planet.plannedHouseDistrictNum) + "/" + planet.availableHouseDistrictNum;
+                break;
+            case DistrictType.Mineral:
+                mineralNum.text = (planet.currentMineralDistrictNum + planet.plannedMineralDistrictNum) + "/" + planet.resourcesDistrictsMaxNum.maxMineral;
+                housingNum.text = (planet.currentHouseDistrictNum + planet.plannedHouseDistrictNum) + "/" + planet.availableHouseDistrictNum;
+                break;
+            case DistrictType.Food:
+                foodNum.text = (planet.currentFoodDistrictNum + planet.plannedFoodDistrictNum) + "/" + planet.resourcesDistrictsMaxNum.maxFood;
+                housingNum.text = (planet.currentHouseDistrictNum + planet.plannedHouseDistrictNum) + "/" + planet.availableHouseDistrictNum;
+                break;
+            case DistrictType.House:
+                housingNum.text = (planet.currentHouseDistrictNum + planet.plannedHouseDistrictNum) + "/" + planet.availableHouseDistrictNum;
+                break;
+        }
     }
 
     private void _AddSquare(DistrictType type)
@@ -94,7 +114,5 @@ public class DistrictUIManager : MonoBehaviour
             default:
                 throw new InvalidOperationException("Invalid District: " + type);
         }
-
-        _InitializeTexts();
     }
 }
