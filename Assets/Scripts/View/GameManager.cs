@@ -33,19 +33,9 @@ public class GameManager : MonoBehaviour
     {
         InstantiateStarSystem(game.systems[0]);
         Debug.Log(game.systems[0]);
-
-
-        
         earth = new Planet_Inhabitable("Earth", 15, game, null, 0, false);
+        earth.EndColonization();
         game.colonizedPlanets.Add(earth);
-        earth.BirthPOP();
-        Debug.Log(earth);
-
-        foreach (var p in earth.unemployedPOPs)
-            Debug.Log(p);
-
-        earth.StartConstruction(BuildingType.ColonizationCenter);
-        earth.StartConstruction(DistrictType.Mineral);
 
         game.systems[0].orbits[0].orbits[0] = earth;
         

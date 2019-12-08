@@ -24,7 +24,7 @@ public class Planet_Inhabitable : Planet
     public Planet_Inhabitable(string name, int size, Game game, StarOrbit orbit, int nthOrbit, bool isSatellite) : base(name, size, PlanetType.Inhabitable, game, orbit, nthOrbit, isSatellite) // for making special inhabitable planet, such as Earth.
     {
         System.Random r = new System.Random();
-        for (int i = 0; i < size / 3 + 1; i++)
+        for (int i = 0; i < size / 3; i++)
         {
             features.Add((PlanetaryFeature)(r.Next() % 6));
         }

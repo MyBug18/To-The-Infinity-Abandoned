@@ -14,6 +14,9 @@ public class InhabitablePlanetUI : MonoBehaviour
     [SerializeField]
     private Text planetNameT, planetSizeT, stabilityT, crimeT, popT, remainingJobSlotT, amenityT, housingT, unemployedPopT, averageHappinessT;
 
+    [SerializeField]
+    private DistrictUIManager districtUIManager;
+
     private void Start()
     {
         gm.game.DayEvents += () => UpdatePlanetUI();
@@ -36,17 +39,20 @@ public class InhabitablePlanetUI : MonoBehaviour
 
         UpdatePlanetUI();
 
+        districtUIManager.planet = planet;
+        districtUIManager.Initialize();
+
     }
 
     public void UpdatePlanetUI()
     {
 
-        stabilityT.text = planet.stability.ToString("0.0");
-        crimeT.text = planet.crime.ToString("0.0");
+        stabilityT.text = ((int)planet.stability).ToString() + "%";
+        crimeT.text = ((int)(planet.crime)).ToString() + "%";
         remainingJobSlotT.text = planet.remainingJobSlotNum.ToString();
-        amenityT.text = planet.amenity.ToString("0.0");
+        amenityT.text = planet.amenity.ToString();
         unemployedPopT.text = planet.unemployedPOPs.Count.ToString();
-        averageHappinessT.text = planet.pops.Average(p => p.happiness).ToString("0.0");
+        averageHappinessT.text = ((int)planet.pops.Average(p => p.happiness)).ToString() + "%";
         housingT.text = planet.housing.ToString();
         popT.text = planet.pops.Count.ToString();
     }
