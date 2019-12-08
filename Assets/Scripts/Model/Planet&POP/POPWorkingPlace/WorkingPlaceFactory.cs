@@ -14,7 +14,7 @@ public class WorkingPlaceFactory
     {
         switch(type)
         {
-            case DistrictType.Fuel:
+            case DistrictType.Electricity:
                 return new ElectricityDistrict(planet);
             case DistrictType.Mineral:
                 return new MineralDistrict(planet);
@@ -100,7 +100,7 @@ public class WorkingPlaceFactory
         switch(type)
         {
             case DistrictType.Food:
-            case DistrictType.Fuel:
+            case DistrictType.Electricity:
             case DistrictType.Mineral:
                 result = 180;
                 break;
@@ -155,7 +155,7 @@ public class WorkingPlaceFactory
         switch(type)
         {
             case DistrictType.Food:
-            case DistrictType.Fuel:
+            case DistrictType.Electricity:
             case DistrictType.Mineral:
                 result = 150;
                 break;

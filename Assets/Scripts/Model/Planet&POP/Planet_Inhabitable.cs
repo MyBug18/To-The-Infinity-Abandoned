@@ -7,8 +7,8 @@ public class Planet_Inhabitable : Planet
 {
     public class ConstructionQueueElement
     {
-        public bool isBuilding;
-        public int type;
+        public bool isBuilding; // true if building; false if district
+        public int type; // enum type. casted depending on isbuilding.
         public int remainTime;
         public Building fromUpgrade;
 
@@ -209,7 +209,7 @@ public class Planet_Inhabitable : Planet
                 if (availableFoodDistrictNum <= 0) result = false;
                 else result = true;
                 break;
-            case DistrictType.Fuel:
+            case DistrictType.Electricity:
                 if (availableElectricityDistrictNum <= 0) result = false;
                 else result = true;
                 break;
@@ -246,7 +246,6 @@ public class Planet_Inhabitable : Planet
     {
         if (!IsDistrictBuildable(type)) throw new InvalidOperationException(type + " District is already at max number!");
 
-        Debug.Log("StartConstruction");
         ongoingConstruction.Add(new ConstructionQueueElement(false, (int)type, workingPlaceFactory.GetConstructionTime(type), null));
     }
 

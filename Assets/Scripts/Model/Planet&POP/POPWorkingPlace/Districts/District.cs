@@ -11,5 +11,5 @@
 
 public enum DistrictType
 {
-    Fuel, Mineral, Food, House
+    House, Electricity, Mineral, Food
 }

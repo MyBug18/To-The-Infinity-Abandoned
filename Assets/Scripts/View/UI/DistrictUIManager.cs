@@ -66,4 +66,9 @@ public class DistrictUIManager : MonoBehaviour
         for (int i = max; i < 12; i++)
             sqrs.GetChild(i).gameObject.SetActive(false);
     }
+
+    public void BuildDistrict(int a)
+    {
+        planet.StartConstruction((DistrictType)a);
+    }
 }

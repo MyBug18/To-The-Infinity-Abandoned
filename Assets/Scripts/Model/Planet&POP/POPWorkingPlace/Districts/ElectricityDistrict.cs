@@ -9,7 +9,7 @@ public class ElectricityDistrict : District
     {
         name = "Electricity District";
 
-        districtType = DistrictType.Fuel;
+        districtType = DistrictType.Electricity;
         InitiallizePOPWorkingList(2);
 
         workingPOPSlotList[0].job = Job.Technician;
