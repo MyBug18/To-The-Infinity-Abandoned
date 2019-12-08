@@ -17,6 +17,9 @@ public class DistrictUIManager : MonoBehaviour
     [SerializeField]
     private Button housePlus, elecPlus, mineralPlus, foodPlus;
 
+    [SerializeField]
+    private ConstructionQueueUI constructionQueue;
+
 
     // Start is called before the first frame update
     void Start()
@@ -98,6 +101,8 @@ public class DistrictUIManager : MonoBehaviour
                 housingNum.text = (planet.currentHouseDistrictNum + planet.plannedHouseDistrictNum) + "/" + planet.availableHouseDistrictNum;
                 break;
         }
+
+        constructionQueue.PutElementOnQueue(planet);
     }
 
     private void _AddSquare(DistrictType type)
