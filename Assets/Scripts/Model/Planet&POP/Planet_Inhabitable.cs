@@ -20,7 +20,6 @@ public class Planet_Inhabitable : Planet
             this.fromUpgrade = fromUpgrade;
         }
     }
-    public System.Random r = new System.Random();
 
     public Planet_Inhabitable(string name, int size, Game game, StarOrbit orbit, int nthOrbit, bool isSatellite) : base(name, size, PlanetType.Inhabitable, game, orbit, nthOrbit, isSatellite) // for making special inhabitable planet, such as Earth.
     {
@@ -73,6 +72,8 @@ public class Planet_Inhabitable : Planet
             return count;
         }
     }
+
+    public WorkingPlaceFactory workingPlaceFactory;
 
     public bool isColonized => pops.Count > 0;
 
@@ -161,6 +162,7 @@ public class Planet_Inhabitable : Planet
     public void EndColonization()
     {
         BirthPOP();
+        workingPlaceFactory = new WorkingPlaceFactory(this);
         _BuildBuilding(BuildingType.ColonizationCenter);
     }
 
@@ -227,17 +229,17 @@ public class Planet_Inhabitable : Planet
 
     private void _BuildDistrict(DistrictType type)
     {
-       districts.Add(WorkingPlaceFactory.GetDistrict(type, this));
+       districts.Add(workingPlaceFactory.GetDistrict(type, this));
     }
 
     private void _BuildBuilding(BuildingType type)
     {
-        buildings.Add(WorkingPlaceFactory.GetBuilding(type, this));
+        buildings.Add(workingPlaceFactory.GetBuilding(type, this));
     }
 
     public void StartConstruction(BuildingType type)
     {
-        ongoingConstruction.Add(new ConstructionQueueElement(true, (int)type, WorkingPlaceFactory.GetConstructionTime(type), null));
+        ongoingConstruction.Add(new ConstructionQueueElement(true, (int)type, workingPlaceFactory.GetConstructionTime(type), null));
     }
 
     public void StartConstruction(DistrictType type)
@@ -245,7 +247,7 @@ public class Planet_Inhabitable : Planet
         if (!IsDistrictBuildable(type)) throw new InvalidOperationException(type + " District is already at max number!");
 
         Debug.Log("StartConstruction");
-        ongoingConstruction.Add(new ConstructionQueueElement(false, (int)type, WorkingPlaceFactory.GetConstructionTime(type), null));
+        ongoingConstruction.Add(new ConstructionQueueElement(false, (int)type, workingPlaceFactory.GetConstructionTime(type), null));
     }
 
     public void StartUpgrade(Building fromUpgrade)
@@ -254,7 +256,7 @@ public class Planet_Inhabitable : Planet
         if (!(fromUpgrade is IUpgradable)) throw new InvalidOperationException("This building is not upgradable!");
 
         ongoingConstruction.Add(new ConstructionQueueElement(true, (int)(fromUpgrade.type + 1), 
-            WorkingPlaceFactory.GetConstructionTime((BuildingType)((int)fromUpgrade.type + 1)), fromUpgrade)); // Every upgraded BuildingType is bigger by 1 than a previous one.
+            workingPlaceFactory.GetConstructionTime((BuildingType)((int)fromUpgrade.type + 1)), fromUpgrade)); // Every upgraded BuildingType is bigger by 1 than a previous one.
     }
 
     public void ProceedConstruction()
@@ -285,7 +287,7 @@ public class Planet_Inhabitable : Planet
         else
         {
             if (justEnded.fromUpgrade == null)
-                buildings.Add(WorkingPlaceFactory.GetBuilding((BuildingType)justEnded.type, this));
+                buildings.Add(workingPlaceFactory.GetBuilding((BuildingType)justEnded.type, this));
             else
                 ((IUpgradable)justEnded.fromUpgrade).Upgrade();
         }

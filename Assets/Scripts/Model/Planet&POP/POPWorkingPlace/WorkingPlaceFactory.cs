@@ -1,8 +1,16 @@
 ﻿using System;
 
-public static class WorkingPlaceFactory
+public class WorkingPlaceFactory
 {
-    public static District GetDistrict(DistrictType type, Planet_Inhabitable planet)
+    public Planet_Inhabitable planet;
+    public Game game;
+
+    public WorkingPlaceFactory(Planet_Inhabitable planet)
+    {
+        this.planet = planet;
+    }
+
+    public District GetDistrict(DistrictType type, Planet_Inhabitable planet)
     {
         switch(type)
         {
@@ -19,7 +27,7 @@ public static class WorkingPlaceFactory
         }
     }
 
-    public static Building GetBuilding(BuildingType type, Planet_Inhabitable planet)
+    public Building GetBuilding(BuildingType type, Planet_Inhabitable planet)
     {
         switch(type)
         {
@@ -50,7 +58,7 @@ public static class WorkingPlaceFactory
         }
     }
 
-    public static int GetConstructionTime(BuildingType type)
+    public int GetConstructionTime(BuildingType type)
     {
         int result;
         switch(type)
@@ -83,10 +91,10 @@ public static class WorkingPlaceFactory
             default:
                 throw new InvalidOperationException("Invalid building type detected.");
         }
-        return (int)(result / GameDataHolder.game.constructionTimeModifier);
+        return (int)(result / planet.game.constructionTimeModifier);
     }
 
-    public static int GetConstructionTime(DistrictType type)
+    public int GetConstructionTime(DistrictType type)
     {
         int result;
         switch(type)
@@ -102,10 +110,10 @@ public static class WorkingPlaceFactory
             default:
                 throw new InvalidOperationException("Invalid district type detected!");
         }
-        return (int)(result / GameDataHolder.game.constructionTimeModifier);
+        return (int)(result / planet.game.constructionTimeModifier);
     }
 
-    public static int GetContructionCost(BuildingType type)
+    public int GetContructionCost(BuildingType type)
     {
         int result;
         switch(type)
@@ -138,10 +146,10 @@ public static class WorkingPlaceFactory
             default:
                 throw new InvalidOperationException("Invalid BuildingType detected!");
         }
-        return (int)(result / GameDataHolder.game.constructionCostModifier);
+        return (int)(result / planet.game.constructionCostModifier);
     }
 
-    public static int GetConstructionCost(DistrictType type)
+    public int GetConstructionCost(DistrictType type)
     {
         int result;
         switch(type)
@@ -157,6 +165,6 @@ public static class WorkingPlaceFactory
             default:
                 throw new InvalidOperationException("Invalid DistrictType detected!");
         }
-        return (int)(result / GameDataHolder.game.constructionCostModifier);
+        return (int)(result / planet.game.constructionCostModifier);
     }
 }
