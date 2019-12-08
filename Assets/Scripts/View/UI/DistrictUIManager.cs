@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -69,6 +70,31 @@ public class DistrictUIManager : MonoBehaviour
 
     public void BuildDistrict(int a)
     {
-        planet.StartConstruction((DistrictType)a);
+        Debug.Log("Building: " + (DistrictType)a);
+        Action OnTimerEnded = () => _AddSquare((DistrictType)a);
+        planet.StartConstruction((DistrictType)a, OnTimerEnded);
+    }
+
+    private void _AddSquare(DistrictType type)
+    {
+        switch(type)
+        {
+            case DistrictType.House:
+                housingSqrs.GetChild(planet.currentHouseDistrictNum - 1).GetChild(0).gameObject.SetActive(true);
+                break;
+            case DistrictType.Electricity:
+                electricitySqrs.GetChild(planet.currentElectricityDistrictNum - 1).GetChild(0).gameObject.SetActive(true);
+                break;
+            case DistrictType.Mineral:
+                mineralSqrs.GetChild(planet.currentMineralDistrictNum - 1).GetChild(0).gameObject.SetActive(true);
+                break;
+            case DistrictType.Food:
+                foodSqrs.GetChild(planet.currentFoodDistrictNum - 1).GetChild(0).gameObject.SetActive(true);
+                break;
+            default:
+                throw new InvalidOperationException("Invalid District: " + type);
+        }
+
+        _InitializeTexts();
     }
 }

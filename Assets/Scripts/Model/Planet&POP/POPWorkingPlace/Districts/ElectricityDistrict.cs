@@ -49,6 +49,7 @@ public class ElectricityDistrict : District
     {
         base.OnConstructing();
         planet.currentElectricityDistrictNum++;
+        planet.plannedElectricityDistrictNum--;
         planet.providedHousing += 3;
     }
 }

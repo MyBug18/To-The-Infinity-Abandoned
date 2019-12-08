@@ -10,6 +10,7 @@
     {
         base.OnConstructing();
         planet.currentHouseDistrictNum++;
+        planet.plannedHouseDistrictNum--;
         planet.providedHousing += 8;
     }
 

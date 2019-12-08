@@ -40,6 +40,7 @@ public class MineralDistrict : District
     {
         base.OnConstructing();
         planet.currentMineralDistrictNum++;
+        planet.plannedMineralDistrictNum--;
         planet.providedHousing += 3;
     }
 

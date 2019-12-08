@@ -21,6 +21,7 @@
     {
         base.OnConstructing();
         planet.currentFoodDistrictNum++;
+        planet.plannedFoodDistrictNum--;
         planet.providedHousing += 3;
     }
 

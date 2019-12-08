@@ -5,22 +5,6 @@ using UnityEngine;
 
 public class Planet_Inhabitable : Planet
 {
-    public class ConstructionQueueElement
-    {
-        public bool isBuilding; // true if building; false if district
-        public int type; // enum type. casted depending on isbuilding.
-        public int remainTime;
-        public Building fromUpgrade;
-
-        public ConstructionQueueElement(bool isBuilding, int type, int remainTime, Building fromUpgrade)
-        {
-            this.isBuilding = isBuilding;
-            this.type = type;
-            this.remainTime = remainTime;
-            this.fromUpgrade = fromUpgrade;
-        }
-    }
-
     public Planet_Inhabitable(string name, int size, Game game, StarOrbit orbit, int nthOrbit, bool isSatellite) : base(name, size, PlanetType.Inhabitable, game, orbit, nthOrbit, isSatellite) // for making special inhabitable planet, such as Earth.
     {
         System.Random r = new System.Random();
@@ -81,7 +65,7 @@ public class Planet_Inhabitable : Planet
     public List<District> districts { get; private set; } = new List<District>();
     public List<PlanetaryFeature> features { get; private set; } = new List<PlanetaryFeature>();
 
-    public List<ConstructionQueueElement> ongoingConstruction = new List<ConstructionQueueElement>();
+    public List<ConstructionQueueElement> ongoingConstruction { get; private set; } = new List<ConstructionQueueElement>();
 
     public List<POP> pops = new List<POP>();
     public List<POP> unemployedPOPs = new List<POP>();
@@ -141,10 +125,12 @@ public class Planet_Inhabitable : Planet
         }
     }
     public int currentElectricityDistrictNum = 0, currentMineralDistrictNum = 0, currentFoodDistrictNum = 0, currentHouseDistrictNum = 0;
-    public int availableElectricityDistrictNum => resourcesDistrictsMaxNum.maxElectricity - currentElectricityDistrictNum;
-    public int availableMineralDistrictNum => resourcesDistrictsMaxNum.maxMineral - currentMineralDistrictNum;
-    public int availableFoodDistrictNum => resourcesDistrictsMaxNum.maxFood - currentFoodDistrictNum;
-    public int availableHouseDistrictNum => size - currentFoodDistrictNum - currentElectricityDistrictNum - currentMineralDistrictNum - currentHouseDistrictNum;
+    public int plannedElectricityDistrictNum = 0, plannedMineralDistrictNum = 0, plannedFoodDistrictNum = 0, plannedHouseDistrictNum = 0;
+    public int availableElectricityDistrictNum => resourcesDistrictsMaxNum.maxElectricity - currentElectricityDistrictNum - plannedElectricityDistrictNum;
+    public int availableMineralDistrictNum => resourcesDistrictsMaxNum.maxMineral - currentMineralDistrictNum - plannedMineralDistrictNum;
+    public int availableFoodDistrictNum => resourcesDistrictsMaxNum.maxFood - currentFoodDistrictNum - plannedFoodDistrictNum;
+    public int availableHouseDistrictNum => size - currentFoodDistrictNum - currentElectricityDistrictNum - currentMineralDistrictNum - currentHouseDistrictNum
+        - plannedElectricityDistrictNum - plannedMineralDistrictNum - plannedFoodDistrictNum - plannedHouseDistrictNum;
 
     public int remainColonizationDay { get; private set; } = 0;
 
@@ -237,25 +223,41 @@ public class Planet_Inhabitable : Planet
         buildings.Add(workingPlaceFactory.GetBuilding(type, this));
     }
 
-    public void StartConstruction(BuildingType type)
+    public void StartConstruction(BuildingType type, Action OnTimerEnded)
     {
-        ongoingConstruction.Add(new ConstructionQueueElement(true, (int)type, workingPlaceFactory.GetConstructionTime(type), null));
+        ongoingConstruction.Add(new ConstructionQueueElement(true, (int)type, workingPlaceFactory.GetConstructionTime(type), null, OnTimerEnded));
     }
 
-    public void StartConstruction(DistrictType type)
+    public void StartConstruction(DistrictType type, Action OnTimerEnded)
     {
         if (!IsDistrictBuildable(type)) throw new InvalidOperationException(type + " District is already at max number!");
 
-        ongoingConstruction.Add(new ConstructionQueueElement(false, (int)type, workingPlaceFactory.GetConstructionTime(type), null));
+        switch(type)
+        {
+            case DistrictType.Electricity:
+                plannedElectricityDistrictNum++;
+                break;
+            case DistrictType.Food:
+                plannedFoodDistrictNum++;
+                break;
+            case DistrictType.House:
+                plannedHouseDistrictNum++;
+                break;
+            case DistrictType.Mineral:
+                plannedMineralDistrictNum++;
+                break;
+        }
+
+        ongoingConstruction.Add(new ConstructionQueueElement(false, (int)type, workingPlaceFactory.GetConstructionTime(type), null, OnTimerEnded));
     }
 
-    public void StartUpgrade(Building fromUpgrade)
+    public void StartUpgrade(Building fromUpgrade, Action OnTimerEnded)
     {
         if (!((IUpgradable)fromUpgrade).IsUpgradable()) throw new InvalidOperationException("This building has not met the upgrade condition!");
         if (!(fromUpgrade is IUpgradable)) throw new InvalidOperationException("This building is not upgradable!");
 
         ongoingConstruction.Add(new ConstructionQueueElement(true, (int)(fromUpgrade.type + 1), 
-            workingPlaceFactory.GetConstructionTime((BuildingType)((int)fromUpgrade.type + 1)), fromUpgrade)); // Every upgraded BuildingType is bigger by 1 than a previous one.
+            workingPlaceFactory.GetConstructionTime((BuildingType)((int)fromUpgrade.type + 1)), fromUpgrade, OnTimerEnded)); // Every upgraded BuildingType is bigger by 1 than a previous one.
     }
 
     public void ProceedConstruction()
@@ -290,6 +292,7 @@ public class Planet_Inhabitable : Planet
             else
                 ((IUpgradable)justEnded.fromUpgrade).Upgrade();
         }
+        justEnded.OnTimerEnded?.Invoke();
         Debug.Log("Construction Ended");
     }
 
