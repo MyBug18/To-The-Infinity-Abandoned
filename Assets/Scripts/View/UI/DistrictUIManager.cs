@@ -37,6 +37,7 @@ public class DistrictUIManager : MonoBehaviour
     {
         _InitializeTexts();
         _InitializeSqrs();
+        _EnableOrDisableButton();
     }
 
     private void _InitializeTexts()
