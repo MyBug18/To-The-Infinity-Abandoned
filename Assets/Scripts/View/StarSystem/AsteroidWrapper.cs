@@ -17,7 +17,7 @@ public class AsteroidWrapper : CelestialBodyWrapper
         base.Start();
         asteroid = (Asteroid)body;
 
-        int idx = GameDataHolder.r.Next(0, textures.Length);
+        int idx = GameDataHolder.random.Next(0, textures.Length);
         Sprite sp = Sprite.Create(textures[idx], new Rect(0, 0, textures[idx].width, textures[idx].height), new Vector2(0.5f, 0.5f));
 
         sr.sprite = sp;

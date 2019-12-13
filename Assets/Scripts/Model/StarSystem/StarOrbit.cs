@@ -5,7 +5,9 @@ public class StarOrbit
 {
     public StarSystem system;
     public List<Star> center = new List<Star>();
-    public List<CelestialBody> orbits;
+
+    public IReadOnlyList<CelestialBody> bodiesInOrbit => _bodiesInOrbit;
+    private List<CelestialBody> _bodiesInOrbit = new List<CelestialBody>();
 
     public int orbitNum;
     public float inhabitableChance;
@@ -17,7 +19,6 @@ public class StarOrbit
     {
         this.system = system;
         //positionInStarSystem = position;
-        orbits = new List<CelestialBody>();
 
         for (int i = 0; i < starNum; i++)
             center.Add(new Star(system.game, this, system.GetStarName()));
@@ -50,19 +51,19 @@ public class StarOrbit
 
     private void _MakeOrbits(int nth)
     {
-        if (GameDataHolder.r.Next() % 100 < inhabitableChance * 100 && inhabitableRange.min <= nth && inhabitableRange.max >= nth)
+        if (GameDataHolder.random.Next() % 100 < inhabitableChance * 100 && inhabitableRange.min <= nth && inhabitableRange.max >= nth)
         {
-            orbits.Add(new Planet_Inhabitable(_GetPlanetName(nth), system.game, this, nth, false));
+            _bodiesInOrbit.Add(new Planet_Inhabitable(_GetPlanetName(nth), system.game, this, nth, false));
         }
         else if ((nth == orbitNum || nth == orbitNum / 2) && orbitNum > 4)
         {
-            orbits.Add(new AsteroidBelt(system.game, this, nth));
+            _bodiesInOrbit.Add(new AsteroidBelt(system.game, this, nth));
         }
         else
         {
             var p = new Planet(_GetPlanetName(nth), system.game, this, nth, false);
 
-            orbits.Add(p);
+            _bodiesInOrbit.Add(p);
         }
     }
 
@@ -80,7 +81,7 @@ public class StarOrbit
         s += "\n";
 
         string o = "Planets:\n";
-        foreach (var orb in orbits)
+        foreach (var orb in _bodiesInOrbit)
             o += orb + "\n";
 
         return s + o;
@@ -104,5 +105,13 @@ public class StarOrbit
         if (number >= 4) return "IV" + _toRoman(number - 4);
         if (number >= 1) return "I" + _toRoman(number - 1);
         throw new ArgumentOutOfRangeException("something bad happened");
+    }
+
+    internal Planet_Inhabitable Addlfgdfangdajk(Game game)
+    {
+        var earth = new Planet_Inhabitable("Earth", 15, game, null, 0, false);
+        earth.EndColonization();
+        _bodiesInOrbit[0] = earth;
+        return earth;
     }
 }

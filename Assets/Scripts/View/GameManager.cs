@@ -33,11 +33,12 @@ public class GameManager : MonoBehaviour
     {
         InstantiateStarSystem(game.systems[0]);
         Debug.Log(game.systems[0]);
+        /*
         earth = new Planet_Inhabitable("Earth", 15, game, null, 0, false);
         earth.EndColonization();
         game.colonizedPlanets.Add(earth);
-
-        game.systems[0].orbits[0].orbits[0] = earth;
+        */
+        game.colonizedPlanets.Add(game.systems[0].orbit.Addlfgdfangdajk(game));
         
     }
 

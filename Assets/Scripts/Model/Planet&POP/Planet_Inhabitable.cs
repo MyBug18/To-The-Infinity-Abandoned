@@ -18,7 +18,7 @@ public class Planet_Inhabitable : Planet
     {
         for (int i = 0; i < size / 3 + 1; i++)
         {
-            features.Add((PlanetaryFeature)(GameDataHolder.r.Next() % 6));
+            features.Add((PlanetaryFeature)(GameDataHolder.random.Next() % 6));
         }
     }
 

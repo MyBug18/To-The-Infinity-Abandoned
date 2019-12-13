@@ -27,7 +27,7 @@ public class StarOrbitWrapper : MonoBehaviour
 
     private void _InstantiateFirstOrbits()
     {
-        foreach (var body in starOrbit.orbits)
+        foreach (var body in starOrbit.bodiesInOrbit)
         {
             Transform objectInOrbit = Instantiate(objectInOrbitPrefab, transform);
             objectInOrbit.GetComponent<ObjectInOrbit>().orbitLine.radius = body.orbitRadius;

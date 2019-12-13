@@ -8,8 +8,8 @@ public abstract class CelestialBody
     public List<CelestialBodyYield> yields = new List<CelestialBodyYield>();
     public StarOrbit starOrbit;
 
-    public int orbitalPeriod = GameDataHolder.r.Next(120, 720);
-    public float rotationCycle = GameDataHolder.r.Next(30, 300) / 100;
+    public int orbitalPeriod = GameDataHolder.random.Next(120, 720);
+    public float rotationCycle = GameDataHolder.random.Next(30, 300) / 100;
 
     public float orbitRadius;
     public (float x, float y) positionComparedToOrbitHost;

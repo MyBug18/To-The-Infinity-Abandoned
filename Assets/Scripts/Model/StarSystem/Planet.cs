@@ -33,7 +33,7 @@ public class Planet : CelestialBody
     {
         this.nthOrbit = nthOrbit;
         this.name = name;
-        size = GameDataHolder.r.Next() % 15 + 11;
+        size = GameDataHolder.random.Next() % 15 + 11;
         this.isSatellite = isSatellite;
 
         _SetRadiusAndPosition();
@@ -42,7 +42,7 @@ public class Planet : CelestialBody
             planetType = PlanetType.Inhabitable;
         else
         {
-            switch(GameDataHolder.r.Next() % 6)
+            switch(GameDataHolder.random.Next() % 6)
             {
                 case 0:
                 case 1:
@@ -62,31 +62,31 @@ public class Planet : CelestialBody
                     break;
             }
 
-            if (GameDataHolder.r.Next() % 3 == 0) // 33% of having resources
+            if (GameDataHolder.random.Next() % 3 == 0) // 33% of having resources
             {
-                switch(GameDataHolder.r.Next() % 9)
+                switch(GameDataHolder.random.Next() % 9)
                 {
                     case 0:
                     case 1:
                     case 2:
                     case 3:
                         if (planetType == PlanetType.GasGiant)
-                            yields.Add(new CelestialBodyYield((GlobalResourceType.Electricity, GameDataHolder.r.Next() % 4 + 3), this));
+                            yields.Add(new CelestialBodyYield((GlobalResourceType.Electricity, GameDataHolder.random.Next() % 4 + 3), this));
                         else
-                            yields.Add(new CelestialBodyYield((GlobalResourceType.Mineral, GameDataHolder.r.Next() % 4 + 3), this));
+                            yields.Add(new CelestialBodyYield((GlobalResourceType.Mineral, GameDataHolder.random.Next() % 4 + 3), this));
                         break;
                     case 4:
-                        yields.Add(new CelestialBodyYield((GlobalResourceType.Engineering, GameDataHolder.r.Next() % 4 + 3), this));
+                        yields.Add(new CelestialBodyYield((GlobalResourceType.Engineering, GameDataHolder.random.Next() % 4 + 3), this));
                         break;
                     case 5:
-                        yields.Add(new CelestialBodyYield((GlobalResourceType.Sociology, GameDataHolder.r.Next() % 4 + 3), this));
+                        yields.Add(new CelestialBodyYield((GlobalResourceType.Sociology, GameDataHolder.random.Next() % 4 + 3), this));
                         break;
                     case 6:
                     case 7:
-                        yields.Add(new CelestialBodyYield((GlobalResourceType.Electricity, GameDataHolder.r.Next() % 4 + 3), this));
+                        yields.Add(new CelestialBodyYield((GlobalResourceType.Electricity, GameDataHolder.random.Next() % 4 + 3), this));
                         break;
                     case 8:
-                        yields.Add(new CelestialBodyYield((GlobalResourceType.Alloy, GameDataHolder.r.Next() % 3 + 1), this));
+                        yields.Add(new CelestialBodyYield((GlobalResourceType.Alloy, GameDataHolder.random.Next() % 3 + 1), this));
                         break;
                 }
             }
@@ -100,16 +100,16 @@ public class Planet : CelestialBody
         int nth = 0;
         while(true)
         {
-            if (satelliteChance * 100 > GameDataHolder.r.Next() % 100)
+            if (satelliteChance * 100 > GameDataHolder.random.Next() % 100)
             {
-                if (nthOrbit <= starOrbit.inhabitableRange.max && nthOrbit >= starOrbit.inhabitableRange.min && GameDataHolder.r.Next() % 100 < starOrbit.inhabitableChance * 100)
+                if (nthOrbit <= starOrbit.inhabitableRange.max && nthOrbit >= starOrbit.inhabitableRange.min && GameDataHolder.random.Next() % 100 < starOrbit.inhabitableChance * 100)
                 {
-                    satellites.Add(new Planet_Inhabitable(_GetSatelliteName(), GameDataHolder.r.Next(5, size * 2 / 3), game, starOrbit, nth, true));
+                    satellites.Add(new Planet_Inhabitable(_GetSatelliteName(), GameDataHolder.random.Next(5, size * 2 / 3), game, starOrbit, nth, true));
                 }
                 else
                 {
                     PlanetType type;
-                    switch(GameDataHolder.r.Next() % 9)
+                    switch(GameDataHolder.random.Next() % 9)
                     {
                         case 0:
                             type = PlanetType.Molten;
@@ -126,7 +126,7 @@ public class Planet : CelestialBody
                             type = PlanetType.Barren;
                             break;
                     }
-                    satellites.Add(new Planet(_GetSatelliteName(), GameDataHolder.r.Next(5, size * 2 / 3), type, game, starOrbit, satellites.Count, true));
+                    satellites.Add(new Planet(_GetSatelliteName(), GameDataHolder.random.Next(5, size * 2 / 3), type, game, starOrbit, satellites.Count, true));
                 }
             }
             else return;
@@ -142,7 +142,7 @@ public class Planet : CelestialBody
         else
             orbitRadius = (float)(nthOrbit + 2) / 2;
 
-        double randomizer = GameDataHolder.r.NextDouble();
+        double randomizer = GameDataHolder.random.NextDouble();
         positionComparedToOrbitHost = (orbitRadius * (float)Math.Cos(Math.PI * 2 * randomizer), orbitRadius * (float)Math.Sin(Math.PI * 2 * randomizer));
     }
 

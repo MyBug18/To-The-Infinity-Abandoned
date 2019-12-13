@@ -47,8 +47,7 @@ public class Game
 
     public string GetStarSystemName()
     {
-        Random r = new Random();
-        int index = r.Next() % _unusedStarName.Count;
+        int index = GameDataHolder.random.Next() % _unusedStarName.Count;
         string result = _unusedStarName[index];
         _unusedStarName.RemoveAt(index);
         return result;
@@ -56,8 +55,7 @@ public class Game
 
     public string GetBlackholeName()
     {
-        Random r = new Random();
-        int index = r.Next() % _unusedBlackholeName.Count;
+        int index = GameDataHolder.random.Next() % _unusedBlackholeName.Count;
         string result = _unusedBlackholeName[index];
         _unusedBlackholeName.RemoveAt(index);
         return result;

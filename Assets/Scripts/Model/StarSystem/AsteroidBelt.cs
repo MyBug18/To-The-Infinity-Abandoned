@@ -11,7 +11,7 @@ public class AsteroidBelt : CelestialBody
 
         orbitRadius = (nthOrbit + 2.5f) * 3.5f;
 
-        int asteroidNum = GameDataHolder.r.Next(7, 9);
+        int asteroidNum = GameDataHolder.random.Next(7, 9);
 
         for (int i = 0; i < asteroidNum; i++)
         {
