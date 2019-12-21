@@ -107,7 +107,7 @@ public class StarOrbit
         throw new ArgumentOutOfRangeException("something bad happened");
     }
 
-    internal Planet_Inhabitable Addlfgdfangdajk(Game game)
+    internal Planet_Inhabitable ForDebug(Game game)
     {
         var earth = new Planet_Inhabitable("Earth", 15, game, null, 0, false);
         earth.EndColonization();

@@ -7,21 +7,23 @@ public class Planet_Inhabitable : Planet
 {
     public Planet_Inhabitable(string name, int size, Game game, StarOrbit orbit, int nthOrbit, bool isSatellite) : base(name, size, PlanetType.Inhabitable, game, orbit, nthOrbit, isSatellite) // for making special inhabitable planet, such as Earth.
     {
-        System.Random r = new System.Random();
+        planetaryResources = new Resource(this);
         for (int i = 0; i < size / 3; i++)
         {
-            features.Add((PlanetaryFeature)(r.Next() % 6));
+            features.Add((PlanetaryFeature)(GameDataHolder.random.Next() % 6));
         }
     }
 
     public Planet_Inhabitable(string name, Game game, StarOrbit orbit, int nthOrbit, bool isSatellite) : base(name, game, orbit, nthOrbit, isSatellite, true) // for making general inhabitable planets.
     {
+        planetaryResources = new Resource(this);
         for (int i = 0; i < size / 3 + 1; i++)
         {
             features.Add((PlanetaryFeature)(GameDataHolder.random.Next() % 6));
         }
     }
 
+    public Resource planetaryResources { get; private set; }
     public int maxBuildingSlotNum => 12;
 
     public int providedHousing = 0;
@@ -75,13 +77,14 @@ public class Planet_Inhabitable : Planet
     public List<WorkingPlaceBaseUpkeep> planetBaseUpkeeps = new List<WorkingPlaceBaseUpkeep>();
     public List<JobYield> planetJobYields = new List<JobYield>();
 
-    public float currentPOPGrowth = 0;
+    public float currentPOPGrowth { get; private set; } = 0;
     public float basePOPGrowth => pops.Count > 0 ? 5 : 0;
-    public float foodPOPGrowthModifier => game.globalResource.isLackOfFood ? 0.25f : 1;
+    public float ifLackOfFoodPOPGrowthModifier => planetaryResources.isLackOfFood ? 0.25f : 1;
+    public float popFoodUpkeepRate { get; private set; } = 1;
     public float POPGrowthRate { get
         {
-            float baseRate = basePOPGrowth * foodPOPGrowthModifier;
-            float result = baseRate * (1 + housingGrowthModifier);
+            float baseRate = basePOPGrowth * ifLackOfFoodPOPGrowthModifier;
+            float result = baseRate * (1 + housingGrowthModifier) * popFoodUpkeepRate;
             return result;
         }
     }

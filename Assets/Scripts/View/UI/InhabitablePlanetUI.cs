@@ -17,6 +17,9 @@ public class InhabitablePlanetUI : MonoBehaviour
     [SerializeField]
     private DistrictUIManager districtUIManager;
 
+    [SerializeField]
+    private ResourceUIManager resourceUIManager;
+
     private void Start()
     {
         gm.game.DayEvents += () => UpdatePlanetUI();
@@ -41,6 +44,9 @@ public class InhabitablePlanetUI : MonoBehaviour
 
         districtUIManager.planet = planet;
         districtUIManager.Initialize();
+
+        resourceUIManager.planet = planet;
+        resourceUIManager.Initialize();
 
     }
 

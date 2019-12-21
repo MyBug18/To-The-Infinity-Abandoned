@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour
 
     public Game game;
 
+    [SerializeField]
+    private Text date;
+
     private float currentInterval = 0;
     private int currentFrameCounter = 0;
 
@@ -33,13 +36,9 @@ public class GameManager : MonoBehaviour
     {
         InstantiateStarSystem(game.systems[0]);
         Debug.Log(game.systems[0]);
-        /*
-        earth = new Planet_Inhabitable("Earth", 15, game, null, 0, false);
-        earth.EndColonization();
-        game.colonizedPlanets.Add(earth);
-        */
-        game.colonizedPlanets.Add(game.systems[0].orbit.Addlfgdfangdajk(game));
-        
+        game.colonizedPlanets.Add(game.systems[0].orbit.ForDebug(game));
+
+        game.DayEvents += () => date.text = game.date;
     }
 
     // Update is called once per frame

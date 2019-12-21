@@ -38,8 +38,8 @@ public class POP
         {
             int _food = 0;
             int _money = 0;
-            if (planet.game.globalResource.isLackOfFood) _food = -25;
-            if (planet.game.globalResource.isLackOfMoney) _money = -40;
+            if (planet.planetaryResources.isLackOfFood) _food = -25;
+            if (planet.planetaryResources.isLackOfMoney) _money = -40;
             return _food + _money;
         }
     }

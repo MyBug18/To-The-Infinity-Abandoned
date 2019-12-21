@@ -2,12 +2,12 @@
 
 public class Resource
 {
-    public Game game;
+    public Planet_Inhabitable planet;
 
-    public Resource(Game game)
+    public Resource(Planet_Inhabitable planet)
     {
-        this.game = game;
-        turnResource = new TurnResource(game);
+        this.planet = planet;
+        turnResource = new TurnResource(planet);
     }
 
     public TurnResource turnResource;

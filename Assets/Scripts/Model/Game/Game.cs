@@ -9,7 +9,6 @@ public class Game
     public int month { get; private set; } = 1;
     public int day { get; private set; } = 1;
     public string date => year + "." + month + "." + day;
-    public Resource globalResource;
 
     public List<Planet_Inhabitable> colonizedPlanets = new List<Planet_Inhabitable>();
     public List<Planet_Inhabitable> ongoingColonization = new List<Planet_Inhabitable>();
@@ -20,7 +19,6 @@ public class Game
     public int colonizationDate => (int)(_baseColonizationDate * _colonizationDateModifier);
 
     public float taxRate = 1;
-    public float popFoodUpkeepRate = 1;
 
     public int fleetNum = 1;
     public float defencePlatformAttackModifier = 1;
@@ -40,7 +38,6 @@ public class Game
     public event Action DayEvents, MonthEvents, YearEvents;
     public Game()
     {
-        globalResource = new Resource(this);
         _unusedStarName = File.ReadAllLines(UnityEngine.Application.streamingAssetsPath + "\\star_name_list.txt").ToList();
         _unusedBlackholeName = File.ReadAllLines(UnityEngine.Application.streamingAssetsPath + "\\blackhole_name_list.txt").ToList();
     }
@@ -146,7 +143,10 @@ public class Game
     private void _OneMonthEvents()
     {
         _ProceedPlanetaryGrowth();
-        globalResource.ApplyTurnResource();
+        foreach (var p in colonizedPlanets)
+        {
+            p.planetaryResources.ApplyTurnResource();
+        }
 
         MonthEvents?.Invoke();
     }

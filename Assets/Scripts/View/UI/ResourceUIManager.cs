@@ -7,21 +7,16 @@ using UnityEngine.UI;
 public class ResourceUIManager : MonoBehaviour
 {
     [SerializeField]
-    private GameManager gm;
+    private Text electricityText, mineralText, foodText, alloyText, moneyText, researchText;
 
-    [SerializeField]
-    private Text date, electricityText, mineralText, foodText, alloyText, moneyText, researchText;
-
-    private Game _game;
-    private Resource _resourceInfo;
+    public Planet_Inhabitable planet;
+    private Resource resourceInfo;
 
     // Start is called before the first frame update
-    void Start()
+    public void Initialize()
     {
-        _game = gm.game;
-        _resourceInfo = _game.globalResource;
-        _game.DayEvents += () => { date.text = _game.date; };
-        _game.MonthEvents += () => UpdateResourceUI();
+        resourceInfo = planet.planetaryResources;
+        planet.game.MonthEvents += () => UpdateResourceUI();
         UpdateResourceUI();
     }
 
@@ -33,11 +28,12 @@ public class ResourceUIManager : MonoBehaviour
 
     public void UpdateResourceUI()
     {
-        electricityText.text = _resourceInfo.electricity.ToString("0.00") + " " + _MinusOrPlus(_resourceInfo.turnResource.turnElectricity);
-        mineralText.text = _resourceInfo.mineral.ToString("0.00") + " " + _MinusOrPlus(_resourceInfo.turnResource.turnMineral);
-        foodText.text = _resourceInfo.food.ToString("0.00") + " " + _MinusOrPlus(_resourceInfo.turnResource.turnFood);
-        alloyText.text = _resourceInfo.alloy.ToString("0.00") + " " + _MinusOrPlus(_resourceInfo.turnResource.turnAlloy);
-        moneyText.text = _resourceInfo.money.ToString("0.00") + " " + _MinusOrPlus(_resourceInfo.turnResource.turnMoney);
-        researchText.text = "+" + (_resourceInfo.turnResource.turnEngineering + _resourceInfo.turnResource.turnPhysics + _resourceInfo.turnResource.turnSociology).ToString("0.00");
+        Debug.Log("asdf");
+        electricityText.text = resourceInfo.electricity.ToString("0.00") + " " + _MinusOrPlus(resourceInfo.turnResource.turnElectricity);
+        mineralText.text = resourceInfo.mineral.ToString("0.00") + " " + _MinusOrPlus(resourceInfo.turnResource.turnMineral);
+        foodText.text = resourceInfo.food.ToString("0.00") + " " + _MinusOrPlus(resourceInfo.turnResource.turnFood);
+        alloyText.text = resourceInfo.alloy.ToString("0.00") + " " + _MinusOrPlus(resourceInfo.turnResource.turnAlloy);
+        moneyText.text = resourceInfo.money.ToString("0.00") + " " + _MinusOrPlus(resourceInfo.turnResource.turnMoney);
+        researchText.text = "+" + (resourceInfo.turnResource.turnEngineering + resourceInfo.turnResource.turnPhysics + resourceInfo.turnResource.turnSociology).ToString("0.00");
     }
 }

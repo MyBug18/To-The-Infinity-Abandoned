@@ -1,11 +1,11 @@
 ﻿using System;
 public class TurnResource
 {
-    public Game game;
+    public Planet_Inhabitable planet;
 
-    public TurnResource(Game game)
+    public TurnResource(Planet_Inhabitable planet)
     {
-        this.game = game;
+        this.planet = planet;
     }
 
     public float turnElectricity { get; private set; }
@@ -27,27 +27,22 @@ public class TurnResource
         turnPhysics = 0;
         turnSociology = 0;
         turnEngineering = 0;
-
-
-        foreach (var planet in game.colonizedPlanets)
+        foreach (var grm in planet.planetBaseUpkeeps)
         {
-            foreach (var grm in planet.planetBaseUpkeeps)
-            {
-                _ApplyOneModifier(grm);
-            }
-
-            foreach (var grm in planet.planetJobUpkeeps)
-            {
-                _ApplyOneModifier(grm);
-            }
-
-            foreach (var grm in planet.planetJobYields)
-            {
-                _ApplyOneModifier(grm);
-            }
-
-            turnFood -= planet.pops.Count * game.popFoodUpkeepRate;
+            _ApplyOneModifier(grm);
         }
+
+        foreach (var grm in planet.planetJobUpkeeps)
+        {
+            _ApplyOneModifier(grm);
+        }
+
+        foreach (var grm in planet.planetJobYields)
+        {
+            _ApplyOneModifier(grm);
+        }
+
+        turnFood -= planet.pops.Count * planet.popFoodUpkeepRate;
     }
 
     private void _ApplyOneModifier(GlobalResourceChanges grm)
@@ -93,7 +88,7 @@ public class TurnResource
                 throw new InvalidOperationException("Undefined GlobalResourceType detected!");
         }
 
-        if (game.globalResource.isLackOfElectricity) turnMineral /= 2;
-        if (game.globalResource.isLackOfMineral) turnAlloy /= 4;
+        if (planet.planetaryResources.isLackOfElectricity) turnMineral /= 2;
+        if (planet.planetaryResources.isLackOfMineral) turnAlloy /= 4;
     }
 }
