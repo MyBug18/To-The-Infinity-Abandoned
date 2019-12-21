@@ -29,11 +29,17 @@ public class ResourceUIManager : MonoBehaviour
     public void UpdateResourceUI()
     {
         Debug.Log("asdf");
-        electricityText.text = resourceInfo.electricity.ToString("0.00") + " " + _MinusOrPlus(resourceInfo.turnResource.turnElectricity);
-        mineralText.text = resourceInfo.mineral.ToString("0.00") + " " + _MinusOrPlus(resourceInfo.turnResource.turnMineral);
-        foodText.text = resourceInfo.food.ToString("0.00") + " " + _MinusOrPlus(resourceInfo.turnResource.turnFood);
-        alloyText.text = resourceInfo.alloy.ToString("0.00") + " " + _MinusOrPlus(resourceInfo.turnResource.turnAlloy);
-        moneyText.text = resourceInfo.money.ToString("0.00") + " " + _MinusOrPlus(resourceInfo.turnResource.turnMoney);
-        researchText.text = "+" + (resourceInfo.turnResource.turnEngineering + resourceInfo.turnResource.turnPhysics + resourceInfo.turnResource.turnSociology).ToString("0.00");
+        electricityText.text = processFloat(resourceInfo.electricity) + "\n" + _MinusOrPlus(resourceInfo.turnResource.turnElectricity);
+        mineralText.text = processFloat(resourceInfo.mineral) + "\n" + _MinusOrPlus(resourceInfo.turnResource.turnMineral);
+        foodText.text = processFloat(resourceInfo.food) + "\n" + _MinusOrPlus(resourceInfo.turnResource.turnFood);
+        alloyText.text = processFloat(resourceInfo.alloy) + "\n" + _MinusOrPlus(resourceInfo.turnResource.turnAlloy);
+        moneyText.text = processFloat(resourceInfo.money) + "\n" + _MinusOrPlus(resourceInfo.turnResource.turnMoney);
+        researchText.text = "+" + processFloat(resourceInfo.turnResource.turnEngineering + resourceInfo.turnResource.turnPhysics + resourceInfo.turnResource.turnSociology);
+    }
+
+    private string processFloat(float value)
+    {
+        if (value > 1000) return (value / 1000) + "k";
+        else return value.ToString();
     }
 }

@@ -229,6 +229,11 @@ public class Planet_Inhabitable : Planet
     public void StartConstruction(BuildingType type, Action OnTimerEnded)
     {
         ongoingConstruction.Add(new ConstructionQueueElement(true, (int)type, workingPlaceFactory.GetConstructionTime(type), null, OnTimerEnded));
+
+        if (!workingPlaceFactory.IsMineralEnough(type))
+            throw new InvalidOperationException("Not enough minerals!");
+
+        planetaryResources.mineral -= workingPlaceFactory.GetConstructionCost(type);
     }
 
     public void StartConstruction(DistrictType type, Action OnTimerEnded)
@@ -250,6 +255,11 @@ public class Planet_Inhabitable : Planet
                 plannedMineralDistrictNum++;
                 break;
         }
+
+        if (!workingPlaceFactory.IsMineralEnough(type))
+            throw new InvalidOperationException("Not enough minerals!");
+
+        planetaryResources.mineral -= workingPlaceFactory.GetConstructionCost(type);
 
         ongoingConstruction.Add(new ConstructionQueueElement(false, (int)type, workingPlaceFactory.GetConstructionTime(type), null, OnTimerEnded));
     }

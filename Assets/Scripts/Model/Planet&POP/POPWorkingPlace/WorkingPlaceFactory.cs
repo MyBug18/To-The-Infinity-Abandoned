@@ -113,7 +113,7 @@ public class WorkingPlaceFactory
         return (int)(result / planet.game.constructionTimeModifier);
     }
 
-    public int GetContructionCost(BuildingType type)
+    public int GetConstructionCost(BuildingType type)
     {
         int result;
         switch(type)
@@ -166,5 +166,15 @@ public class WorkingPlaceFactory
                 throw new InvalidOperationException("Invalid DistrictType detected!");
         }
         return (int)(result / planet.game.constructionCostModifier);
+    }
+
+    public bool IsMineralEnough(BuildingType type)
+    {
+        return planet.planetaryResources.mineral > GetConstructionCost(type);
+    }
+
+    public bool IsMineralEnough(DistrictType type)
+    {
+        return planet.planetaryResources.mineral > GetConstructionCost(type);
     }
 }
