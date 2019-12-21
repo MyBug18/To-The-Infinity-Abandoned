@@ -28,7 +28,7 @@ public class Resource
 
     public void ApplyTurnResource()
     {
-        turnResource.ApplyAllModifiers();
+        turnResource.ApplyAllChanges();
 
         electricity += turnResource.turnElectricity;
         if (electricity < 0) electricity = 0;

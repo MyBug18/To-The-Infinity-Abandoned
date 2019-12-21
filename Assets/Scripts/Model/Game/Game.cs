@@ -215,5 +215,3 @@ public class Game
         _colonizationDateModifier += v;
     }
 }
-
-

@@ -17,7 +17,7 @@ public class TurnResource
     public float turnSociology { get; private set; }
     public float turnEngineering { get; private set; }
 
-    public void ApplyAllModifiers() // should be called with _IncreaseOneMonth().
+    public void ApplyAllChanges() // should be called with _IncreaseOneMonth().
     {
         turnElectricity = 0;
         turnMineral = 0;
@@ -27,32 +27,32 @@ public class TurnResource
         turnPhysics = 0;
         turnSociology = 0;
         turnEngineering = 0;
-        foreach (var grm in planet.planetBaseUpkeeps)
+        foreach (var grc in planet.planetBaseUpkeeps)
         {
-            _ApplyOneModifier(grm);
+            _ApplyOneChange(grc);
         }
 
-        foreach (var grm in planet.planetJobUpkeeps)
+        foreach (var grc in planet.planetJobUpkeeps)
         {
-            _ApplyOneModifier(grm);
+            _ApplyOneChange(grc);
         }
 
-        foreach (var grm in planet.planetJobYields)
+        foreach (var grc in planet.planetJobYields)
         {
-            _ApplyOneModifier(grm);
+            _ApplyOneChange(grc);
         }
 
         turnFood -= planet.pops.Count * planet.popFoodUpkeepRate;
     }
 
-    private void _ApplyOneModifier(GlobalResourceChanges grm)
+    private void _ApplyOneChange(GlobalResourceChanges grc)
     {
-        var (_type, _amount) = grm.value;
-        UnityEngine.Debug.Log(grm.changeType + " " + _type.ToString() + " " + _amount);
+        var (_type, _amount) = grc.value;
+        UnityEngine.Debug.Log(grc.changeType + " " + _type.ToString() + " " + _amount);
 
         float amount;
 
-        if (grm.changeType == ChangeType.Upkeep)
+        if (grc.changeType == ChangeType.Upkeep)
             amount = -_amount;
         else
             amount = _amount;
