@@ -1,21 +1,20 @@
-﻿public abstract class GlobalResourceModifiers
+﻿public abstract class GlobalResourceChanges
 {
-
-    public ModifierType modifierType { get; private set; }
+    public ChangeType changeType { get; private set; }
     public GlobalResourceType resourceType;
     public float amount; // must be positive.
     public abstract float GetModifier();
 
     public (GlobalResourceType type, float amount) value => (resourceType, amount * GetModifier());
 
-    public GlobalResourceModifiers(ModifierType type)
+    public GlobalResourceChanges(ChangeType type)
     {
-        modifierType = type;
+        changeType = type;
     }
 
-    public GlobalResourceModifiers((GlobalResourceType, float) v, ModifierType type)
+    public GlobalResourceChanges((GlobalResourceType, float) v, ChangeType type)
     {
-        modifierType = type;
+        changeType = type;
         resourceType = v.Item1;
         amount = v.Item2;
     }
@@ -23,12 +22,12 @@
     public override string ToString()
     {
         string result;
-        result = modifierType + ": (" + resourceType + ", " + amount + ")"; 
+        result = changeType + ": (" + resourceType + ", " + amount + ")"; 
         return result;
     }
 }
 
-public enum ModifierType
+public enum ChangeType
 {
     Yield,
     Upkeep

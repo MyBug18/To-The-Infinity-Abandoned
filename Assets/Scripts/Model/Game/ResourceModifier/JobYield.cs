@@ -1,9 +1,9 @@
-﻿public class JobYield : GlobalResourceModifiers
+﻿public class JobYield : GlobalResourceChanges
 {
 
     public POP pop;
 
-    public JobYield((GlobalResourceType, float) v, POP pop) : base(v, ModifierType.Yield)
+    public JobYield((GlobalResourceType, float) v, POP pop) : base(v, ChangeType.Yield)
     {
         this.pop = pop;
     }

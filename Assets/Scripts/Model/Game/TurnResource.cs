@@ -50,14 +50,14 @@ public class TurnResource
         }
     }
 
-    private void _ApplyOneModifier(GlobalResourceModifiers grm)
+    private void _ApplyOneModifier(GlobalResourceChanges grm)
     {
         var (_type, _amount) = grm.value;
-        UnityEngine.Debug.Log(grm.modifierType + " " + _type.ToString() + " " + _amount);
+        UnityEngine.Debug.Log(grm.changeType + " " + _type.ToString() + " " + _amount);
 
         float amount;
 
-        if (grm.modifierType == ModifierType.Upkeep)
+        if (grm.changeType == ChangeType.Upkeep)
             amount = -_amount;
         else
             amount = _amount;

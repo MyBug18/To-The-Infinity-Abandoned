@@ -1,8 +1,8 @@
-﻿public class CelestialBodyYield : GlobalResourceModifiers
+﻿public class CelestialBodyYield : GlobalResourceChanges
 {
     public CelestialBody celestialBody;
 
-    public CelestialBodyYield((GlobalResourceType type, float amount) v, CelestialBody celestialBody) : base(v, ModifierType.Yield)
+    public CelestialBodyYield((GlobalResourceType type, float amount) v, CelestialBody celestialBody) : base(v, ChangeType.Yield)
     {
         this.celestialBody = celestialBody;
     }
