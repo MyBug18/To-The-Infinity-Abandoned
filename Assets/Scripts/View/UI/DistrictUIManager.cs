@@ -27,7 +27,7 @@ public class DistrictUIManager : MonoBehaviour
     {
         _InitializeTexts();
         _InitializeSqrs();
-        UpdateButtons();
+        UpdateButtonStatus();
     }
 
     private void _InitializeTexts()
@@ -72,7 +72,7 @@ public class DistrictUIManager : MonoBehaviour
         Action OnTimerEnded = () => _AddSquare(type);
         planet.StartConstruction(type, OnTimerEnded);
 
-        UpdateButtons();
+        UpdateButtonStatus();
 
         switch (type)
         {
@@ -117,11 +117,13 @@ public class DistrictUIManager : MonoBehaviour
         }
     }
 
-    public void UpdateButtons()
+    public void UpdateButtonStatus()
     { 
         if (planet.IsDistrictBuildable(DistrictType.Electricity)) elecPlus.interactable = true; else elecPlus.interactable = false;
         if (planet.IsDistrictBuildable(DistrictType.Mineral)) mineralPlus.interactable = true; else mineralPlus.interactable = false;
         if (planet.IsDistrictBuildable(DistrictType.Food)) foodPlus.interactable = true; else foodPlus.interactable = false;
         if (planet.IsDistrictBuildable(DistrictType.House)) housePlus.interactable = true; else housePlus.interactable = false;
+
+        resourceUIManager.UpdateResourceUI();
     }
 }
