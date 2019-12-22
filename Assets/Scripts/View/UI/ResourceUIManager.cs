@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class ResourceUIManager : MonoBehaviour
@@ -12,7 +9,6 @@ public class ResourceUIManager : MonoBehaviour
     public Planet_Inhabitable planet;
     private Resource resourceInfo;
 
-    // Start is called before the first frame update
     public void Initialize()
     {
         resourceInfo = planet.planetaryResources;

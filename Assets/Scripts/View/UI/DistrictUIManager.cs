@@ -20,24 +20,14 @@ public class DistrictUIManager : MonoBehaviour
     [SerializeField]
     private ConstructionQueueUI constructionQueue;
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField]
+    private ResourceUIManager resourceUIManager;
 
     public void Initialize()
     {
         _InitializeTexts();
         _InitializeSqrs();
-        _EnableOrDisableButton();
+        UpdateButtons();
     }
 
     private void _InitializeTexts()
@@ -82,7 +72,7 @@ public class DistrictUIManager : MonoBehaviour
         Action OnTimerEnded = () => _AddSquare(type);
         planet.StartConstruction(type, OnTimerEnded);
 
-        _EnableOrDisableButton();
+        UpdateButtons();
 
         switch (type)
         {
@@ -127,7 +117,7 @@ public class DistrictUIManager : MonoBehaviour
         }
     }
 
-    private void _EnableOrDisableButton() 
+    public void UpdateButtons()
     { 
         if (planet.IsDistrictBuildable(DistrictType.Electricity)) elecPlus.interactable = true; else elecPlus.interactable = false;
         if (planet.IsDistrictBuildable(DistrictType.Mineral)) mineralPlus.interactable = true; else mineralPlus.interactable = false;

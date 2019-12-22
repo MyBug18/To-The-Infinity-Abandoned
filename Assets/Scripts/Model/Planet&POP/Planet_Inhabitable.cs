@@ -213,6 +213,8 @@ public class Planet_Inhabitable : Planet
             default: throw new InvalidOperationException("Invalid DistrictType detected!");
         }
 
+        if (!workingPlaceFactory.IsMineralEnough(type)) return false;
+
         return result;
     }
 

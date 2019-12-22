@@ -12,7 +12,7 @@ public class Resource
 
     public TurnResource turnResource;
     public float electricity = 0;
-    public float mineral = 10000;
+    public float mineral = 1000;
     public float food = 0;
     public float money = 0;
     public float alloy = 0;

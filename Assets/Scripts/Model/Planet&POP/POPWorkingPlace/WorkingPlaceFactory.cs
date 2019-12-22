@@ -170,11 +170,11 @@ public class WorkingPlaceFactory
 
     public bool IsMineralEnough(BuildingType type)
     {
-        return planet.planetaryResources.mineral > GetConstructionCost(type);
+        return planet.planetaryResources.mineral >= GetConstructionCost(type);
     }
 
     public bool IsMineralEnough(DistrictType type)
     {
-        return planet.planetaryResources.mineral > GetConstructionCost(type);
+        return planet.planetaryResources.mineral >= GetConstructionCost(type);
     }
 }

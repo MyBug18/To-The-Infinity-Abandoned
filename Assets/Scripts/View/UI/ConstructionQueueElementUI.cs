@@ -23,10 +23,4 @@ public class ConstructionQueueElementUI : MonoBehaviour
         planet.game.DayEvents += () => { remainingTime.text = element.remainTime.ToString(); };
         element.OnTimerEnded += () => { Destroy(gameObject); };
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
