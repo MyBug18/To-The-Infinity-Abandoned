@@ -72,7 +72,8 @@ public class DistrictUIManager : MonoBehaviour
         Action OnTimerEnded = () => _AddSquare(type);
         planet.StartConstruction(type, OnTimerEnded);
 
-        UpdateButtonStatus();
+        UpdateButtonStatus(); 
+        resourceUIManager.UpdateResourceUI();
 
         switch (type)
         {
@@ -123,7 +124,5 @@ public class DistrictUIManager : MonoBehaviour
         if (planet.IsDistrictBuildable(DistrictType.Mineral)) mineralPlus.interactable = true; else mineralPlus.interactable = false;
         if (planet.IsDistrictBuildable(DistrictType.Food)) foodPlus.interactable = true; else foodPlus.interactable = false;
         if (planet.IsDistrictBuildable(DistrictType.House)) housePlus.interactable = true; else housePlus.interactable = false;
-
-        resourceUIManager.UpdateResourceUI();
     }
 }

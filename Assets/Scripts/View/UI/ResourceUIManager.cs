@@ -24,7 +24,6 @@ public class ResourceUIManager : MonoBehaviour
 
     public void UpdateResourceUI()
     {
-        Debug.Log("asdf");
         electricityText.text = processFloat(resourceInfo.electricity) + "\n" + _MinusOrPlus(resourceInfo.turnResource.turnElectricity);
         mineralText.text = processFloat(resourceInfo.mineral) + "\n" + _MinusOrPlus(resourceInfo.turnResource.turnMineral);
         foodText.text = processFloat(resourceInfo.food) + "\n" + _MinusOrPlus(resourceInfo.turnResource.turnFood);

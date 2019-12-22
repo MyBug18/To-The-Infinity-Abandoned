@@ -12446,7 +12446,7 @@ MonoBehaviour:
   mineralPlus: {fileID: 2012444614}
   foodPlus: {fileID: 1838777419}
   constructionQueue: {fileID: 120833833}
-  resourceUIManager: {fileID: 0}
+  resourceUIManager: {fileID: 493764585}
 --- !u!1 &1814038566
 GameObject:
   m_ObjectHideFlags: 0
