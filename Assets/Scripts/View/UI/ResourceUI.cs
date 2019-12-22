@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class ResourceUIManager : MonoBehaviour
+public class ResourceUI : MonoBehaviour
 {
     [SerializeField]
     private Text electricityText, mineralText, foodText, alloyText, moneyText, researchText;

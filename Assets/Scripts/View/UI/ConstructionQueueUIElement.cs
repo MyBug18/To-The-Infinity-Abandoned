@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class ConstructionQueueElementUI : MonoBehaviour
+public class ConstructionQueueUIElement : MonoBehaviour
 {
     public Planet_Inhabitable planet;
 

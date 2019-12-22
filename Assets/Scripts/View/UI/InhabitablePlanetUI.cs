@@ -15,10 +15,10 @@ public class InhabitablePlanetUI : MonoBehaviour
     private Text planetNameT, planetSizeT, stabilityT, crimeT, popT, remainingJobSlotT, amenityT, housingT, unemployedPopT, averageHappinessT;
 
     [SerializeField]
-    private DistrictUIManager districtUIManager;
+    private DistrictUI districtUI;
 
     [SerializeField]
-    private ResourceUIManager resourceUIManager;
+    private ResourceUI resourceUI;
 
     private void Start()
     {
@@ -37,11 +37,11 @@ public class InhabitablePlanetUI : MonoBehaviour
 
         UpdatePlanetUI();
 
-        districtUIManager.planet = planet;
-        districtUIManager.Initialize();
+        districtUI.planet = planet;
+        districtUI.Initialize();
 
-        resourceUIManager.planet = planet;
-        resourceUIManager.Initialize();
+        resourceUI.planet = planet;
+        resourceUI.Initialize();
 
     }
 

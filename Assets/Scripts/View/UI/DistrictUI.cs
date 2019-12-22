@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DistrictUIManager : MonoBehaviour
+public class DistrictUI : MonoBehaviour
 {
     public Planet_Inhabitable planet;
 
@@ -19,7 +19,7 @@ public class DistrictUIManager : MonoBehaviour
     private ConstructionQueueUI constructionQueue;
 
     [SerializeField]
-    private ResourceUIManager resourceUIManager;
+    private ResourceUI resourceUI;
 
     public void Initialize()
     {
@@ -71,7 +71,7 @@ public class DistrictUIManager : MonoBehaviour
         planet.StartConstruction(type, OnTimerEnded);
 
         UpdateButtonStatus(); 
-        resourceUIManager.UpdateResourceUI();
+        resourceUI.UpdateResourceUI();
 
         switch (type)
         {
