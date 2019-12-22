@@ -16,12 +16,6 @@ public class CelestialBodyUI : MonoBehaviour
         _Initiallize();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void _Initiallize()
     {
         cbNameT.text = body.name;

@@ -1,6 +1,4 @@
-﻿using System;
-
-public class Resource
+﻿public class Resource
 {
     public Planet_Inhabitable planet;
 

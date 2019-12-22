@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class ConstructionQueueElementUI : MonoBehaviour
@@ -12,7 +10,6 @@ public class ConstructionQueueElementUI : MonoBehaviour
 
     private ConstructionQueueElement element;
 
-    // Start is called before the first frame update
     void Start()
     {
         element = planet.ongoingConstruction[planet.ongoingConstruction.Count - 1];

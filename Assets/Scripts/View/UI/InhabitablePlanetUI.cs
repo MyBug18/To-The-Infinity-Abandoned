@@ -30,11 +30,6 @@ public class InhabitablePlanetUI : MonoBehaviour
         _Initiallize();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
     private void _Initiallize()
     {
         planetNameT.text = planet.name;
