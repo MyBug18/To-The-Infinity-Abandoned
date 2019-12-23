@@ -1,5 +1,6 @@
 ﻿public class BioPlant : Building
 {
+    public static BuildingType type => BuildingType.BioPlant;
     public BioPlant(Planet_Inhabitable planet) : base(planet, 1)
     {
         name = "Mineral Extractor";

@@ -9,7 +9,7 @@ public class InhabitablePlanetUI : MonoBehaviour
     [SerializeField]
     private GameManager gm;
 
-    public Planet_Inhabitable planet { private get; set; }
+    public Planet_Inhabitable planet { get; set; }
 
     [SerializeField]
     private Text planetNameT, planetSizeT, stabilityT, crimeT, popT, remainingJobSlotT, amenityT, housingT, unemployedPopT, averageHappinessT;

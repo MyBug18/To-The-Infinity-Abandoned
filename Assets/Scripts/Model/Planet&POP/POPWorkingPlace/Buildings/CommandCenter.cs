@@ -1,5 +1,6 @@
 ﻿public class CommandCenter : Building
 {
+    public static BuildingType type => BuildingType.CommandCenter;
     public CommandCenter(Planet_Inhabitable planet) : base(planet, 1)
     {
         name = "Fleet Training Center";

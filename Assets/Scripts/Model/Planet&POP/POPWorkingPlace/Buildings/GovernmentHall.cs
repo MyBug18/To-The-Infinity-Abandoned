@@ -1,5 +1,6 @@
 ﻿public class GovernmentHall : Building
 {
+    public static BuildingType type => BuildingType.GovernmentHall;
     public GovernmentHall(Planet_Inhabitable planet) : base(planet, 1)
     {
         name = "Government Hall";

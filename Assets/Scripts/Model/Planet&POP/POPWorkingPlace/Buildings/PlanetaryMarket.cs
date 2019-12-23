@@ -1,5 +1,6 @@
 ﻿public class PlanetaryMarket : Building
 {
+    public static BuildingType type => BuildingType.PlanetaryMarket;
     public PlanetaryMarket(Planet_Inhabitable planet) : base(planet, 1.5f)
     {
         name = "Planetary Market";

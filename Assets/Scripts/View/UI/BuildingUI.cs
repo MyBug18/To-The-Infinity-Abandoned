@@ -7,7 +7,12 @@ public class BuildingUI : MonoBehaviour
     [SerializeField]
     private Transform buildingContent, buildingElementPrefab;
 
+    [SerializeField]
+    private AuxiliaryUI auxiliaryUI;
+
     public List<BuildingUIElement> elements = new List<BuildingUIElement>();
+
+    public BuildingUIElement currentEmptyElement => elements[elements.Count - 1];
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +29,7 @@ public class BuildingUI : MonoBehaviour
     public void MakeNewBuildingElement()
     {
         var elem = Instantiate(buildingElementPrefab, buildingContent).GetComponent<BuildingUIElement>();
+        elem.auxiliaryUI = auxiliaryUI;
         elements.Add(elem);
     }
 }

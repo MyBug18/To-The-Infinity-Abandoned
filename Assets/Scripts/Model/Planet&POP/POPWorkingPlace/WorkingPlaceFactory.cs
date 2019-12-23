@@ -27,7 +27,7 @@ public class WorkingPlaceFactory
         }
     }
 
-    public Building GetBuilding(BuildingType type, Planet_Inhabitable planet)
+    public Building GetBuilding(BuildingType type)
     {
         switch(type)
         {

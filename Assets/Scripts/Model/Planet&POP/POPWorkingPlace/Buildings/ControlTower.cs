@@ -2,6 +2,7 @@
 
 public class ControlTower : Building, IUpgradable
 {
+    public static BuildingType type => BuildingType.ControlTower;
     public ControlTower(Planet_Inhabitable planet) : base(planet, 0.5f)
     {
         name = "Control Tower";

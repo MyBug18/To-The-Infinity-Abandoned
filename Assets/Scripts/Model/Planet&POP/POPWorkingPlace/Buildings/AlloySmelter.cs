@@ -2,6 +2,7 @@
 
 public class AlloySmelter : Building, IUpgradable
 {
+    public static BuildingType type => BuildingType.AlloySmelter;
     public AlloySmelter(Planet_Inhabitable planet) : base(planet, 1)
     {
         name = "Alloy Smelter";

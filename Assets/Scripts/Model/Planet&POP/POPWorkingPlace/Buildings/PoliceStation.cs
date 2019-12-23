@@ -1,5 +1,6 @@
 ﻿public class PoliceStation : Building
 {
+    public static BuildingType type => BuildingType.PoliceStation;
     public PoliceStation(Planet_Inhabitable planet) : base(planet, 1)
     {
         name = "Police Station";

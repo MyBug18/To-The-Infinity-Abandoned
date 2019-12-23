@@ -225,7 +225,7 @@ public class Planet_Inhabitable : Planet
 
     private void _BuildBuilding(BuildingType type)
     {
-        buildings.Add(workingPlaceFactory.GetBuilding(type, this));
+        buildings.Add(workingPlaceFactory.GetBuilding(type));
     }
 
     public void StartConstruction(BuildingType type, Action OnTimerEnded)
@@ -303,7 +303,7 @@ public class Planet_Inhabitable : Planet
         else
         {
             if (justEnded.fromUpgrade == null)
-                buildings.Add(workingPlaceFactory.GetBuilding((BuildingType)justEnded.type, this));
+                buildings.Add(workingPlaceFactory.GetBuilding((BuildingType)justEnded.type));
             else
                 ((IUpgradable)justEnded.fromUpgrade).Upgrade();
         }
