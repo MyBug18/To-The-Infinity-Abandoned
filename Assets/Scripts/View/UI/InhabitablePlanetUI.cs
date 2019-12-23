@@ -47,7 +47,6 @@ public class InhabitablePlanetUI : MonoBehaviour
 
     public void UpdatePlanetUI()
     {
-
         stabilityT.text = ((int)planet.stability).ToString() + "%";
         crimeT.text = ((int)(planet.crime)).ToString() + "%";
         remainingJobSlotT.text = planet.remainingJobSlotNum.ToString();
