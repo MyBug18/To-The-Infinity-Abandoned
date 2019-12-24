@@ -1,6 +1,5 @@
 ﻿public class FleetTrainingCenter : Building
 {
-    public static BuildingType type => BuildingType.FleetTrainingCenter;
     public FleetTrainingCenter(Planet_Inhabitable planet) : base(planet, 1)
     {
         name = "Fleet Training Center";

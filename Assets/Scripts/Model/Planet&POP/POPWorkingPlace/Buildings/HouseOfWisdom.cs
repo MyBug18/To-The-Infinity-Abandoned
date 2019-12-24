@@ -2,7 +2,6 @@
 
 public class HouseOfWisdom : Building, IUpgradable
 {
-    public static BuildingType type => BuildingType.HouseOfWisdom;
     public HouseOfWisdom(Planet_Inhabitable planet) : base(planet, 1)
     {
         name = "House of Wisdom";

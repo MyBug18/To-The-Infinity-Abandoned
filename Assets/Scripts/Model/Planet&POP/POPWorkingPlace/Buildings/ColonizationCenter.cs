@@ -2,7 +2,6 @@
 
 public class ColonizationCenter : Building, IUpgradable
 {
-    public static BuildingType type => BuildingType.ColonizationCenter ;
     public ColonizationCenter(Planet_Inhabitable planet) : base(planet, 1f)
     {
         name = "Colonization Center";
