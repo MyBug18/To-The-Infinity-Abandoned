@@ -29,12 +29,6 @@ public class BuildingListUIElement : MonoBehaviour
         planet = inhabitablePlanetUI.planet;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void UpdateInfo()
     {
         costT.text = planet.workingPlaceFactory.GetConstructionCost(type).ToString();

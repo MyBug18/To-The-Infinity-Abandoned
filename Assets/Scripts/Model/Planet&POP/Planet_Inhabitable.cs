@@ -274,10 +274,10 @@ public class Planet_Inhabitable : Planet
         if (!(fromUpgrade is IUpgradable)) throw new InvalidOperationException("This building is not upgradable!");
         if (!((IUpgradable)fromUpgrade).IsUpgradable()) throw new InvalidOperationException("This building has not met the upgrade condition!");
 
-        planetaryResources.mineral -= workingPlaceFactory.GetConstructionCost((BuildingType)((int)fromUpgrade.type + 1));
+        planetaryResources.mineral -= workingPlaceFactory.GetConstructionCost((BuildingType)((int)fromUpgrade.buildingType + 1));
 
-        ongoingConstruction.Add(new ConstructionQueueElement(true, (int)(fromUpgrade.type + 1), 
-            workingPlaceFactory.GetConstructionTime((BuildingType)((int)fromUpgrade.type + 1)), fromUpgrade, OnTimerEnded)); // Every upgraded BuildingType is bigger by 1 than a previous one.
+        ongoingConstruction.Add(new ConstructionQueueElement(true, (int)(fromUpgrade.buildingType + 1), 
+            workingPlaceFactory.GetConstructionTime((BuildingType)((int)fromUpgrade.buildingType + 1)), fromUpgrade, OnTimerEnded)); // Every upgraded BuildingType is bigger by 1 than a previous one.
     }
 
     public void ProceedConstruction()

@@ -5,10 +5,10 @@ using UnityEngine;
 
 public abstract class POPWorkingPlace
 {
-    protected POPWorkingPlace(WorkingPlaceType type, Planet_Inhabitable planet)
+    protected POPWorkingPlace(WorkingPlaceType workingPlaceType, Planet_Inhabitable planet)
     {
         this.planet = planet;
-        this.type = type;
+        this.workingPlaceType = workingPlaceType;
         OnConstructing();       
     }
 
@@ -20,7 +20,7 @@ public abstract class POPWorkingPlace
 
     public POPWorkingSlot[] workingPOPSlotList { get; protected set; }
 
-    public WorkingPlaceType type { get; private set; }
+    public WorkingPlaceType workingPlaceType { get; private set; }
 
     public WorkingPlaceBaseUpkeep baseUpkeep { get; protected set; }
 

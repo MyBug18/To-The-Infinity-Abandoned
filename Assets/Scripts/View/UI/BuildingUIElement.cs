@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 
 public class BuildingUIElement : MonoBehaviour
 {
@@ -6,6 +7,8 @@ public class BuildingUIElement : MonoBehaviour
     private Building building;
 
     public AuxiliaryUI auxiliaryUI;
+    public ConstructionQueueUI constructionQueueUI;
+    public ResourceUI resourceUI;
 
     [SerializeField]
     private GameObject notYetBuiltUI, builtUI, upgradeButton;
@@ -47,5 +50,19 @@ public class BuildingUIElement : MonoBehaviour
 
         if (b is IUpgradable)
             upgradeButton.SetActive(true);
+    }
+
+    public void OnUpgradeFinished()
+    {
+        Debug.Log("Upgraded Finished!");
+    }
+
+    public void OnClickUpgrade()
+    {
+        Action onTimerEnded = () => OnUpgradeFinished();
+        building.planet.StartUpgrade(building, onTimerEnded);
+        upgradeButton.SetActive(false);
+        constructionQueueUI.PutElementOnQueue(building.planet);
+        resourceUI.UpdateResourceUI();
     }
 }

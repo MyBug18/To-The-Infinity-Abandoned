@@ -215,6 +215,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   auxiliaryUI: {fileID: 0}
+  constructionQueueUI: {fileID: 0}
   notYetBuiltUI: {fileID: 5004922261039890919}
   builtUI: {fileID: 5004922259553222336}
   upgradeButton: {fileID: 6570142723250196264}
@@ -460,4 +461,15 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6882108803623469198}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4986415876215562042}
+        m_MethodName: OnClickUpgrade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
