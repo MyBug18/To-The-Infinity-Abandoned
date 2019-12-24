@@ -53,7 +53,7 @@ public abstract class POPWorkingPlace
 
     public override string ToString()
     {
-        string result = "";
+        string result;
         string popStatus = "";
 
         for(int i = 0; i < workingPOPSlotNumber; i++)

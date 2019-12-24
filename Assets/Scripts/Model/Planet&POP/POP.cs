@@ -196,7 +196,6 @@ public class POP
 
     }
 
-
     private void _StartTraining(POPWorkingSlot futureSlot) // Removes current job, sets future job, and start training.
     {
         if (isTraining) throw new InvalidOperationException("Trying to train POP already training!");

@@ -89,6 +89,9 @@ public class DistrictUI : MonoBehaviour
                 break;
             case DistrictType.House:
                 housingNum.text = (planet.currentHouseDistrictNum + planet.plannedHouseDistrictNum) + "/" + planet.availableHouseDistrictNum;
+                electricityNum.text = (planet.currentElectricityDistrictNum + planet.plannedElectricityDistrictNum) + "/" + planet.resourcesDistrictsMaxNum.maxElectricity;
+                mineralNum.text = (planet.currentMineralDistrictNum + planet.plannedMineralDistrictNum) + "/" + planet.resourcesDistrictsMaxNum.maxMineral;
+                foodNum.text = (planet.currentFoodDistrictNum + planet.plannedFoodDistrictNum) + "/" + planet.resourcesDistrictsMaxNum.maxFood;
                 break;
         }
 

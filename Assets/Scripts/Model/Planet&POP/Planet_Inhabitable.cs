@@ -124,7 +124,9 @@ public class Planet_Inhabitable : Planet
                 }
             }
 
-            return (_electricity, _mineral, _food);
+            int occupiedByHouse = currentHouseDistrictNum + plannedHouseDistrictNum;
+
+            return (Math.Max(_electricity - occupiedByHouse, 0), Math.Max(_mineral - occupiedByHouse, 0), Math.Max(_food - occupiedByHouse, 0));
         }
     }
     public int currentElectricityDistrictNum = 0, currentMineralDistrictNum = 0, currentFoodDistrictNum = 0, currentHouseDistrictNum = 0;
