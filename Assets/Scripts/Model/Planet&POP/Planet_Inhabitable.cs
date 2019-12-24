@@ -124,9 +124,10 @@ public class Planet_Inhabitable : Planet
                 }
             }
 
-            int occupiedByHouse = currentHouseDistrictNum + plannedHouseDistrictNum;
+            int occupiedByHouse = currentHouseDistrictNum + plannedHouseDistrictNum + currentFoodDistrictNum + plannedFoodDistrictNum +
+                currentElectricityDistrictNum + plannedElectricityDistrictNum + currentMineralDistrictNum + plannedMineralDistrictNum;
 
-            return (Math.Max(_electricity - occupiedByHouse, 0), Math.Max(_mineral - occupiedByHouse, 0), Math.Max(_food - occupiedByHouse, 0));
+            return (Math.Min(size - occupiedByHouse, _electricity), Math.Min(size - occupiedByHouse, _mineral), Math.Min(size - occupiedByHouse, _food));
         }
     }
     public int currentElectricityDistrictNum = 0, currentMineralDistrictNum = 0, currentFoodDistrictNum = 0, currentHouseDistrictNum = 0;
@@ -272,6 +273,8 @@ public class Planet_Inhabitable : Planet
     {
         if (!(fromUpgrade is IUpgradable)) throw new InvalidOperationException("This building is not upgradable!");
         if (!((IUpgradable)fromUpgrade).IsUpgradable()) throw new InvalidOperationException("This building has not met the upgrade condition!");
+
+        planetaryResources.mineral -= workingPlaceFactory.GetConstructionCost((BuildingType)((int)fromUpgrade.type + 1));
 
         ongoingConstruction.Add(new ConstructionQueueElement(true, (int)(fromUpgrade.type + 1), 
             workingPlaceFactory.GetConstructionTime((BuildingType)((int)fromUpgrade.type + 1)), fromUpgrade, OnTimerEnded)); // Every upgraded BuildingType is bigger by 1 than a previous one.

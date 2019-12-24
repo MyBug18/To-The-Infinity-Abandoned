@@ -10,6 +10,9 @@ public class BuildingUI : MonoBehaviour
     [SerializeField]
     private AuxiliaryUI auxiliaryUI;
 
+    [SerializeField]
+    private ResourceUI resourceUI;
+
     public List<BuildingUIElement> elements = new List<BuildingUIElement>();
 
     public BuildingUIElement currentEmptyElement => elements[elements.Count - 1];

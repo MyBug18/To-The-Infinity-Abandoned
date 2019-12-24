@@ -70,30 +70,12 @@ public class DistrictUI : MonoBehaviour
         Action OnTimerEnded = () => _AddSquare(type);
         planet.StartConstruction(type, OnTimerEnded);
 
-        UpdateButtonStatus(); 
+        UpdateButtonStatus();
         resourceUI.UpdateResourceUI();
-
-        switch (type)
-        {
-            case DistrictType.Electricity:
-                electricityNum.text = (planet.currentElectricityDistrictNum + planet.plannedElectricityDistrictNum) + "/" + planet.resourcesDistrictsMaxNum.maxElectricity;
-                housingNum.text = (planet.currentHouseDistrictNum + planet.plannedHouseDistrictNum) + "/" + planet.availableHouseDistrictNum;
-                break;
-            case DistrictType.Mineral:
-                mineralNum.text = (planet.currentMineralDistrictNum + planet.plannedMineralDistrictNum) + "/" + planet.resourcesDistrictsMaxNum.maxMineral;
-                housingNum.text = (planet.currentHouseDistrictNum + planet.plannedHouseDistrictNum) + "/" + planet.availableHouseDistrictNum;
-                break;
-            case DistrictType.Food:
-                foodNum.text = (planet.currentFoodDistrictNum + planet.plannedFoodDistrictNum) + "/" + planet.resourcesDistrictsMaxNum.maxFood;
-                housingNum.text = (planet.currentHouseDistrictNum + planet.plannedHouseDistrictNum) + "/" + planet.availableHouseDistrictNum;
-                break;
-            case DistrictType.House:
-                housingNum.text = (planet.currentHouseDistrictNum + planet.plannedHouseDistrictNum) + "/" + planet.availableHouseDistrictNum;
-                electricityNum.text = (planet.currentElectricityDistrictNum + planet.plannedElectricityDistrictNum) + "/" + planet.resourcesDistrictsMaxNum.maxElectricity;
-                mineralNum.text = (planet.currentMineralDistrictNum + planet.plannedMineralDistrictNum) + "/" + planet.resourcesDistrictsMaxNum.maxMineral;
-                foodNum.text = (planet.currentFoodDistrictNum + planet.plannedFoodDistrictNum) + "/" + planet.resourcesDistrictsMaxNum.maxFood;
-                break;
-        }
+        housingNum.text = (planet.currentHouseDistrictNum + planet.plannedHouseDistrictNum) + "/" + planet.availableHouseDistrictNum;
+        electricityNum.text = (planet.currentElectricityDistrictNum + planet.plannedElectricityDistrictNum) + "/" + planet.resourcesDistrictsMaxNum.maxElectricity;
+        mineralNum.text = (planet.currentMineralDistrictNum + planet.plannedMineralDistrictNum) + "/" + planet.resourcesDistrictsMaxNum.maxMineral;
+        foodNum.text = (planet.currentFoodDistrictNum + planet.plannedFoodDistrictNum) + "/" + planet.resourcesDistrictsMaxNum.maxFood;
 
         constructionQueue.PutElementOnQueue(planet);
     }

@@ -19,6 +19,9 @@ public class BuildingListUIElement : MonoBehaviour
     [SerializeField]
     private ConstructionQueueUI constructionQueueUI;
 
+    [SerializeField]
+    private ResourceUI resourceUI;
+
     private Planet_Inhabitable planet;
     // Start is called before the first frame update
     void Start()
@@ -49,6 +52,8 @@ public class BuildingListUIElement : MonoBehaviour
         constructionQueueUI.PutElementOnQueue(planet);
 
         buildingUI.MakeNewBuildingElement();
+
+        resourceUI.UpdateResourceUI();
     }
     
 }
