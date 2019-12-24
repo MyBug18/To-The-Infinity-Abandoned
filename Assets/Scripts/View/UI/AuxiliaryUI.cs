@@ -6,16 +6,6 @@ public class AuxiliaryUI : MonoBehaviour
     [SerializeField]
     private GameObject buildingListUI;
 
-    void Start()
-    {
-        
-    }
-    
-    void Update()
-    {
-        
-    }
-
     public void Initialize(AuxiliaryUIStatus status)
     {
         switch (status)
@@ -26,6 +16,11 @@ public class AuxiliaryUI : MonoBehaviour
             default:
                 throw new InvalidOperationException("Invalid enum!");
         }
+    }
+
+    public void Close()
+    {
+        gameObject.SetActive(false);
     }
 }
 
