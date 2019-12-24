@@ -26,7 +26,7 @@ public class AlloySmelter : Building, IUpgradable
 
     public bool IsUpgradable()
     {
-        return true;
+        return planet.workingPlaceFactory.IsMineralEnough(BuildingType.AlloyFoundry);
     }
 
     public void Upgrade()

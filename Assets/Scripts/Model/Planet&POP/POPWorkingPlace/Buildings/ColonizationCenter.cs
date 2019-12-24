@@ -36,7 +36,7 @@ public class ColonizationCenter : Building, IUpgradable
 
     public bool IsUpgradable()
     {
-        return planet.pops.Count >= 50;
+        return planet.pops.Count >= 50 && planet.workingPlaceFactory.IsMineralEnough(BuildingType.PlanetaryCapital);
     }
 
     public void Upgrade()

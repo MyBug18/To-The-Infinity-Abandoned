@@ -24,7 +24,7 @@ public class HouseOfWisdom : Building, IUpgradable
 
     public bool IsUpgradable()
     {
-        return true;
+        return planet.workingPlaceFactory.IsMineralEnough(BuildingType.ResearchLab);
     }
 
     public void Upgrade()

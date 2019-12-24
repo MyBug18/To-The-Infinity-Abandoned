@@ -8,7 +8,7 @@ public class BuildingUIElement : MonoBehaviour
     public AuxiliaryUI auxiliaryUI;
 
     [SerializeField]
-    private GameObject notYetBuiltUI, builtUI;
+    private GameObject notYetBuiltUI, builtUI, upgradeButton;
 
     public bool isNotYetBuilt = true;
 
@@ -44,5 +44,8 @@ public class BuildingUIElement : MonoBehaviour
 
         notYetBuiltUI.SetActive(false);
         builtUI.SetActive(true);
+
+        if (b is IUpgradable)
+            upgradeButton.SetActive(true);
     }
 }

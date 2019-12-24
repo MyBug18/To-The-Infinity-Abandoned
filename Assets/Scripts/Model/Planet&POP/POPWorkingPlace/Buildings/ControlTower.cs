@@ -14,7 +14,7 @@ public class ControlTower : Building, IUpgradable
 
     public bool IsUpgradable()
     {
-        return true;
+        return planet.workingPlaceFactory.IsMineralEnough(BuildingType.PlanetaryCommHub);
     }
 
     public void Upgrade()
