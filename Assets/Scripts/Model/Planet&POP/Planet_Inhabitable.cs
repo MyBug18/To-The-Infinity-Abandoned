@@ -280,6 +280,17 @@ public class Planet_Inhabitable : Planet
             workingPlaceFactory.GetConstructionTime((BuildingType)((int)fromUpgrade.buildingType + 1)), fromUpgrade, OnTimerEnded)); // Every upgraded BuildingType is bigger by 1 than a previous one.
     }
 
+    public void CancelFromConstructionQueue(int index)
+    {
+        ConstructionQueueElement toDel = ongoingConstruction[index];
+        if (toDel.isBuilding)
+            planetaryResources.mineral += workingPlaceFactory.GetConstructionCost((BuildingType)toDel.type);
+        else
+            planetaryResources.mineral += workingPlaceFactory.GetConstructionCost((DistrictType)toDel.type);
+
+        ongoingConstruction.RemoveAt(index);
+    }
+
     public void ProceedConstruction()
     {
         if (ongoingConstruction.Count > 0)
