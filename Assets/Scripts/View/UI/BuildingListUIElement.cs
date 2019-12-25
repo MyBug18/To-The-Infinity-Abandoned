@@ -43,8 +43,9 @@ public class BuildingListUIElement : MonoBehaviour
         Action onTimerEnded = () => cur.OnConstructionFinished(planet.workingPlaceFactory.GetBuilding(type));
         planet.StartConstruction(type, onTimerEnded);
 
-        constructionQueueUI.PutElementOnQueue(planet);
-
+        var elem = constructionQueueUI.PutElementOnQueue(planet);
+        elem.targetBuildingSlot = buildingUI.currentEmptyElement;
+        buildingUI.currentEmptyElement.ChangeStatus(BuildingUIElementStatus.CurrentlyBuilding);
         buildingUI.MakeNewBuildingElement();
 
         resourceUI.UpdateResourceUI();

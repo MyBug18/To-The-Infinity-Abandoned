@@ -233,7 +233,8 @@ public class Planet_Inhabitable : Planet
 
     public void StartConstruction(BuildingType type, Action OnTimerEnded)
     {
-        ongoingConstruction.Add(new ConstructionQueueElement(true, (int)type, workingPlaceFactory.GetConstructionTime(type), null, OnTimerEnded));
+        int index = ongoingConstruction.Count;
+        ongoingConstruction.Add(new ConstructionQueueElement(true, (int)type, workingPlaceFactory.GetConstructionTime(type), null, index, OnTimerEnded));
 
         if (!workingPlaceFactory.IsMineralEnough(type))
             throw new InvalidOperationException("Not enough minerals!");
@@ -266,7 +267,9 @@ public class Planet_Inhabitable : Planet
 
         planetaryResources.mineral -= workingPlaceFactory.GetConstructionCost(type);
 
-        ongoingConstruction.Add(new ConstructionQueueElement(false, (int)type, workingPlaceFactory.GetConstructionTime(type), null, OnTimerEnded));
+        int index = ongoingConstruction.Count;
+
+        ongoingConstruction.Add(new ConstructionQueueElement(false, (int)type, workingPlaceFactory.GetConstructionTime(type), null, index, OnTimerEnded));
     }
 
     public void StartUpgrade(Building fromUpgrade, Action OnTimerEnded)
@@ -276,8 +279,10 @@ public class Planet_Inhabitable : Planet
 
         planetaryResources.mineral -= workingPlaceFactory.GetConstructionCost((BuildingType)((int)fromUpgrade.buildingType + 1));
 
+        int index = ongoingConstruction.Count;
+
         ongoingConstruction.Add(new ConstructionQueueElement(true, (int)(fromUpgrade.buildingType + 1), 
-            workingPlaceFactory.GetConstructionTime((BuildingType)((int)fromUpgrade.buildingType + 1)), fromUpgrade, OnTimerEnded)); // Every upgraded BuildingType is bigger by 1 than a previous one.
+            workingPlaceFactory.GetConstructionTime((BuildingType)((int)fromUpgrade.buildingType + 1)), fromUpgrade, index, OnTimerEnded)); // Every upgraded BuildingType is bigger by 1 than a previous one.
     }
 
     public void CancelFromConstructionQueue(int index)
@@ -287,8 +292,27 @@ public class Planet_Inhabitable : Planet
             planetaryResources.mineral += workingPlaceFactory.GetConstructionCost((BuildingType)toDel.type);
         else
             planetaryResources.mineral += workingPlaceFactory.GetConstructionCost((DistrictType)toDel.type);
-
+        if (!toDel.isBuilding)
+        {
+            DistrictType type = (DistrictType)toDel.type;
+            switch (type)
+            {
+                case DistrictType.Electricity:
+                    plannedElectricityDistrictNum--;
+                    break;
+                case DistrictType.Food:
+                    plannedFoodDistrictNum--;
+                    break;
+                case DistrictType.House:
+                    plannedHouseDistrictNum--;
+                    break;
+                case DistrictType.Mineral:
+                    plannedMineralDistrictNum--;
+                    break;
+            }
+        }
         ongoingConstruction.RemoveAt(index);
+        _DecreaseIndexesOfQueueElementsFrom(index);
     }
 
     public void ProceedConstruction()
@@ -298,7 +322,6 @@ public class Planet_Inhabitable : Planet
             if (ongoingConstruction[0].remainTime > 0)
             {
                 ongoingConstruction[0].remainTime--;
-                Debug.Log(ongoingConstruction[0].remainTime);
             }
             else
             {
@@ -311,6 +334,7 @@ public class Planet_Inhabitable : Planet
     {
         ConstructionQueueElement justEnded = ongoingConstruction[0];
         ongoingConstruction.RemoveAt(0);
+        _DecreaseIndexesOfQueueElementsFrom(0);
 
         if (justEnded.isBuilding == false)
         {
@@ -324,7 +348,12 @@ public class Planet_Inhabitable : Planet
                 ((IUpgradable)justEnded.fromUpgrade).Upgrade();
         }
         justEnded.OnTimerEnded?.Invoke();
-        Debug.Log("Construction Ended");
+    }
+
+    private void _DecreaseIndexesOfQueueElementsFrom(int fromIndex)
+    {
+        for (int i = fromIndex; i < ongoingConstruction.Count; i++)
+            ongoingConstruction[i].index--;
     }
 
     public void DemolishWorkingPlace(POPWorkingPlace workingPlace)

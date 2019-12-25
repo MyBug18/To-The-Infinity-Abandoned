@@ -48,7 +48,6 @@ public class TurnResource
     private void _ApplyOneChange(GlobalResourceChanges grc)
     {
         var (_type, _amount) = grc.value;
-        UnityEngine.Debug.Log(grc.changeType + " " + _type.ToString() + " " + _amount);
 
         float amount;
 

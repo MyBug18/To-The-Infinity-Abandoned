@@ -11,9 +11,9 @@ public class BuildingUIElement : MonoBehaviour
     public ResourceUI resourceUI;
 
     [SerializeField]
-    private GameObject notYetBuiltUI, builtUI, upgradeButton;
+    private GameObject notYetBuiltUI, builtUI, upgradeButton, currentlyBuildingUI, UpgradingUI;
 
-    public bool isNotYetBuilt = true;
+    public BuildingUIElementStatus status = BuildingUIElementStatus.NotBuilt;
 
     // Start is called before the first frame update
     void Start()
@@ -29,40 +29,81 @@ public class BuildingUIElement : MonoBehaviour
 
     public void OnClick()
     {
-        if (isNotYetBuilt)
+        if (status == BuildingUIElementStatus.NotBuilt)
         {
             auxiliaryUI.gameObject.SetActive(true);
             auxiliaryUI.Initialize(AuxiliaryUIStatus.BuildingList);
         }
         else
         {
-
+            Debug.Log(building.name);
         }
     }
 
     public void OnConstructionFinished(Building b)
     {
-        Debug.Log(b.name);
         building = b;
-
-        notYetBuiltUI.SetActive(false);
-        builtUI.SetActive(true);
+        ChangeStatus(BuildingUIElementStatus.AlreadyBuilt);
 
         if (b is IUpgradable)
-            upgradeButton.SetActive(true);
+            ActivateUpgradeButton();
     }
 
     public void OnUpgradeFinished()
     {
-        Debug.Log("Upgraded Finished!");
+        ChangeStatus(BuildingUIElementStatus.AlreadyBuilt);
     }
 
     public void OnClickUpgrade()
     {
+        ChangeStatus(BuildingUIElementStatus.Upgrading);
         Action onTimerEnded = () => OnUpgradeFinished();
         building.planet.StartUpgrade(building, onTimerEnded);
         upgradeButton.SetActive(false);
-        constructionQueueUI.PutElementOnQueue(building.planet);
+
+        var elem = constructionQueueUI.PutElementOnQueue(building.planet);
+
+        elem.targetBuildingSlot = this;
         resourceUI.UpdateResourceUI();
     }
+
+    public void ChangeStatus(BuildingUIElementStatus status)
+    {
+        this.status = status;
+        notYetBuiltUI.SetActive(false);
+        currentlyBuildingUI.SetActive(false);
+        builtUI.SetActive(false);
+        UpgradingUI.SetActive(false);
+
+        switch(status)
+        {
+            case BuildingUIElementStatus.AlreadyBuilt:
+                builtUI.SetActive(true);
+                break;
+            case BuildingUIElementStatus.CurrentlyBuilding:
+                currentlyBuildingUI.SetActive(true);
+                break;
+            case BuildingUIElementStatus.NotBuilt:
+                notYetBuiltUI.SetActive(true);
+                break;
+            case BuildingUIElementStatus.Upgrading:
+                UpgradingUI.SetActive(true);
+                break;
+            default:
+                throw new InvalidOperationException("BuildingUIElementStatus enum invalid!");
+        }
+    }
+
+    public void ActivateUpgradeButton()
+    {
+        upgradeButton.SetActive(true);
+    }
+}
+
+public enum BuildingUIElementStatus
+{
+    NotBuilt,
+    CurrentlyBuilding,
+    AlreadyBuilt,
+    Upgrading
 }

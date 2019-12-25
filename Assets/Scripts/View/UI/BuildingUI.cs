@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class BuildingUI : MonoBehaviour
 {
+    public Transform buildingContent;
+
     [SerializeField]
-    private Transform buildingContent, buildingElementPrefab;
+    private Transform buildingElementPrefab;
 
     [SerializeField]
     private AuxiliaryUI auxiliaryUI;
