@@ -6,6 +6,9 @@ public class CameraMovement : MonoBehaviour
 {
     private int _width;
     private int _height;
+
+    public GameObject test;
+
     public int speed = 1;
     public int Boundary = 50;
 
@@ -51,7 +54,9 @@ public class CameraMovement : MonoBehaviour
         }
 
         if (Input.mouseScrollDelta.y > 0 && cameraVector.magnitude > 10)
+        {
             mainCamera.localPosition += new Vector3(0, 0, 10);
+        }
 
         if (Input.mouseScrollDelta.y < 0 && cameraVector.magnitude < 100)
             mainCamera.localPosition += new Vector3(0, 0, -10);
@@ -71,6 +76,36 @@ public class CameraMovement : MonoBehaviour
             Vector3 toRot = new Vector3(-rotY, rotX, 0.0f);
 
             transform.localEulerAngles = toRot;
+        }
+
+        //Debug
+        if (Input.GetMouseButton(0))
+        {
+            Vector3 angleOfCamera = transform.GetChild(0).eulerAngles;
+            Vector3 positionOfCamera = transform.GetChild(0).position;
+            float distanceOfCameraFromOrigin = positionOfCamera.magnitude;
+
+            Vector3 positionOfCameraDiffByAngle = new Vector3(
+                distanceOfCameraFromOrigin * Mathf.Sin(angleOfCamera.x),
+                distanceOfCameraFromOrigin * Mathf.Sin(angleOfCamera.y),
+                distanceOfCameraFromOrigin * Mathf.Sin(angleOfCamera.z)
+                );
+
+            Vector3 positionOfMouseOnScreen = Input.mousePosition;
+            positionOfMouseOnScreen.z = 1;
+
+            Vector3 positionOfMouseInWorld = Camera.main.ScreenToWorldPoint(positionOfMouseOnScreen);
+
+            Vector3 positionOfMouseOnPlane = positionOfCameraDiffByAngle + (positionOfMouseInWorld - positionOfCamera);
+
+            test.transform.position = positionOfMouseOnPlane;
+
+            Debug.Log(positionOfMouseOnPlane);
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Debug.Break();
         }
     }
 }
